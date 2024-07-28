@@ -1,6 +1,8 @@
-#How to run
+# how to run
 .Open the app.js file in an integrated terminal and run it with npm start.
-.Open the backend server.js file by opening it in an integrated terminal and giving command npm start
+
+.Open the backend server.js file by opening it in an integrated terminal and giving command npm start.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
