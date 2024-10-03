@@ -23,7 +23,7 @@
       firstStatusTime: 5000,  // 5 seconds in milliseconds
       secondStatusTime: 60000,
       pollingInterval: 120000,
-    //   callUrl : 'https://dev-ade-an.hydro.online'
+       callUrl : 'https://dev-ade-an.hydro.online'
   };
 
 let adsId = ''; // To store the ads ID after getting from /slots
@@ -47,21 +47,23 @@ function getAdsId() {
                     },
         body: JSON.stringify({ 
             tag_id: '8010bb85-b06d-49d4-8143-f30bbec82842',
-            ad_request_id: addRequestId // Include session_id in the request
+            ad_request_id: addRequestId 
         })
     })
     .then(response => response.json())
     .then(data => {
         adsId = data.ad_id;
-        imageUrl = data.ad_url ;
+        imageUrl = data.ad_creative_url;
         adShow = data.ad_show
+    //  console.log(data)
         if (!imageUrl) {
-          throw new Error('Image URL not received from ');
-      }
-  })
-  .catch(error => {
-      console.error('Error getting image URL:', error);
-  });
+            throw new Error('Image URL not received');
+        }
+        return { adsId, imageUrl, adShow };
+    })
+    .catch(error => {
+        console.error('Error getting ad data:', error);
+    });
 }
 function pollForNewAd() {
   getAdsId()
