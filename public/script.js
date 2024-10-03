@@ -1,29 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Web site created using create-react-app" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Aryavhir.in</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    
-    <!-- Your custom script starts here -->
-    <script>
- (function() {
+(function() {
     const config = {
       tagId: 'sampleTagId123',
       redirectUrl: 'https://example.com/redirect-page',
       firstStatusTime: 5000,  // 5 seconds in milliseconds
       secondStatusTime: 60000,
       pollingInterval: 120000,
-    //   callUrl : 'https://dev-ade-an.hydro.online'
   };
 
 let adsId = ''; // To store the ads ID after getting from /slots
@@ -38,23 +19,22 @@ function generateSessionId() {
     });
 }
 
-// Function to send the Tag ID to the  endpoint and get the ads ID
+// Function to send the Tag ID to the /slots endpoint and get the ads ID
 function getAdsId() {
-    return fetch('https://dev-ade-an.hydro.online/api/v1/fetchbanner', {
+    return fetch('/slots', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-                    },
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ 
-            tag_id: '8010bb85-b06d-49d4-8143-f30bbec82842',
-            ad_request_id: addRequestId // Include session_id in the request
+            tag_id: window.Hydro_tagId,
+            add_request_id: addRequestId // Include session_id in the request
         })
     })
     .then(response => response.json())
     .then(data => {
         adsId = data.ad_id;
-        imageUrl = data.ad_url ;
-        adShow = data.ad_show
+        imageUrl = data.ad_url 
         if (!imageUrl) {
           throw new Error('Image URL not received from ');
       }
@@ -184,7 +164,3 @@ pollForNewAd();
   loadExternalConfig();
   init();
 })();
-
-</script>
-  </body>
-</html>

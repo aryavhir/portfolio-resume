@@ -123,7 +123,7 @@ const vidURl = "https://www.youtube.com/watch?v=ZBCUegTZF7M&t=2343s"
           </Col>
         </Row>
       </Container>
-      <img className="background-image-right" src={colorSharp2}></img>
+      <img className="background-image-right" src={colorSharp2} alt="color"></img>
     </section>
   )
 }

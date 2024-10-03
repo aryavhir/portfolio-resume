@@ -3,8 +3,7 @@ import meter2 from "../asset/img/meter2.svg";
 import meter3 from "../asset/img/meter3.svg";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import arrow1 from "../asset/img/arrow1.svg";
-import arrow2 from "../asset/img/arrow2.svg";
+
 import colorSharp from "../asset/img/color-sharp.png"
 
 export const Skills = () => {
@@ -37,54 +36,52 @@ export const Skills = () => {
                         <h2>Skills</h2>
                         <p>skills here are strictly adhering to the technical aspects<br></br>(refering to the coding front).</p>
                         <Carousel responsive={responsive} infinite={true} className="owl-carousel owl-theme skill-slider">
-                            <div className="item">
-                                <img src={meter1} alt="Image" />
-                                <h5>React.js</h5>
-                            </div>
-                            <div className="item">
-                                <img src={meter1} alt="Image" />
-                                <h5>Figma</h5>
-                                
-                            </div>
-                            <div className="item">
-                                <img src={meter1} alt="Image" />
-                                <h5>SQL</h5>
-                                
-                            </div>
-                            <div className="item">
-                                <img src={meter2} alt="Image" />
-                                <h5>ReactNative</h5>
-                            </div>
-                            <div className="item">
-                                <img src={meter2} alt="Image" />
-                                <h5>Canva</h5>
-                            </div>
-                            <div className="item">
-                                <img src={meter2} alt="Image" />
-                                <h5>Swift</h5>
-                            </div>
-                            <div className="item">
-                                <img src={meter2} alt="Image" />
-                                <h5>HTML</h5>
-                            </div>
-                            <div className="item">
-                                <img src={meter3} alt="Image" />
-                                <h5>CSS</h5>
-                            </div>
-                            <div className="item">
-                                <img src={meter3} alt="Image" />
-                                <h5>Git</h5>
-                            </div>
-                            <div className="item">
-                                <img src={meter3} alt="Image" />
-                                <h5>Latex</h5>
-                            </div>
+                        <div className="item">
+                  <img src={meter1} alt="React.js skill level" />
+                  <h5>React.js</h5>
+                </div>
+                <div className="item">
+                  <img src={meter1} alt="Figma skill level" />
+                  <h5>Figma</h5>
+                </div>
+                <div className="item">
+                  <img src={meter1} alt="SQL skill level" />
+                  <h5>SQL</h5>
+                </div>
+                <div className="item">
+                  <img src={meter2} alt="React Native skill level" />
+                  <h5>React Native</h5>
+                </div>
+                <div className="item">
+                  <img src={meter2} alt="Canva skill level" />
+                  <h5>Canva</h5>
+                </div>
+                <div className="item">
+                  <img src={meter2} alt="Swift skill level" />
+                  <h5>Swift</h5>
+                </div>
+                <div className="item">
+                  <img src={meter2} alt="HTML skill level" />
+                  <h5>HTML</h5>
+                </div>
+                <div className="item">
+                  <img src={meter3} alt="CSS skill level" />
+                  <h5>CSS</h5>
+                </div>
+                <div className="item">
+                  <img src={meter3} alt="Git skill level" />
+                  <h5>Git</h5>
+                </div>
+                <div className="item">
+                  <img src={meter3} alt="LaTeX skill level" />
+                  <h5>LaTeX</h5>
+                </div>
                         </Carousel>
                     </div>
                 </div>
             </div>
         </div>
-        <img className="background-image-left" src={colorSharp} alt="Image" />
+        <img className="background-image-left" src={colorSharp} alt="color" />
     </section>
   )
 }
