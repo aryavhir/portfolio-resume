@@ -1,5 +1,5 @@
-import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
-import { ProjectCard } from "./ProjectCard";
+import { Container } from "react-bootstrap";
+// import { ProjectCard } from "./ProjectCard";
 import projImg1 from "../asset/img/7.png";
 import projImg2 from "../asset/img/5.png";
 import projImg3 from "../asset/img/cert.png";
@@ -8,13 +8,13 @@ import projImg5 from "../asset/img/cert1.png";
 import projImg6 from "../asset/img/6.png";
 import projImg7 from "../asset/img/2.png";
 import colorSharp2 from "../asset/img/color-sharp2.png";
-import ReactPlayer from "react-player";
+// import ReactPlayer from "react-player";
 import 'animate.css';
-import TrackVisibility from 'react-on-screen';
+// import TrackVisibility from 'react-on-screen';
 
 
 export const Projects = () => {
-const vidURl = "https://www.youtube.com/watch?v=ZBCUegTZF7M&t=2343s"
+// const vidURl = "https://www.youtube.com/watch?v=ZBCUegTZF7M&t=2343s"
   const projects = [
     {
       title: "React.js",
@@ -64,7 +64,7 @@ const vidURl = "https://www.youtube.com/watch?v=ZBCUegTZF7M&t=2343s"
   return (
     <section className="project" id="projects">
       <Container>
-        <Row>
+        {/* <Row>
           <Col size={12}>
             <TrackVisibility>
               {({ isVisible }) =>
@@ -121,7 +121,7 @@ const vidURl = "https://www.youtube.com/watch?v=ZBCUegTZF7M&t=2343s"
               </div>}
             </TrackVisibility>
           </Col>
-        </Row>
+        </Row> */}
       </Container>
       <img className="background-image-right" src={colorSharp2} alt="color"></img>
     </section>
