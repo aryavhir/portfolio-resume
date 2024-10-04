@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import headerImg from "../asset/img/ron.svg";
-import { ArrowRightCircle } from 'react-bootstrap-icons';
+// import { Container, Row, Col } from "react-bootstrap";
+// import headerImg from "../asset/img/ron.svg";
+// import { ArrowRightCircle } from 'react-bootstrap-icons';
 import 'animate.css';
-import TrackVisibility from 'react-on-screen';
+// import TrackVisibility from 'react-on-screen';
 
 export const Banner = () => {
   const [loopNum, setLoopNum] = useState(0);
@@ -51,15 +51,17 @@ export const Banner = () => {
     }
   };
 
-  const openPdfFile = () => {
-    // Replace 'your-pdf-file.pdf' with the actual path to your PDF file
-    const pdfPath = '/resume11.pdf';
-    window.open(pdfPath, '_blank');
-  };
+  // const openPdfFile = () => {
+  //   // Replace 'your-pdf-file.pdf' with the actual path to your PDF file
+  //   const pdfPath = '/resume11.pdf';
+  //   window.open(pdfPath, '_blank');
+  // };
 
   return (
     <section className="banner" id="home">
-      <Container>
+      <h1 style={{textAlign: 'center'}}> Hello</h1>
+    
+      {/* <Container>
         <Row className="aligh-items-center">
           <Col xs={12} md={6} xl={7}>
             <TrackVisibility>
@@ -83,7 +85,7 @@ export const Banner = () => {
             </TrackVisibility>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </section>
   );
 };
