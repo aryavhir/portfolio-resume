@@ -343,12 +343,18 @@
         const duration = 5000; // 5 seconds for each image
         const frameRate = 60; // Target 60fps for smooth animation
         const totalDistance = singleImageWidth;
-        const stepSize = totalDistance / (duration / (1000 / frameRate)); // Pixels per frame
         let position = window.innerWidth;
+        let lastFrameTimestamp = performance.now();
         let animationComplete = false;
     
-        function animate() {
-            position -= stepSize;
+        function animate(timestamp) {
+            const elapsedTime = timestamp - lastFrameTimestamp;
+            const elapsedFrames = elapsedTime / (1000 / frameRate);
+            lastFrameTimestamp = timestamp;
+    
+            // Calculate the distance to move based on elapsed frames
+            const distance = elapsedFrames * (totalDistance / (duration / 1000));
+            position -= distance;
     
             // Check if animation should complete
             if (position <= -singleImageWidth * totalImages) {
