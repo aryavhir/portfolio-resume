@@ -341,7 +341,7 @@
         }
     
         const baseFrameRate = 60; // Base frame rate we're designing for
-        const duration = 5000; // Base duration for calculating speed
+        const duration = 10000; // Base duration for calculating speed
         const baseSpeed = singleImageWidth / duration; // Base speed at 60fps
         
         let position = window.innerWidth;
