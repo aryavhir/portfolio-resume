@@ -335,64 +335,28 @@
         }
     }
 
-    function startScrolling(element, singleImageWidth) {
-        if (scrollInterval) {
-            clearInterval(scrollInterval);
-        }
+    function animate(timestamp) {
+        const elapsedTime = timestamp - lastFrameTimestamp;
+        const minFrameDelay = 1000 / 30; // 30fps minimum
+        if (elapsedTime >= minFrameDelay) {
+            const elapsedFrames = elapsedTime / (1000 / frameRate);
+            lastFrameTimestamp = timestamp;
     
-        const duration = 5000; // keeping original 5 seconds
-        const speed = singleImageWidth / duration; 
-        let position = window.innerWidth;
-        let lastTimestamp = null;
-        let animationComplete = false;
-    
-        function animate(timestamp) {
-            // Safari fix: Use performance.now() if timestamp is undefined or irregular
-            const currentTime = timestamp || performance.now();
-            
-            if (!lastTimestamp) {
-                lastTimestamp = currentTime;
-                scrollInterval = requestAnimationFrame(animate);
-                return;
-            }
-    
-            // Ensure elapsed time is not too large (Safari fix)
-            const elapsed = Math.min(currentTime - lastTimestamp, 16.67); // Cap at ~60fps
-            position -= speed * elapsed;
-            lastTimestamp = currentTime;
-    
-            // Check if animation should complete
-            if (position <= -singleImageWidth * totalImages) {
-                if (!animationComplete) {
-                    animationComplete = true;
-                    // Ensure last image is fully out of view
-                    element.style.transform = `translateX(${-(singleImageWidth * totalImages + window.innerWidth)}px)`;
-                    
-                    // Force the end event for the last image
-                    const lastImage = element.children[totalImages - 1];
-                    if (lastImage && lastImage.startEventSent && lastImage.midEventSent && !lastImage.endEventSent) {
-                        lastImage.endEventSent = true;
-                        sendStatus('end');
-                    }
-    
-                    // Wait for status to be sent before fetching new ad
-                    setTimeout(() => {
-                        fetchNewAd();
-                    }, 200);
-                    return;
-                }
-            }
-    
+            const distance = elapsedFrames * (totalDistance / (duration / 1000));
+            position -= distance;
             element.style.transform = `translateX(${position}px)`;
-            
+    
+            if (position <= -singleImageWidth * totalImages) {
+                // ... completion logic
+            }
+    
             if (!animationComplete) {
                 scrollInterval = requestAnimationFrame(animate);
             }
+        } else {
+            scrollInterval = requestAnimationFrame(animate);
         }
-    
-        scrollInterval = requestAnimationFrame(animate);
     }
-    
     function clearAd() {
         if (adContainer) {
             adContainer.style.display = 'none';
