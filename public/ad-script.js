@@ -340,30 +340,26 @@
             clearInterval(scrollInterval);
         }
     
-        const baseFrameRate = 60; // Base frame rate we're designing for
-        const duration = 10000; // Base duration for calculating speed
-        const baseSpeed = singleImageWidth / duration; // Base speed at 60fps
-        
+        const duration = 5000; // keeping original 5 seconds
+        const speed = singleImageWidth / duration; 
         let position = window.innerWidth;
-        let lastTimestamp = 0;
+        let lastTimestamp = null;
         let animationComplete = false;
     
         function animate(timestamp) {
+            // Safari fix: Use performance.now() if timestamp is undefined or irregular
+            const currentTime = timestamp || performance.now();
+            
             if (!lastTimestamp) {
-                lastTimestamp = timestamp;
+                lastTimestamp = currentTime;
                 scrollInterval = requestAnimationFrame(animate);
                 return;
             }
     
-            const elapsed = timestamp - lastTimestamp;
-            const currentFPS = 1000 / elapsed; // Calculate current FPS
-            
-            // Adjust speed based on current frame rate
-            const speedAdjustment = baseFrameRate / Math.max(currentFPS, 30); // Cap at minimum 30fps
-            const adjustedSpeed = baseSpeed * speedAdjustment;
-            
-            // Calculate movement with adjusted speed
-            position -= adjustedSpeed * elapsed;
+            // Ensure elapsed time is not too large (Safari fix)
+            const elapsed = Math.min(currentTime - lastTimestamp, 16.67); // Cap at ~60fps
+            position -= speed * elapsed;
+            lastTimestamp = currentTime;
     
             // Check if animation should complete
             if (position <= -singleImageWidth * totalImages) {
@@ -388,7 +384,6 @@
             }
     
             element.style.transform = `translateX(${position}px)`;
-            lastTimestamp = timestamp;
             
             if (!animationComplete) {
                 scrollInterval = requestAnimationFrame(animate);
