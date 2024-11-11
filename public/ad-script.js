@@ -340,38 +340,46 @@
             clearInterval(scrollInterval);
         }
     
-        const imageDuration = 10000; // 10 seconds per image
-        const totalScrollDistance = window.innerWidth + singleImageWidth; // Distance each image needs to travel
-        const pixelsPerMs = totalScrollDistance / imageDuration; // How many pixels to move per millisecond
+        const baseFrameRate = 60; // Base frame rate we're designing for
+        const duration = 5000; // Base duration for calculating speed
+        const baseSpeed = singleImageWidth / duration; // Base speed at 60fps
         
         let position = window.innerWidth;
-        let startTime = null;
+        let lastTimestamp = 0;
         let animationComplete = false;
     
-        function animate(currentTime) {
-            if (!startTime) {
-                startTime = currentTime;
+        function animate(timestamp) {
+            if (!lastTimestamp) {
+                lastTimestamp = timestamp;
+                scrollInterval = requestAnimationFrame(animate);
+                return;
             }
     
-            // Calculate elapsed time since animation started
-            const elapsedMs = currentTime - startTime;
+            const elapsed = timestamp - lastTimestamp;
+            const currentFPS = 1000 / elapsed; // Calculate current FPS
             
-            // Calculate how far we should have moved based on elapsed time
-            const expectedMove = pixelsPerMs * elapsedMs;
-            position = window.innerWidth - expectedMove;
+            // Adjust speed based on current frame rate
+            const speedAdjustment = baseFrameRate / Math.max(currentFPS, 30); // Cap at minimum 30fps
+            const adjustedSpeed = baseSpeed * speedAdjustment;
+            
+            // Calculate movement with adjusted speed
+            position -= adjustedSpeed * elapsed;
     
             // Check if animation should complete
             if (position <= -singleImageWidth * totalImages) {
                 if (!animationComplete) {
                     animationComplete = true;
+                    // Ensure last image is fully out of view
                     element.style.transform = `translateX(${-(singleImageWidth * totalImages + window.innerWidth)}px)`;
                     
+                    // Force the end event for the last image
                     const lastImage = element.children[totalImages - 1];
                     if (lastImage && lastImage.startEventSent && lastImage.midEventSent && !lastImage.endEventSent) {
                         lastImage.endEventSent = true;
                         sendStatus('end');
                     }
     
+                    // Wait for status to be sent before fetching new ad
                     setTimeout(() => {
                         fetchNewAd();
                     }, 200);
@@ -380,13 +388,13 @@
             }
     
             element.style.transform = `translateX(${position}px)`;
+            lastTimestamp = timestamp;
             
             if (!animationComplete) {
                 scrollInterval = requestAnimationFrame(animate);
             }
         }
     
-        // Start the animation
         scrollInterval = requestAnimationFrame(animate);
     }
     
