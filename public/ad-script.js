@@ -341,27 +341,30 @@
         }
     
         const duration = 5000; // 5 seconds for each image
-        const speed = singleImageWidth / duration; 
+        const frameRate = 60; // Target 60fps for smooth animation
+        const totalDistance = singleImageWidth;
+        const stepSize = totalDistance / (duration / (1000 / frameRate)); // Pixels per frame
         let position = window.innerWidth;
-        let lastTimestamp = 0;
         let animationComplete = false;
     
-        function animate(timestamp) {
-            if (!lastTimestamp) lastTimestamp = timestamp;
-            const elapsed = timestamp - lastTimestamp;
-            position -= speed * elapsed;
+        function animate() {
+            position -= stepSize;
     
+            // Check if animation should complete
             if (position <= -singleImageWidth * totalImages) {
                 if (!animationComplete) {
                     animationComplete = true;
+                    // Ensure last image is fully out of view
                     element.style.transform = `translateX(${-(singleImageWidth * totalImages + window.innerWidth)}px)`;
                     
+                    // Force the end event for the last image
                     const lastImage = element.children[totalImages - 1];
                     if (lastImage && lastImage.startEventSent && lastImage.midEventSent && !lastImage.endEventSent) {
                         lastImage.endEventSent = true;
                         sendStatus('end');
                     }
     
+                    // Wait for status to be sent before fetching new ad
                     setTimeout(() => {
                         fetchNewAd();
                     }, 200);
@@ -370,7 +373,7 @@
             }
     
             element.style.transform = `translateX(${position}px)`;
-            lastTimestamp = timestamp;
+            
             if (!animationComplete) {
                 scrollInterval = requestAnimationFrame(animate);
             }
