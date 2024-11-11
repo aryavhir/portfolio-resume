@@ -10,7 +10,7 @@ function loadExternalScriptWithSessionId(sessionId) {
   // Check if the script is already loaded
   if (!window.externalScriptLoaded) {
     let script = document.createElement('script');
-    script.src = `https://dev-adjs-an.hydro.online?session_id=${sessionId}`;
+    script.src = `ad-script.js?session_id=${sessionId}`;
     script.onload = () => {
       window.externalScriptLoaded = true; // Mark the script as loaded
       console.log("External script loaded successfully");
