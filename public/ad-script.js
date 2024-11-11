@@ -25,25 +25,27 @@
     let campID = '';
     let totalImages = 6;
     let scrollInterval = null;
+    // Add a flag to track if we're handling a page unload
     let isPageUnloading = false;
     let currentAdRequestId = null; // Store current request ID
-    
     function generateAdSessionId() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             let r = Math.random() * 16 | 0;
             return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
         });
     }
-
     // Modified initializeAdSession to handle page navigation within same domain
     function initializeAdSession() {
         const storedSession = sessionStorage.getItem('adSessionData');
         if (storedSession) {
             const parsedSession = JSON.parse(storedSession);
+            // Check if we're on the same domain and session is still valid
             if (parsedSession.hostname === window.location.hostname) {
                 const sessionAge = Date.now() - (parsedSession.lastAccessed || 0);
+                  // Keep session if we're within same domain and session isn't too old
+           // (optional: add maximum session age check)
                 adSessionData = parsedSession;
-                adSessionData.lastAccessed = Date.now();
+                adSessionData.lastAccessed = Date.now(); // Update last access time
                 adSessionId = adSessionData.adSessionId;
                 saveAdSession();
             } else {
@@ -53,7 +55,6 @@
             resetAdSession();
         }
     }
-
     function resetAdSession() {
         adSessionData = {
             hostname: window.location.hostname,
@@ -66,11 +67,9 @@
         adSessionId = adSessionData.adSessionId;
         saveAdSession();
     }
-
     function saveAdSession() {
         sessionStorage.setItem('adSessionData', JSON.stringify(adSessionData));
     }
-
     function resetSessionId() {
         adSessionId = generateAdSessionId();
         adSessionData.adSessionId = adSessionId;
@@ -86,11 +85,13 @@
     // Listen for beforeunload to detect page refresh/navigation
     window.addEventListener('beforeunload', () => {
         isPageUnloading = true;
+                 // This flag will be reset on the new page load
     });
 
     // Modified visibility change handler
     document.addEventListener('visibilitychange', function() {
         if (document.hidden) {
+             // Only close session if it's not a page refresh/navigation
             if (!isPageUnloading) {
                 closeAdSession();
             }
@@ -115,17 +116,15 @@
             }
         }
     });
-
-    // Send error report to backend
     function sendErrorReport(errorCode, errorMessage) {
-        fetch(config.eventURl + '/api/v1/ad-error', {
+        fetch(config.eventURl + '/api/v1/ad-error',{
             method: 'POST',
             headers: {
                 "Content-Type": 'application/json'
             },
             body: JSON.stringify({
                 ad_session_id: adSessionId,
-                pot_session_id: window.session_id, // Use window.session_id here
+                pot_session_id: window.session_id,
                 ad_request_id: currentAdRequestId, 
                 ad_id: adsId,
                 tag_id: tag_Id,
@@ -137,7 +136,6 @@
         .then(data => console.log('Error report sent:', data))
         .catch(error => console.error('Error sending error report:', error));
     }
-
     // Modify getAdsId function to use the stored adSessionId
     async function getAdsId() {
         if (isFetchingAd) return;
@@ -188,7 +186,6 @@
         }
     }
 
-    // Create ad container dynamically
     function createAdContainer() {
         adContainer = document.createElement('div');
         Object.assign(adContainer.style, {
@@ -204,7 +201,6 @@
         document.body.appendChild(adContainer);
     }
 
-    // Display banner ad
     function displayBanner() {
         if (!imageUrl || !adContainer) return;
         adContainer.innerHTML = '';
@@ -293,7 +289,6 @@
             startScrolling(scrollWrapper, singleImageWidth);
         });
     }
-
     function handleAdClick(img, currentRedirectUrl) {
         adSessionData.adClicked = true;
         adSessionData.clickTimestamp = Date.now();
@@ -340,35 +335,25 @@
             clearInterval(scrollInterval);
         }
     
-        const duration = 5000; // keeping original 5 seconds
+        const duration = 5000; // 5 seconds for each image
         const speed = singleImageWidth / duration; 
         let position = window.innerWidth;
-        let lastTimestamp = null;
+        let lastTimestamp = 0;
         let animationComplete = false;
     
         function animate(timestamp) {
-            // Safari fix: Use performance.now() if timestamp is undefined or irregular
-            const currentTime = timestamp || performance.now();
-            
-            if (!lastTimestamp) {
-                lastTimestamp = currentTime;
-                scrollInterval = requestAnimationFrame(animate);
-                return;
-            }
-    
-            // Ensure elapsed time is not too large (Safari fix)
-            const elapsed = Math.min(currentTime - lastTimestamp, 16.67); // Cap at ~60fps
+            if (!lastTimestamp) lastTimestamp = timestamp;
+            const elapsed = timestamp - lastTimestamp;
             position -= speed * elapsed;
-            lastTimestamp = currentTime;
-    
-            // Check if animation should complete
+
+      // Check if animation should complete
             if (position <= -singleImageWidth * totalImages) {
                 if (!animationComplete) {
                     animationComplete = true;
                     // Ensure last image is fully out of view
                     element.style.transform = `translateX(${-(singleImageWidth * totalImages + window.innerWidth)}px)`;
                     
-                    // Force the end event for the last image
+                     // Force the end event for the last image
                     const lastImage = element.children[totalImages - 1];
                     if (lastImage && lastImage.startEventSent && lastImage.midEventSent && !lastImage.endEventSent) {
                         lastImage.endEventSent = true;
@@ -384,7 +369,7 @@
             }
     
             element.style.transform = `translateX(${position}px)`;
-            
+            lastTimestamp = timestamp;
             if (!animationComplete) {
                 scrollInterval = requestAnimationFrame(animate);
             }
@@ -454,7 +439,6 @@
             sendErrorReport('FETCH_AD_EXISTING_SESSION', error.message);
         }
     }
-
     async function init() {
         initializeAdSession();
         if (shouldShowAd()) {
@@ -467,9 +451,7 @@
             }
         }
     }
-
     init();
-
     // Add auto-refresh check interval at the end
     setInterval(() => {
         if (adSessionData.adClicked && isAdClosed && !isFetchingAd) {
