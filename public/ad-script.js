@@ -340,28 +340,25 @@
             clearInterval(scrollInterval);
         }
     
-        const duration = 5000; // 5 seconds for each image
-        const frameRate = 60; // Target 60fps for smooth animation
-        const totalDistance = singleImageWidth;
+        const duration = 10000; // 10 seconds for each image to scroll
+        const totalDistance = singleImageWidth * totalImages;
         let position = window.innerWidth;
-        let lastFrameTimestamp = performance.now();
+        let startTime = performance.now();
         let animationComplete = false;
     
         function animate(timestamp) {
-            const elapsedTime = timestamp - lastFrameTimestamp;
-            const elapsedFrames = elapsedTime / (1000 / frameRate);
-            lastFrameTimestamp = timestamp;
+            const elapsedTime = timestamp - startTime;
+            const progress = elapsedTime / duration;
     
-            // Calculate the distance to move based on elapsed frames
-            const distance = elapsedFrames * (totalDistance / (duration / 1000));
-            position -= distance;
+            // Calculate the distance to move based on elapsed time
+            position = window.innerWidth * (1 - progress);
     
             // Check if animation should complete
-            if (position <= -singleImageWidth * totalImages) {
+            if (progress >= 1) {
                 if (!animationComplete) {
                     animationComplete = true;
                     // Ensure last image is fully out of view
-                    element.style.transform = `translateX(${-(singleImageWidth * totalImages + window.innerWidth)}px)`;
+                    element.style.transform = `translateX(-${totalDistance}px)`;
                     
                     // Force the end event for the last image
                     const lastImage = element.children[totalImages - 1];
