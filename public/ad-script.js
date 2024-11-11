@@ -335,27 +335,54 @@
         }
     }
 
-    function animate(timestamp) {
-        const elapsedTime = timestamp - lastFrameTimestamp;
-        const minFrameDelay = 1000 / 30; // 30fps minimum
-        if (elapsedTime >= minFrameDelay) {
-            const elapsedFrames = elapsedTime / (1000 / frameRate);
-            lastFrameTimestamp = timestamp;
+    function startScrolling(element, singleImageWidth) {
+        if (scrollInterval) {
+            clearInterval(scrollInterval);
+        }
     
-            const distance = elapsedFrames * (totalDistance / (duration / 1000));
-            position -= distance;
-            element.style.transform = `translateX(${position}px)`;
+        const duration = 10000; // 10 seconds for each image to scroll
+        const totalDistance = singleImageWidth * totalImages;
+        let position = window.innerWidth;
+        let startTime = performance.now();
+        let animationComplete = false;
     
-            if (position <= -singleImageWidth * totalImages) {
-                // ... completion logic
+        function animate(timestamp) {
+            const elapsedTime = timestamp - startTime;
+            const progress = elapsedTime / duration;
+    
+            // Calculate the distance to move based on elapsed time
+            position = window.innerWidth * (1 - progress);
+    
+            // Check if animation should complete
+            if (progress >= 1) {
+                if (!animationComplete) {
+                    animationComplete = true;
+                    // Ensure last image is fully out of view
+                    element.style.transform = `translateX(-${totalDistance}px)`;
+                    
+                    // Force the end event for the last image
+                    const lastImage = element.children[totalImages - 1];
+                    if (lastImage && lastImage.startEventSent && lastImage.midEventSent && !lastImage.endEventSent) {
+                        lastImage.endEventSent = true;
+                        sendStatus('end');
+                    }
+    
+                    // Wait for status to be sent before fetching new ad
+                    setTimeout(() => {
+                        fetchNewAd();
+                    }, 200);
+                    return;
+                }
             }
     
+            element.style.transform = `translateX(${position}px)`;
+            
             if (!animationComplete) {
                 scrollInterval = requestAnimationFrame(animate);
             }
-        } else {
-            scrollInterval = requestAnimationFrame(animate);
         }
+    
+        scrollInterval = requestAnimationFrame(animate);
     }
     function clearAd() {
         if (adContainer) {
