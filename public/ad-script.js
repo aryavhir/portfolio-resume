@@ -340,25 +340,33 @@
             clearInterval(scrollInterval);
         }
     
-        const duration = 10000; // 10 seconds for each image to scroll
-        const totalDistance = singleImageWidth * totalImages;
+        // Speed calculation for 10-second duration per image
+        const singleImageDuration = 10000; // 10 seconds for one image to complete its journey
+        const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
+        const speed = totalDistance / singleImageDuration; // pixels per millisecond
+        
         let position = window.innerWidth;
-        let startTime = performance.now();
+        let lastTimestamp = 0;
         let animationComplete = false;
     
         function animate(timestamp) {
-            const elapsedTime = timestamp - startTime;
-            const progress = elapsedTime / duration;
+            if (!lastTimestamp) {
+                lastTimestamp = timestamp;
+                scrollInterval = requestAnimationFrame(animate);
+                return;
+            }
     
-            // Calculate the distance to move based on elapsed time
-            position = window.innerWidth * (1 - progress);
+            const elapsed = timestamp - lastTimestamp;
+            const pixelsToMove = speed * elapsed;
+            position -= pixelsToMove;
+            lastTimestamp = timestamp;
     
             // Check if animation should complete
-            if (progress >= 1) {
+            if (position <= -singleImageWidth * totalImages) {
                 if (!animationComplete) {
                     animationComplete = true;
                     // Ensure last image is fully out of view
-                    element.style.transform = `translateX(-${totalDistance}px)`;
+                    element.style.transform = `translateX(${-(singleImageWidth * totalImages + window.innerWidth)}px)`;
                     
                     // Force the end event for the last image
                     const lastImage = element.children[totalImages - 1];
