@@ -340,42 +340,38 @@
             clearInterval(scrollInterval);
         }
     
-        // Speed calculation for 10-second duration per image
-        const singleImageDuration = 10000; // 10 seconds for one image to complete its journey
-        const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
-        const speed = totalDistance / singleImageDuration; // pixels per millisecond
+        const imageDuration = 10000; // 10 seconds per image
+        const totalScrollDistance = window.innerWidth + singleImageWidth; // Distance each image needs to travel
+        const pixelsPerMs = totalScrollDistance / imageDuration; // How many pixels to move per millisecond
         
         let position = window.innerWidth;
-        let lastTimestamp = 0;
+        let startTime = null;
         let animationComplete = false;
     
-        function animate(timestamp) {
-            if (!lastTimestamp) {
-                lastTimestamp = timestamp;
-                scrollInterval = requestAnimationFrame(animate);
-                return;
+        function animate(currentTime) {
+            if (!startTime) {
+                startTime = currentTime;
             }
     
-            const elapsed = timestamp - lastTimestamp;
-            const pixelsToMove = speed * elapsed;
-            position -= pixelsToMove;
-            lastTimestamp = timestamp;
+            // Calculate elapsed time since animation started
+            const elapsedMs = currentTime - startTime;
+            
+            // Calculate how far we should have moved based on elapsed time
+            const expectedMove = pixelsPerMs * elapsedMs;
+            position = window.innerWidth - expectedMove;
     
             // Check if animation should complete
             if (position <= -singleImageWidth * totalImages) {
                 if (!animationComplete) {
                     animationComplete = true;
-                    // Ensure last image is fully out of view
                     element.style.transform = `translateX(${-(singleImageWidth * totalImages + window.innerWidth)}px)`;
                     
-                    // Force the end event for the last image
                     const lastImage = element.children[totalImages - 1];
                     if (lastImage && lastImage.startEventSent && lastImage.midEventSent && !lastImage.endEventSent) {
                         lastImage.endEventSent = true;
                         sendStatus('end');
                     }
     
-                    // Wait for status to be sent before fetching new ad
                     setTimeout(() => {
                         fetchNewAd();
                     }, 200);
@@ -390,6 +386,7 @@
             }
         }
     
+        // Start the animation
         scrollInterval = requestAnimationFrame(animate);
     }
     
