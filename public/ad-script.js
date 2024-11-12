@@ -511,10 +511,6 @@
     }
 
     async function init() {
-        try {
-            // Load CryptoJS library first
-            CryptoJS = await loadCryptoJS();
-            
             initializeAdSession();
             if (shouldShowAd()) {
                 try {
@@ -525,11 +521,8 @@
                     console.error('Failed to initialize ad:', error);
                 }
             }
-        } catch (error) {
-            console.error('Failed to load CryptoJS:', error);
-        }
-    }
-
+        } 
+    
     init();
 
     // Add auto-refresh check interval at the end
