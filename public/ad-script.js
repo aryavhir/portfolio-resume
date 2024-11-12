@@ -1,7 +1,24 @@
 (function() {
+    function loadCryptoJS() {
+        return new Promise((resolve, reject) => {
+            if (window.CryptoJS) {
+                resolve(window.CryptoJS);
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
+            script.integrity = 'sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==';
+            script.crossOrigin = 'anonymous';
+            script.onload = () => resolve(window.CryptoJS);
+            script.onerror = () => reject(new Error('Failed to load CryptoJS'));
+            document.head.appendChild(script);
+        });
+    }
     const config = {
         callUrl: 'https://dev-ade-an.hydro.online',
-        eventURl: 'https://dev-ad-events.hydro.online'
+        eventURl: 'https://dev-ad-events.hydro.online',
+        encryptionKey: 'your-32-character-encryption-key'
     };
     let adSessionData = {
         hostname: window.location.hostname,
@@ -10,6 +27,7 @@
         clickTimestamp: null,
         timeDelay: 36000000 // 10 hours in milliseconds
     };
+   
     let tag_Id = window.Hydro_tagId;
     let adsId = '';
     let adSessionId = generateAdSessionId();
@@ -27,7 +45,28 @@
     let scrollInterval = null;
     let isPageUnloading = false;
     let currentAdRequestId = null; // Store current request ID
+    const encryptionUtils = {
+        encrypt(data) {
+            try {
+                const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), encryptionKey).toString();
+                return ciphertext;
+            } catch (error) {
+                console.error('Encryption error:', error);
+                throw new Error('Encryption failed');
+            }
+        },
     
+        decrypt(encryptedData) {
+            try {
+                const bytes = CryptoJS.AES.decrypt(encryptedData, encryptionKey);
+                const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+                return JSON.parse(decryptedText);
+            } catch (error) {
+                console.error('Decryption error:', error);
+                throw new Error('Decryption failed');
+            }
+        }
+    };
     function generateAdSessionId() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             let r = Math.random() * 16 | 0;
@@ -118,64 +157,73 @@
 
     // Send error report to backend
     function sendErrorReport(errorCode, errorMessage) {
+        const payload = {
+            ad_session_id: adSessionId,
+            pot_session_id: window.session_id,
+            ad_request_id: currentAdRequestId,
+            ad_id: adsId,
+            tag_id: tag_Id,
+            campaign_id: campID,
+            error_code: errorCode,
+            error_message: errorMessage
+        };
+
+        const encryptedPayload = encryptionUtils.encrypt(payload);
+
         fetch(config.eventURl + '/api/v1/ad-error', {
             method: 'POST',
             headers: {
-                "Content-Type": 'application/json'
+                "Content-Type": 'application/json',
             },
-            body: JSON.stringify({
-                ad_session_id: adSessionId,
-                pot_session_id: window.session_id, // Use window.session_id here
-                ad_request_id: currentAdRequestId, 
-                ad_id: adsId,
-                tag_id: tag_Id,
-                campaign_id: campID,
-                error_code: errorCode,
-                error_message: errorMessage
-            })
+            body: JSON.stringify({ data: encryptedPayload })
         }).then(response => response.json())
-        .then(data => console.log('Error report sent:', data))
+        .then(encryptedResponse => {
+            const data = encryptionUtils.decrypt(encryptedResponse.data);
+            console.log('Error report sent:', data);
+        })
         .catch(error => console.error('Error sending error report:', error));
     }
 
     // Modify getAdsId function to use the stored adSessionId
     async function getAdsId() {
         if (isFetchingAd) return;
-        isFetchingAd = true;
+        isFetchingAd = true;   
         try {
             currentAdRequestId = generateAdSessionId();
+            const payload = {
+                ad_session_id: adSessionData.adSessionId,
+                tag_id: tag_Id,
+                ad_request_id: generateAdSessionId(),
+                impression_count: 6,
+                pot_session_id: 'potSessionId',
+                already_shown_ad_ids: alreadyShownAds.join(",")
+            };
+    
+            // Encrypt the payload
+            const encryptedPayload = encryptionUtils.encrypt(payload);  
             const response = await fetch(config.callUrl + '/api/v1/fetchbanner', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ad_session_id: adSessionData.adSessionId,
-                    tag_id: tag_Id,
-                    ad_request_id: currentAdRequestId, // Use the new request ID
-                    impression_count: 6,
-                    pot_session_id: window.session_id, // Use window.session_id here
-                    already_shown_ad_ids: alreadyShownAds.join(",")
-                })
+                body: JSON.stringify({ data: encryptedPayload })
             });
-
+    
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(JSON.stringify(errorData));
             }
-
-            const data = await response.json();
-
-            // Check if reset_ad is true and reset the alreadyShownAds array
+    
+            const encryptedResponse = await response.json();
+            // Decrypt the response
+            const data = encryptionUtils.decrypt(encryptedResponse.data);
             if (data.reset_ad === true) {
                 console.log('Resetting already shown ads array');
                 alreadyShownAds = [];
             }
-
             adsId = data.AdInfo.ad_id;
             imageUrl = data.AdInfo.ad_creative_url;
             redirectUrl = data.AdInfo.redirect_url;
             campID = data.AdInfo.campaign_id;
-            console.log('Fetched redirect URL:', redirectUrl);
-
+    
             if (!imageUrl) throw new Error('Image URL not received');
             alreadyShownAds.push(adsId);
             return { adsId, imageUrl, redirectUrl };
@@ -311,24 +359,33 @@
 
     async function sendClickStatus() {
         try {
+            const payload = {
+                ad_session_id: adSessionId,
+                ad_id: adsId,
+                pot_session_id: window.session_id,
+                ad_request_id: currentAdRequestId,
+                campaign_id: campID,
+                tag_id: tag_Id,
+                redirect_url: redirectUrl
+            };
+
+            const encryptedPayload = encryptionUtils.encrypt(payload);
+
             const response = await fetch(config.eventURl + '/api/v1/ad-click', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ad_session_id: adSessionId,
-                    ad_id: adsId,
-                    pot_session_id: window.session_id, // Use window.session_id here
-                    ad_request_id: currentAdRequestId, 
-                    campaign_id: campID,
-                    tag_id: tag_Id,
-                    redirect_url: redirectUrl
-                })
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: encryptedPayload })
             });
+
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(JSON.stringify(errorData));
             }
-            const data = await response.json();
+
+            const encryptedResponse = await response.json();
+            const data = encryptionUtils.decrypt(encryptedResponse.data);
             console.log('Click status sent:', data);
         } catch (error) {
             sendErrorReport('CLICK_TRACK_ERROR', error.message);
@@ -413,24 +470,32 @@
         if (!adsId || (event === lastSentStatus && event !== 'start' && event !== 'middle' && event !== 'end')) return;
         lastSentStatus = event;
         try {
+            const payload = {
+                ad_session_id: adSessionId,
+                ad_id: adsId,
+                pot_session_id: window.session_id,
+                ad_request_id: currentAdRequestId,
+                ad_position: event,
+                campaign_id: campID,
+                tag_id: tag_Id,
+            };
+
+            const encryptedPayload = encryptionUtils.encrypt(payload);
+
             const response = await fetch(config.eventURl + '/api/v1/ad-display', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ad_session_id: adSessionId,
-                    ad_id: adsId,
-                    pot_session_id: window.session_id, // Use window.session_id here
-                    ad_request_id: currentAdRequestId,
-                    ad_position: event,
-                    campaign_id: campID,
-                    tag_id: tag_Id,
-                })
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: encryptedPayload })
             });
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(JSON.stringify(errorData));
             }
-            const data = await response.json();
+
+            const encryptedResponse = await response.json();
+            const data = encryptionUtils.decrypt(encryptedResponse.data);
             console.log('Status sent:', data);
         } catch (error) {
             console.error('Error sending status:', error);
@@ -455,15 +520,22 @@
     }
 
     async function init() {
-        initializeAdSession();
-        if (shouldShowAd()) {
-            try {
-                await getAdsId();
-                createAdContainer();
-                displayBanner();
-            } catch (error) {
-                console.error('Failed to initialize ad:', error);
+        try {
+            // Load CryptoJS library first
+            CryptoJS = await loadCryptoJS();
+            
+            initializeAdSession();
+            if (shouldShowAd()) {
+                try {
+                    await getAdsId();
+                    createAdContainer();
+                    displayBanner();
+                } catch (error) {
+                    console.error('Failed to initialize ad:', error);
+                }
             }
+        } catch (error) {
+            console.error('Failed to load CryptoJS:', error);
         }
     }
 
