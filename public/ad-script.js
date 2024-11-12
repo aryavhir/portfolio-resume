@@ -48,7 +48,11 @@
     const encryptionUtils = {
         encrypt(data) {
             try {
-                const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), encryptionKey).toString();
+                // Use config.encryptionKey instead of just encryptionKey
+                const ciphertext = CryptoJS.AES.encrypt(
+                    JSON.stringify(data), 
+                    config.encryptionKey
+                ).toString();
                 return ciphertext;
             } catch (error) {
                 console.error('Encryption error:', error);
@@ -58,7 +62,11 @@
     
         decrypt(encryptedData) {
             try {
-                const bytes = CryptoJS.AES.decrypt(encryptedData, encryptionKey);
+                // Use config.encryptionKey instead of just encryptionKey
+                const bytes = CryptoJS.AES.decrypt(
+                    encryptedData, 
+                    config.encryptionKey
+                );
                 const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
                 return JSON.parse(decryptedText);
             } catch (error) {
