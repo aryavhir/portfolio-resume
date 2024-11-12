@@ -1,20 +1,4 @@
 (function() {
-    function loadCryptoJS() {
-        return new Promise((resolve, reject) => {
-            if (window.CryptoJS) {
-                resolve(window.CryptoJS);
-                return;
-            }
-
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
-            script.integrity = 'sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==';
-            script.crossOrigin = 'anonymous';
-            script.onload = () => resolve(window.CryptoJS);
-            script.onerror = () => reject(new Error('Failed to load CryptoJS'));
-            document.head.appendChild(script);
-        });
-    }
     const config = {
         callUrl: 'https://dev-ade-an.hydro.online',
         eventURl: 'https://dev-ad-events.hydro.online',
@@ -47,27 +31,26 @@
     let currentAdRequestId = null; // Store current request ID
     const encryptionUtils = {
         encrypt(data) {
-            try {
-                // Use config.encryptionKey instead of just encryptionKey
-                const ciphertext = CryptoJS.AES.encrypt(
-                    JSON.stringify(data), 
-                    config.encryptionKey
-                ).toString();
-                return ciphertext;
-            } catch (error) {
-                console.error('Encryption error:', error);
-                throw new Error('Encryption failed');
-            }
+            const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+            const keyChars = textToChars(config.encryptionKey);
+            const keyLength = keyChars.length;
+            const encryptedBytes = JSON.stringify(data).split('').map((char, index) => {
+                return char.charCodeAt(0) ^ keyChars[index % keyLength];
+            });
+            // Convert to Base64 to make the encrypted data readable and transmittable
+            const encryptedString = String.fromCharCode(...encryptedBytes);
+            return btoa(encryptedString);
         },
-    
-        decrypt(encryptedData) {
+        
+        decrypt(encoded) {
             try {
-                // Use config.encryptionKey instead of just encryptionKey
-                const bytes = CryptoJS.AES.decrypt(
-                    encryptedData, 
-                    config.encryptionKey
-                );
-                const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+                const encryptedString = atob(encoded);
+                const keyChars = config.encryptionKey.split('').map(c => c.charCodeAt(0));
+                const keyLength = keyChars.length;
+                const decryptedBytes = encryptedString.split('').map((char, index) => {
+                    return char.charCodeAt(0) ^ keyChars[index % keyLength];
+                });
+                const decryptedText = String.fromCharCode(...decryptedBytes);
                 return JSON.parse(decryptedText);
             } catch (error) {
                 console.error('Decryption error:', error);
