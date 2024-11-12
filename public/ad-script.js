@@ -2,7 +2,8 @@
     const config = {
         callUrl: 'https://dev-ade-an.hydro.online',
         eventURl: 'https://dev-ad-events.hydro.online',
-        encryptionKey: 'your-32-character-encryption-key'
+        encryptionKey: 'your-32-character-encryption-key',
+        useEncryption: false
     };
     let adSessionData = {
         hostname: window.location.hostname,
@@ -58,6 +59,19 @@
             }
         }
     };
+    function preparePayload(payload) {
+        if (config.useEncryption) {
+            return { data: encryptionUtils.encrypt(payload) };
+        }
+        return payload;
+    }
+    
+    function processResponse(response) {
+        if (config.useEncryption) {
+            return encryptionUtils.decrypt(response.data);
+        }
+        return response;
+    }
     function generateAdSessionId() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             let r = Math.random() * 16 | 0;
@@ -159,17 +173,17 @@
             error_message: errorMessage
         };
 
-        const encryptedPayload = encryptionUtils.encrypt(payload);
+        const processedPayload = preparePayload(payload);
 
         fetch(config.eventURl + '/api/v1/ad-error', {
             method: 'POST',
             headers: {
                 "Content-Type": 'application/json',
             },
-            body: JSON.stringify({ data: encryptedPayload })
+            body: JSON.stringify(processedPayload)
         }).then(response => response.json())
-        .then(encryptedResponse => {
-            const data = encryptionUtils.decrypt(encryptedResponse.data);
+        .then(responseData => {
+            const data = processResponse(responseData);
             console.log('Error report sent:', data);
         })
         .catch(error => console.error('Error sending error report:', error));
@@ -191,11 +205,11 @@
             };
     
             // Encrypt the payload
-            const encryptedPayload = encryptionUtils.encrypt(payload);  
+            const processedPayload = preparePayload(payload);
             const response = await fetch(config.callUrl + '/api/v1/fetchbanner', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ data: encryptedPayload })
+                body: JSON.stringify(processedPayload)
             });
     
             if (!response.ok) {
@@ -203,9 +217,8 @@
                 throw new Error(JSON.stringify(errorData));
             }
     
-            const encryptedResponse = await response.json();
-            // Decrypt the response
-            const data = encryptionUtils.decrypt(encryptedResponse.data);
+            const responseData = await response.json();
+            const data = processResponse(responseData);
             if (data.reset_ad === true) {
                 console.log('Resetting already shown ads array');
                 alreadyShownAds = [];
@@ -360,23 +373,22 @@
                 redirect_url: redirectUrl
             };
 
-            const encryptedPayload = encryptionUtils.encrypt(payload);
+            const processedPayload = preparePayload(payload);
 
-            const response = await fetch(config.eventURl + '/api/v1/ad-click', {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ data: encryptedPayload })
-            });
-
+const response = await fetch(config.eventURl + '/api/v1/ad-click', {
+    method: 'POST',
+    headers: { 
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(processedPayload)
+});
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(JSON.stringify(errorData));
             }
 
-            const encryptedResponse = await response.json();
-            const data = encryptionUtils.decrypt(encryptedResponse.data);
+            const responseData = await response.json();
+            const data = processResponse(responseData);
             console.log('Click status sent:', data);
         } catch (error) {
             sendErrorReport('CLICK_TRACK_ERROR', error.message);
@@ -471,22 +483,22 @@
                 tag_id: tag_Id,
             };
 
-            const encryptedPayload = encryptionUtils.encrypt(payload);
+            const processedPayload = preparePayload(payload);
 
             const response = await fetch(config.eventURl + '/api/v1/ad-display', {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ data: encryptedPayload })
+                body: JSON.stringify(processedPayload)
             });
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(JSON.stringify(errorData));
             }
 
-            const encryptedResponse = await response.json();
-            const data = encryptionUtils.decrypt(encryptedResponse.data);
+            const responseData = await response.json();
+            const data = processResponse(responseData);
             console.log('Status sent:', data);
         } catch (error) {
             console.error('Error sending status:', error);
