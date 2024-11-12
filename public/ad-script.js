@@ -3,7 +3,7 @@
         callUrl: 'https://dev-ade-an.hydro.online',
         eventURl: 'https://dev-ad-events.hydro.online',
         encryptionKey: 'your-32-character-encryption-key',
-        useEncryption: true
+        useEncryption: false
     };
     let adSessionData = {
         hostname: window.location.hostname,
