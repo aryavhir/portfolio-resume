@@ -2,15 +2,16 @@
     const config = {
         callUrl: 'https://dev-ade-an.hydro.online',
         eventURl: 'https://dev-ad-events.hydro.online',
-        encryptionKey: 'your-32-character-encryption-key',
-        useEncryption: false
+        encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
+        useEncryption: true
     };
     let adSessionData = {
         hostname: window.location.hostname,
         adSessionId: null,
         adClicked: false,
         clickTimestamp: null,
-        timeDelay: 36000000 // 10 hours in milliseconds
+        timeDelay: 36000000, // 10 hours in milliseconds
+        fetchBanner422Error: false,
     };
    
     let tag_Id = window.Hydro_tagId;
@@ -105,7 +106,8 @@
             adClicked: false,
             clickTimestamp: null,
             timeDelay: 36000000,
-            lastAccessed: Date.now() // Add timestamp for session tracking
+            lastAccessed: Date.now(), // Add timestamp for session tracking
+            fetchBanner422Error: false
         };
         adSessionId = adSessionData.adSessionId;
         saveAdSession();
@@ -170,7 +172,8 @@
             tag_id: tag_Id,
             campaign_id: campID,
             error_code: errorCode,
-            error_message: errorMessage
+            error_message: errorMessage,
+            request_timestamp: Math.floor(Date.now() / 1000) 
         };
 
         const processedPayload = preparePayload(payload);
@@ -201,7 +204,8 @@
                 ad_request_id: generateAdSessionId(),
                 impression_count: 6,
                 pot_session_id: 'potSessionId',
-                already_shown_ad_ids: alreadyShownAds.join(",")
+                already_shown_ad_ids: alreadyShownAds.join(","),
+                request_timestamp: Math.floor(Date.now() / 1000) 
             };
     
             // Encrypt the payload
@@ -214,8 +218,14 @@
     
             if (!response.ok) {
                 const errorData = await response.json();
+                if (response.status === 422) {
+                adSessionData.fetchBanner422Error = true;
+                saveAdSession();
+                throw new Error(JSON.stringify(errorData));
+            } else {
                 throw new Error(JSON.stringify(errorData));
             }
+        }
     
             const responseData = await response.json();
             const data = processResponse(responseData);
@@ -370,7 +380,8 @@
                 ad_request_id: currentAdRequestId,
                 campaign_id: campID,
                 tag_id: tag_Id,
-                redirect_url: redirectUrl
+                redirect_url: redirectUrl,
+                request_timestamp: Math.floor(Date.now() / 1000) 
             };
 
             const processedPayload = preparePayload(payload);
@@ -481,6 +492,7 @@ const response = await fetch(config.eventURl + '/api/v1/ad-click', {
                 ad_position: event,
                 campaign_id: campID,
                 tag_id: tag_Id,
+                request_timestamp: Math.floor(Date.now() / 1000) 
             };
 
             const processedPayload = preparePayload(payload);
@@ -524,6 +536,10 @@ const response = await fetch(config.eventURl + '/api/v1/ad-click', {
 
     async function init() {
             initializeAdSession();
+            if (adSessionData.fetchBanner422Error) {
+                console.log('422 error previously received. No calls will be made until session ends.');
+                return;
+            }
             if (shouldShowAd()) {
                 try {
                     await getAdsId();
