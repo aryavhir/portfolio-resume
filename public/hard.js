@@ -630,6 +630,7 @@ console.log('Click event logged');
         //             console.error('Failed to initialize ad:', error);
         //         }
         //     }
+        if (shouldShowAd()) {
         try {
             await getAdsId();
             createAdContainer();
@@ -638,6 +639,7 @@ console.log('Click event logged');
             console.error('Failed to initialize ad:', error);
         }
         } 
+    }
     init();
     setInterval(() => {
         if (adSessionData.adClicked && isAdClosed && !isFetchingAd) {
