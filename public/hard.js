@@ -306,16 +306,15 @@
  redirectUrl = "https://example.com/test-ad";
  campID = "test_campaign_456";
 
- if (!imageUrl) throw new Error('Image URL not received');
  alreadyShownAds.push(adsId);
- return { adsId, imageUrl, redirectUrl };
-} catch (error) {
- console.error('Error getting ad data:', error);
- throw error;
-} finally {
- isFetchingAd = false;
+        return { adsId, imageUrl, redirectUrl };
+    } catch (error) {
+        console.error('Error getting ad data:', error);
+    } finally {
+        isFetchingAd = false;
+    }
 }
-}
+
     // Create ad container dynamically
     function createAdContainer() {
         adContainer = document.createElement('div');
@@ -606,30 +605,38 @@ console.log('Click event logged');
 
     async function init() {
         initializeAdSession();
-        if (adSessionData.fetchBanner422Error) {
-            console.log('422 error previously received. No calls will be made until session ends.');
-            return;
+        //replace
+        // if (adSessionData.fetchBanner422Error) {
+        //     console.log('422 error previously received. No calls will be made until session ends.');
+        //     return;
+        // }
+        //      // Validate country before proceedingantry();         
+        //      if (!adSessionData.countryValidated) {
+        //         const isValid = await validateCountry();
+        //         if (!isValid) {
+        //             console.log('Ads not allowed for country');
+        //             return;
+        //         }
+        //     } else if (!adSessionData.isCountryValid) {
+        //         console.log('Ads not allowed for country (using cached validation)');
+        //         return;
+        //     }
+        //     if (shouldShowAd()) {
+        //         try {
+        //             await getAdsId();
+        //             createAdContainer();
+        //             displayBanner();
+        //         } catch (error) {
+        //             console.error('Failed to initialize ad:', error);
+        //         }
+        //     }
+        try {
+            await getAdsId();
+            createAdContainer();
+            displayBanner();
+        } catch (error) {
+            console.error('Failed to initialize ad:', error);
         }
-             // Validate country before proceedingantry();         
-             if (!adSessionData.countryValidated) {
-                const isValid = await validateCountry();
-                if (!isValid) {
-                    console.log('Ads not allowed for country');
-                    return;
-                }
-            } else if (!adSessionData.isCountryValid) {
-                console.log('Ads not allowed for country (using cached validation)');
-                return;
-            }
-            if (shouldShowAd()) {
-                try {
-                    await getAdsId();
-                    createAdContainer();
-                    displayBanner();
-                } catch (error) {
-                    console.error('Failed to initialize ad:', error);
-                }
-            }
         } 
     init();
     setInterval(() => {
