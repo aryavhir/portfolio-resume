@@ -3,7 +3,7 @@
         callUrl: 'https://dev-ade-an.hydro.online',
         eventURl: 'https://dev-ad-events.hydro.online',
         encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
-        tagValidationUrl: 'https://dev-ad-traffics-regulation-config.hydro.online/tags.json',
+        tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
         // countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
         useEncryption: false
     };
@@ -20,7 +20,7 @@
         countryCode: countryCodeFromUrl,
         isCountryValid: null,
         countryValidated: false ,
-        isTagValid: true,
+        isTagValid: null,
         tagValidated: false
     };
    
