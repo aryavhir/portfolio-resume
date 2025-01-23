@@ -322,13 +322,13 @@ function createAdContainer() {
     
     let containerHeight, bottomPosition;
     if (screenWidth < 576) { // Mobile
-        containerHeight = '110px';
+        containerHeight = '145px';
         bottomPosition = '1%';
     } else if (screenWidth < 1025) { // Tablet
-        containerHeight = '170px';
+        containerHeight = '216px';
         bottomPosition = '2%';
     } else { // Desktop
-        containerHeight = '160px';
+        containerHeight = '170px';
         bottomPosition = '3%';
     }
 
