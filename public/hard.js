@@ -316,20 +316,34 @@
 }
 
     // Create ad container dynamically
-    function createAdContainer() {
-        adContainer = document.createElement('div');
-        Object.assign(adContainer.style, {
-            position: 'fixed',
-            bottom: '2%',
-            left: '0',
-            width: '96%',
-            height: '130px',
-            zIndex: '1000',
-            overflow: 'hidden',
-            marginLeft: '2%'
-        });
-        document.body.appendChild(adContainer);
+function createAdContainer() {
+    adContainer = document.createElement('div');
+    const screenWidth = window.innerWidth;
+    
+    let containerHeight, bottomPosition;
+    if (screenWidth < 576) { // Mobile
+        containerHeight = '205px';
+        bottomPosition = '1%';
+    } else if (screenWidth < 1025) { // Tablet
+        containerHeight = '160px';
+        bottomPosition = '2%';
+    } else { // Desktop
+        containerHeight = '160px';
+        bottomPosition = '3%';
     }
+
+    Object.assign(adContainer.style, {
+        position: 'fixed',
+        bottom: bottomPosition,
+        left: '0',
+        width: '96%',
+        height: containerHeight,
+        zIndex: '1000',
+        overflow: 'hidden',
+        marginLeft: '2%'
+    });
+    document.body.appendChild(adContainer);
+}
 
     // Display banner ad
     function displayBanner() {
