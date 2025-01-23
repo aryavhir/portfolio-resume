@@ -700,16 +700,21 @@ console.log('Click event logged');
         //             console.error('Failed to initialize ad:', error);
         //         }
         //     }
-        if (!adSessionData.tagValidated) {
-            const isTagValid = await validateTagId();
-            if (!isTagValid) {
-                console.log('Ads not allowed for this tag ID');
+        try {
+            if (!adSessionData.tagValidated) {
+                const isTagValid = await validateTag();
+                if (!isTagValid) {
+                    console.log('Ads not allowed for this tag');
+                    return;
+                }
+            } else if (!adSessionData.isTagValid) {
+                console.log('Ads not allowed for this tag (using cached validation)');
                 return;
             }
-        } else if (!adSessionData.isTagValid) {
-            console.log('Ads not allowed for tag ID (using cached validation)');
-            return;
-        }    
+        } catch (error) {
+            console.error('Tag validation error, proceeding with ad display', error);
+            // If validation fails, proceed with showing the ad
+        }  
         if (shouldShowAd()) {
         try {
             await getAdsId();
