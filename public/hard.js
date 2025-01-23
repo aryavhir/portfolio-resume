@@ -322,7 +322,7 @@ function createAdContainer() {
     
     let containerHeight, bottomPosition;
     if (screenWidth < 576) { // Mobile
-        containerHeight = '205px';
+        containerHeight = '110px';
         bottomPosition = '1%';
     } else if (screenWidth < 1025) { // Tablet
         containerHeight = '160px';
