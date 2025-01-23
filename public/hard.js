@@ -364,7 +364,7 @@ function createAdContainer() {
             if (screenWidth < 576) {
                 // Phone-specific image URL
                 scrollDuration = 10000;
-                return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mobile-3.png';
+                return 'https://dev-creativestore-an.hydro.online/hydro-test-mobile-2.png';
             } else if (screenWidth < 1025) {
                 // Tablet-specific image URL
                 scrollDuration = 10000; 
@@ -385,6 +385,7 @@ function createAdContainer() {
         Object.assign(img.style, {
             width: '100%',
             borderRadius: '14px',
+
             marginRight: '20px',
             cursor: 'pointer',
             display: 'inline-block'
