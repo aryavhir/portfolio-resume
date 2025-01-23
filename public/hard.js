@@ -364,7 +364,7 @@
         const img = document.createElement('img');
         Object.assign(img.style, {
             height: '100%',
-            width: '105%',
+            width: '104%',
             borderRadius: '14px',
             marginRight: '20px',
             cursor: 'pointer',
