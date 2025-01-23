@@ -350,7 +350,7 @@
             const screenWidth = window.innerWidth;
             if (screenWidth < 576) {
                 // Phone-specific image URL
-                return 'https://dev-creativestore-an.hydro.online/cartoonish-hydro-design-v2.png';
+                return 'https://dev-creativestore-an.hydro.online/cartoonish-hydro-design-v3.png';
             } 
             // Desktop image URL (default)
             return 'https://creativestore-an.hydro.online/hydro-banner.png';
