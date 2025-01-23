@@ -363,14 +363,17 @@ function createAdContainer() {
             const screenWidth = window.innerWidth;
             if (screenWidth < 576) {
                 // Phone-specific image URL
+                scrollDuration = 10000;
                 return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mobile-3.png';
             } else if (screenWidth < 1025) {
                 // Tablet-specific image URL
                 return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mid-2.png';
             }
             // Desktop image URL (default)
+            scrollDuration = 20000;
             return 'https://dev-creativestore-an.hydro.online/hydro-test-gif-1.gif';
         };
+        
         // Create all images first
         const responsiveImageUrl = getResponsiveImageUrl();
         const totalImages = 6;
@@ -506,9 +509,9 @@ console.log('Click event logged');
         }
     
         // Speed calculation for 10-second duration per image
-        const singleImageDuration = 10000; // 10 seconds for one image to complete its journey
+        // 10 seconds for one image to complete its journey
         const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
-        const speed = totalDistance / singleImageDuration; // pixels per millisecond
+        const speed = totalDistance / scrollDuration; // pixels per millisecond
         
         let position = window.innerWidth;
         let lastTimestamp = 0;
