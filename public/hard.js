@@ -355,7 +355,7 @@
                 return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mid-2.png';
             }
             // Desktop image URL (default)
-            return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile-1.png';
+            return 'https://dev-creativestore-an.hydro.online/hydro-test-gif-1.gif';
         };
         // Create all images first
         const responsiveImageUrl = getResponsiveImageUrl();
