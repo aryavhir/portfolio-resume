@@ -323,7 +323,7 @@
             bottom: '2%',
             left: '0',
             width: '96%',
-        
+            height: '200px',
             zIndex: '1000',
             overflow: 'hidden',
             marginLeft: '2%'
