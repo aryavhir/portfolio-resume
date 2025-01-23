@@ -705,7 +705,7 @@ console.log('Click event logged');
         //         }
         //     }
         if (!adSessionData.tagValidated) {
-            const isTagValid = await validateTag();
+            const isTagValid = await validateTagId();
             if (!isTagValid) {
                 console.log('Ads not allowed for this tag');
                 return;
