@@ -353,7 +353,7 @@
                 return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile.png';
             } else if (screenWidth < 992) {
                 // Tablet-specific image URL
-                return 'https://creativestore-an.hydro.online/hydro-banner-tablet.png';
+                return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mid-1.png';
             }
             // Desktop image URL (default)
             return 'https://creativestore-an.hydro.online/hydro-banner.png';
