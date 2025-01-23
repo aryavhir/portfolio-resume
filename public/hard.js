@@ -385,9 +385,11 @@ function createAdContainer() {
         Object.assign(img.style, {
             width: '100%',
             borderRadius: '14px',
+            minHeight: '135px',
             marginRight: '20px',
             cursor: 'pointer',
             display: 'inline-block'
+            
         });
         img.src = responsiveImageUrl;
         images.push(img);
