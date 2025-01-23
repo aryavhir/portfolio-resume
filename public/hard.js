@@ -383,7 +383,6 @@ function createAdContainer() {
     for (let i = 0; i < totalImages; i++) {
         const img = document.createElement('img');
         Object.assign(img.style, {
-            width: '100%',
             borderRadius: '14px',
             minHeight: '135px',
             marginRight: '20px',
