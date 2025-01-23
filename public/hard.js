@@ -351,7 +351,7 @@
             if (screenWidth < 576) {
                 // Phone-specific image URL
                 return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile.png';
-            } else if (screenWidth < 1024) {
+            } else if (screenWidth < 1025) {
                 // Tablet-specific image URL
                 return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mid-1.png';
             }
