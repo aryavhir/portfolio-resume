@@ -364,12 +364,11 @@
         const img = document.createElement('img');
         Object.assign(img.style, {
             height: '100%',
-            maxWidth: '100%', // Prevent overflow
+            width: '100%',
             borderRadius: '14px',
             marginRight: '20px',
             cursor: 'pointer',
-            display: 'inline-block',
-            objectFit: 'cover' 
+            display: 'inline-block'
         });
         img.src = responsiveImageUrl;
         images.push(img);
