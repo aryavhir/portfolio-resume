@@ -350,8 +350,11 @@
             const screenWidth = window.innerWidth;
             if (screenWidth < 576) {
                 // Phone-specific image URL
-                return 'https://dev-creativestore-an.hydro.online/cartoonish-hydro-design-v3.png';
-            } 
+                return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile.png';
+            } else if (screenWidth < 992) {
+                // Tablet-specific image URL
+                return 'https://creativestore-an.hydro.online/hydro-banner-tablet.png';
+            }
             // Desktop image URL (default)
             return 'https://creativestore-an.hydro.online/hydro-banner.png';
         };
@@ -364,7 +367,7 @@
         const img = document.createElement('img');
         Object.assign(img.style, {
             height: '100%',
-            width: '104%',
+            width: '100%',
             borderRadius: '14px',
             marginRight: '20px',
             cursor: 'pointer',
