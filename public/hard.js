@@ -325,7 +325,7 @@ function createAdContainer() {
         containerHeight = '110px';
         bottomPosition = '1%';
     } else if (screenWidth < 1025) { // Tablet
-        containerHeight = '160px';
+        containerHeight = '170px';
         bottomPosition = '2%';
     } else { // Desktop
         containerHeight = '160px';
@@ -368,7 +368,7 @@ function createAdContainer() {
             } else if (screenWidth < 1025) {
                 // Tablet-specific image URL
                 scrollDuration = 10000; 
-                return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mid-2.png';
+                return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-tablet-1.png';
             }
             // Desktop image URL (default)
             scrollDuration = 20000;
