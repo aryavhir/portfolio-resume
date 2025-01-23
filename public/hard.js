@@ -323,7 +323,7 @@
             bottom: '2%',
             left: '0',
             width: '96%',
-            height: '200px',
+            height: '130px',
             zIndex: '1000',
             overflow: 'hidden',
             marginLeft: '2%'
@@ -349,7 +349,7 @@
             const screenWidth = window.innerWidth;
             if (screenWidth < 576) {
                 // Phone-specific image URL
-                return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile.png';
+                return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile-1.png';
             } else if (screenWidth < 1025) {
                 // Tablet-specific image URL
                 return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mid-2.png';
