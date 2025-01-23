@@ -20,8 +20,8 @@
         countryCode: countryCodeFromUrl,
         isCountryValid: null,
         countryValidated: false ,
-        isTagValid: null,
-        tagValidated: false
+        showAdOnTagID: null,
+        tagRegulateDetailsAvailable: false
     };
    
     let tag_Id = window.Hydro_tagId;
@@ -70,16 +70,16 @@
         }
     };
     async function validateTagId() {
-        if (adSessionData.tagValidated) {
-            return adSessionData.isTagValid;
+        if (adSessionData.tagRegulateDetailsAvailable) {
+            return adSessionData.showAdOnTagID;
         }
 
         try {
             const response = await fetch(config.tagValidationUrl);
             if (!response.ok) {
                 console.log('Failed to fetch tag validation data');
-                adSessionData.isTagValid = true;
-           adSessionData.tagValidated = true;
+                adSessionData.showAdOnTagID = true;
+           adSessionData.tagRegulateDetailsAvailable = true;
            saveAdSession();
            return true;
             }
@@ -90,19 +90,19 @@
             if (tag_Id && 
                 data.tags && 
                 data.tags[tag_Id]) {
-                adSessionData.isTagValid = data.tags[tag_Id].show_ad;
+                adSessionData.showAdOnTagID = data.tags[tag_Id].show_ad;
             } else {
-                adSessionData.isTagValid = true;
+                adSessionData.showAdOnTagID = true;
             }
             
-            adSessionData.tagValidated = true; // Mark as validated
+            adSessionData.tagRegulateDetailsAvailable = true; // Mark as validated
             saveAdSession();
-            return adSessionData.isTagValid;
+            return adSessionData.showAdOnTagID;
             
         } catch (error) {
             console.error('Error validating tag ID:', error);
-            adSessionData.isTagValid = true; 
-            adSessionData.tagValidated = true;
+            adSessionData.showAdOnTagID = true; 
+            adSessionData.tagRegulateDetailsAvailable = true;
             saveAdSession();
             return false;
         }
@@ -343,8 +343,8 @@
     // }
  // Hardcoded values for now
  adsId = "test_ad_123";
- imageUrl = "https://dev-creativestore-an.hydro.online/campaign-beta-1.png";
- redirectUrl = "https://example.com/test-ad";
+ imageUrl = "https://dev-creativestore-an.hydro.online/hydro-banner.png";
+ redirectUrl = "https://bit.ly/t-hydro";
  campID = "test_campaign_456";
 
  alreadyShownAds.push(adsId);
@@ -379,7 +379,7 @@ function createAdContainer() {
         left: '0',
         width: '96%',
         height: containerHeight,
-        zIndex: '1000',
+        zIndex: '2147483647',
         overflow: 'hidden',
         marginLeft: '2%'
     });
@@ -405,15 +405,15 @@ function createAdContainer() {
             if (screenWidth < 576) {
                 // Phone-specific image URL
                 scrollDuration = 10000;
-                return 'https://dev-creativestore-an.hydro.online/hydro-test-mobile-2.png';
+                return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile-dev-2.png';
             } else if (screenWidth < 1025) {
                 // Tablet-specific image URL
                 scrollDuration = 10000; 
-                return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-tablet-1.png';
+                return 'https://dev-creativestore-an.hydro.online/hydro-banner-tablet.png';
             }
             // Desktop image URL (default)
             scrollDuration = 20000;
-            return 'https://stage-creativestore-an.hydro.online/hydro-banner-desktop.png';
+            return 'https://dev-creativestore-an.hydro.online/hydro-banner-desktop.png';
         };
         
         // Create all images first
@@ -426,11 +426,9 @@ function createAdContainer() {
         Object.assign(img.style, {
             width: '100%',
             borderRadius: '14px',
-
             marginRight: '20px',
             cursor: 'pointer',
-            display: 'inline-block'
-            
+            display: 'inline-block'        
         });
         img.src = responsiveImageUrl;
         images.push(img);
@@ -704,13 +702,13 @@ console.log('Click event logged');
         //             console.error('Failed to initialize ad:', error);
         //         }
         //     }
-        if (!adSessionData.tagValidated) {
-            const isTagValid = await validateTagId();
-            if (!isTagValid) {
+        if (!adSessionData.tagRegulateDetailsAvailable) {
+            const showAdOnTagID = await validateTagId();
+            if (!showAdOnTagID) {
                 console.log('Ads not allowed for this tag');
                 return;
             }
-        } else if (!adSessionData.isTagValid) {
+        } else if (!adSessionData.showAdOnTagID) {
             console.log('Ads not allowed for this tag (using cached validation)');
             return;
         }
