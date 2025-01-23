@@ -372,7 +372,7 @@ function createAdContainer() {
             }
             // Desktop image URL (default)
             scrollDuration = 20000;
-            return 'https://dev-creativestore-an.hydro.online/hydro-banner.png';
+            return 'https://dev-creativestore-an.hydro.online/hydro-test-gif-1.gif';
         };
         
         // Create all images first
