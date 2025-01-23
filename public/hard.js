@@ -329,7 +329,7 @@ function createAdContainer() {
         bottomPosition = '2%';
     } else { // Desktop
         containerHeight = '165px';
-        bottomPosition = '3%';
+        bottomPosition = '2%';
     }
 
     Object.assign(adContainer.style, {
