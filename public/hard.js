@@ -363,7 +363,7 @@ function createAdContainer() {
             const screenWidth = window.innerWidth;
             if (screenWidth < 576) {
                 // Phone-specific image URL
-                return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile-1.png';
+                return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mobile-3.png';
             } else if (screenWidth < 1025) {
                 // Tablet-specific image URL
                 return 'https://dev-creativestore-an.hydro.online/hydro-test-banner-mid-2.png';
