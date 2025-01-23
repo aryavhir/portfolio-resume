@@ -20,7 +20,7 @@
         countryCode: countryCodeFromUrl,
         isCountryValid: null,
         countryValidated: false ,
-        isTagValid: null,
+        isTagValid: true,
         tagValidated: false
     };
    
