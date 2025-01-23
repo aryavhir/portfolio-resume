@@ -346,8 +346,19 @@
             alignItems: 'center',
             transform: `translateX(${window.innerWidth}px)` // Start at window width
         });
-    
+        const getResponsiveImageUrl = () => {
+            const screenWidth = window.innerWidth;
+            if (screenWidth < 576) {
+                // Phone-specific image URL
+                return 'https://dev-creativestore-an.hydro.online/cartoonish-hydro-design-v2.png';
+            } 
+            // Desktop image URL (default)
+            return 'https://creativestore-an.hydro.online/hydro-banner.png';
+        };
         // Create all images first
+        const responsiveImageUrl = getResponsiveImageUrl();
+        const totalImages = 6;
+     
         const images = [];
     for (let i = 0; i < totalImages; i++) {
         const img = document.createElement('img');
@@ -358,7 +369,7 @@
             cursor: 'pointer',
             display: 'inline-block'
         });
-        img.src = imageUrl;
+        img.src = responsiveImageUrl;
         images.push(img);
         scrollWrapper.appendChild(img);
     }
