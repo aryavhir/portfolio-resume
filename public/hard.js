@@ -3,7 +3,7 @@
         callUrl: 'https://dev-ade-an.hydro.online',
         eventURl: 'https://dev-ad-events.hydro.online',
         encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
-        tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
+        tagValidationUrl: 'https://dev-ad-traffics-regulation-config.hydro.online/tags.json',
         // countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
         useEncryption: false
     };
@@ -19,7 +19,9 @@
         fetchBanner422Error: false,
         countryCode: countryCodeFromUrl,
         isCountryValid: null,
-        countryValidated: false 
+        countryValidated: false ,
+        isTagValid: null,
+        tagValidated: false
     };
    
     let tag_Id = window.Hydro_tagId;
@@ -76,9 +78,6 @@
             const response = await fetch(config.tagValidationUrl);
             if (!response.ok) {
                 console.log('Failed to fetch tag validation data');
-                adSessionData.isTagValid = false;
-                saveAdSession();
-                return false;
             }
             
             const data = await response.json();
@@ -98,7 +97,7 @@
             
         } catch (error) {
             console.error('Error validating tag ID:', error);
-            adSessionData.isTagValid = false;
+            adSessionData.isTagValid = true; 
             adSessionData.tagValidated = true;
             saveAdSession();
             return false;
