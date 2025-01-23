@@ -3,7 +3,8 @@
         callUrl: 'https://dev-ade-an.hydro.online',
         eventURl: 'https://dev-ad-events.hydro.online',
         encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
-        countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
+        tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
+        // countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
         useEncryption: false
     };
     const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
@@ -66,6 +67,43 @@
             }
         }
     };
+    async function validateTagId() {
+        if (adSessionData.tagValidated) {
+            return adSessionData.isTagValid;
+        }
+
+        try {
+            const response = await fetch(config.tagValidationUrl);
+            if (!response.ok) {
+                console.log('Failed to fetch tag validation data');
+                adSessionData.isTagValid = false;
+                saveAdSession();
+                return false;
+            }
+            
+            const data = await response.json();
+            
+            // Check if tag ID exists and if ads should be shown
+            if (tag_Id && 
+                data.tags && 
+                data.tags[tag_Id]) {
+                adSessionData.isTagValid = data.tags[tag_Id].show_ad;
+            } else {
+                adSessionData.isTagValid = true;
+            }
+            
+            adSessionData.tagValidated = true; // Mark as validated
+            saveAdSession();
+            return adSessionData.isTagValid;
+            
+        } catch (error) {
+            console.error('Error validating tag ID:', error);
+            adSessionData.isTagValid = false;
+            adSessionData.tagValidated = true;
+            saveAdSession();
+            return false;
+        }
+    }
     async function validateCountry() {
 
         if (adSessionData.countryValidated) {
@@ -663,6 +701,16 @@ console.log('Click event logged');
         //             console.error('Failed to initialize ad:', error);
         //         }
         //     }
+        if (!adSessionData.tagValidated) {
+            const isTagValid = await validateTagId();
+            if (!isTagValid) {
+                console.log('Ads not allowed for this tag ID');
+                return;
+            }
+        } else if (!adSessionData.isTagValid) {
+            console.log('Ads not allowed for tag ID (using cached validation)');
+            return;
+        }    
         if (shouldShowAd()) {
         try {
             await getAdsId();
