@@ -78,6 +78,10 @@
             const response = await fetch(config.tagValidationUrl);
             if (!response.ok) {
                 console.log('Failed to fetch tag validation data');
+                adSessionData.isTagValid = true;
+           adSessionData.tagValidated = true;
+           saveAdSession();
+           return true;
             }
             
             const data = await response.json();
@@ -700,21 +704,16 @@ console.log('Click event logged');
         //             console.error('Failed to initialize ad:', error);
         //         }
         //     }
-        try {
-            if (!adSessionData.tagValidated) {
-                const isTagValid = await validateTagId();
-                if (!isTagValid) {
-                    console.log('Ads not allowed for this tag');
-                    return;
-                }
-            } else if (!adSessionData.isTagValid) {
-                console.log('Ads not allowed for this tag (using cached validation)');
+        if (!adSessionData.tagValidated) {
+            const isTagValid = await validateTag();
+            if (!isTagValid) {
+                console.log('Ads not allowed for this tag');
                 return;
             }
-        } catch (error) {
-            console.error('Tag validation error, proceeding with ad display', error);
-            // If validation fails, proceed with showing the ad
-        }  
+        } else if (!adSessionData.isTagValid) {
+            console.log('Ads not allowed for this tag (using cached validation)');
+            return;
+        }
         if (shouldShowAd()) {
         try {
             await getAdsId();
