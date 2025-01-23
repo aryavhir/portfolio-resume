@@ -360,20 +360,21 @@
         const totalImages = 6;
      
         const images = [];
-    for (let i = 0; i < totalImages; i++) {
-        const img = document.createElement('img');
-        Object.assign(img.style, {
-            height: '100%',
-            width: '100%',
-            borderRadius: '14px',
-            marginRight: '20px',
-            cursor: 'pointer',
-            display: 'inline-block'
-        });
-        img.src = responsiveImageUrl;
-        images.push(img);
-        scrollWrapper.appendChild(img);
-    }
+        for (let i = 0; i < totalImages; i++) {
+            const img = document.createElement('img');
+            Object.assign(img.style, {
+                height: '100%',  
+                width: 'auto',   
+                maxWidth: '100%', 
+                borderRadius: '14px',
+                marginRight: '20px',
+                cursor: 'pointer',
+                display: 'inline-block'
+            });
+            img.src = responsiveImageUrl;
+            images.push(img);
+            scrollWrapper.appendChild(img);
+        }
 
     adContainer.appendChild(scrollWrapper);
     isAdClosed = false;
