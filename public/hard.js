@@ -341,7 +341,6 @@
         Object.assign(scrollWrapper.style, {
             whiteSpace: 'nowrap',
             position: 'absolute',
-            height: '100%',
             display: 'flex',
             alignItems: 'center',
             transform: `translateX(${window.innerWidth}px)` // Start at window width
@@ -366,7 +365,6 @@
     for (let i = 0; i < totalImages; i++) {
         const img = document.createElement('img');
         Object.assign(img.style, {
-            height: '100%',
             width: '100%',
             borderRadius: '14px',
             marginRight: '20px',
