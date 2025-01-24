@@ -406,7 +406,7 @@ function createAdContainer() {
                 // Phone-specific image URL
                 scrollDuration = 10000;
                 return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile-dev-2.png';
-            } else if (screenWidth < 1025) {
+            } else if (screenWidth < 1100) {
                 // Tablet-specific image URL
                 scrollDuration = 10000; 
                 return 'https://dev-creativestore-an.hydro.online/hydro-banner-tablet.png';
@@ -553,10 +553,8 @@ console.log('Click event logged');
         // Speed calculation for 10-second duration per image
         // 10 seconds for one image to complete its journey
         const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
-        // const speed = totalDistance / scrollDuration;
-        const speed = 0;
-        let position = 0;
-        // let position = window.innerWidth;
+        const speed = totalDistance / scrollDuration;
+        let position = window.innerWidth;
         let lastTimestamp = 0;
         let animationComplete = false;
     
