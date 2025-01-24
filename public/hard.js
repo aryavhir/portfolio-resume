@@ -425,13 +425,11 @@ function createAdContainer() {
         const img = document.createElement('img');
         Object.assign(img.style, {
             width: '100%',
-            height: 'auto',
-            minWidth: '100%',
-            objectFit: 'contain',
-            display: 'block',
+          height: '100%',
             borderRadius: '14px',
             marginRight: '20px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            display: 'inline-block'        
         });
         img.src = responsiveImageUrl;
         images.push(img);
