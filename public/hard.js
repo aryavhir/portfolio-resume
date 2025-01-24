@@ -365,36 +365,26 @@ function createAdContainer() {
     if (screenWidth < 576) { // Mobile
         containerHeight = '105px';
         bottomPosition = '1%';
-        MarginOnSide = '2%';
-        ContainerWidth = '96%';
     } else if (screenWidth < 1025) { // Tablet
         containerHeight = '216px';
         bottomPosition = '2%';
-        MarginOnSide = '2%';
-        ContainerWidth = '96%';
     } else if (screenWidth < 1955){ // Desktop
         containerHeight = '163px';
         bottomPosition = '1%';
-        MarginOnSide = '2%';
-        ContainerWidth = '96%';
     } else {
-        containerHeight = '217px';
+        containerHeight = '220px';
         bottomPosition = '1%';
-        MarginOnSide = '2%';
-        ContainerWidth = '96%';
         }
-    
-
 
     Object.assign(adContainer.style, {
         position: 'fixed',
         bottom: bottomPosition,
         left: '0',
-        width: ContainerWidth,
+        width: '96%',
         height: containerHeight,
         zIndex: '2147483647',
         overflow: 'hidden',
-        marginLeft: MarginOnSide,
+         marginLeft: '2%'
     });
     document.body.appendChild(adContainer);
 }
@@ -434,8 +424,7 @@ function createAdContainer() {
      
         const images = [];
     for (let i = 0; i < totalImages; i++) {
-        const img = document.createElement('img');
-        
+        const img = document.createElement('img');  
         Object.assign(img.style, {
             width: '100%',
             borderRadius: '14px',
@@ -568,7 +557,6 @@ console.log('Click event logged');
         const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
         const speed = totalDistance / scrollDuration; // pixels per millisecond
         let position = window.innerWidth;
-
         let lastTimestamp = 0;
         let animationComplete = false;
     
