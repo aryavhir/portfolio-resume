@@ -386,7 +386,7 @@ function createAdContainer() {
         position: 'fixed',
         bottom: bottomPosition,
         left: '0',
-        width: '96%',
+        width: '94%',
         height: containerHeight,
         zIndex: '2147483647',
         overflow: 'hidden',
