@@ -423,19 +423,10 @@ function createAdContainer() {
         const images = [];
     for (let i = 0; i < totalImages; i++) {
         const img = document.createElement('img');
-        const screenWidth = window.innerWidth;
-        let imgHeight;
-        if (screenWidth < 576) { // Mobile
-            imgHeight = '105px';
-        } else if (screenWidth < 1025) { // Tablet
-            imgHeight = '205px';
-        } else { // Desktop
-            imgHeight = '163px';
-        }
+        
         Object.assign(img.style, {
             width: '100%',
-            height: imgHeight,
-            objectFit: 'cover', // Ensures image covers the area without distortion
+            MinHeight: '100%',
             borderRadius: '14px',
             marginRight: '20px',
             cursor: 'pointer',
