@@ -378,7 +378,7 @@ function createAdContainer() {
         MarginOnSide = '2%';
         ContainerWidth = '96%';
     } else {
-        containerHeight = '319px';
+        containerHeight = '217px';
         bottomPosition = '1%';
         MarginOnSide = '2%';
         ContainerWidth = '96%';
