@@ -361,7 +361,7 @@ function createAdContainer() {
     adContainer = document.createElement('div');
     const screenWidth = window.innerWidth;
     
-    let containerHeight, bottomPosition, Imgheight ;
+    let containerHeight, bottomPosition;
     if (screenWidth < 576) { // Mobile
         containerHeight = '105px';
         bottomPosition = '1%';
@@ -371,7 +371,7 @@ function createAdContainer() {
     } else { // Desktop
         containerHeight = '163px';
         bottomPosition = '1%';
-        Imgheight = '163px';
+        Imgheight
     }
 
     Object.assign(adContainer.style, {
@@ -426,7 +426,7 @@ function createAdContainer() {
         const img = document.createElement('img');
         Object.assign(img.style, {
             width: '100%',
-          height: Imgheight,
+          height: containerHeight,
           minWidth: '100%',
             borderRadius: '14px',
             marginRight: '20px',
