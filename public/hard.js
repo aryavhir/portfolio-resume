@@ -361,17 +361,26 @@ function createAdContainer() {
     adContainer = document.createElement('div');
     const screenWidth = window.innerWidth;
     
-    let containerHeight, bottomPosition;
+    let containerHeight, bottomPosition,MarginOnSide;
     if (screenWidth < 576) { // Mobile
         containerHeight = '105px';
         bottomPosition = '1%';
+        MarginOnSide = '2%';
     } else if (screenWidth < 1025) { // Tablet
         containerHeight = '216px';
         bottomPosition = '2%';
-    } else { // Desktop
+        MarginOnSide = '2%';
+    } else if (screenWidth < 1955){ // Desktop
         containerHeight = '163px';
         bottomPosition = '1%';
-    }
+        MarginOnSide = '2%';
+    } else {
+        containerHeight = '163px';
+        bottomPosition = '1%';
+        MarginOnSide = '3%';
+        }
+    
+
 
     Object.assign(adContainer.style, {
         position: 'fixed',
@@ -381,7 +390,7 @@ function createAdContainer() {
         height: containerHeight,
         zIndex: '2147483647',
         overflow: 'hidden',
-        marginLeft: '2%'
+        marginLeft: MarginOnSide,
     });
     document.body.appendChild(adContainer);
 }
