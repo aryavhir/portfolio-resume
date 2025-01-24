@@ -396,8 +396,6 @@ function createAdContainer() {
         Object.assign(scrollWrapper.style, {
             whiteSpace: 'nowrap',
             position: 'absolute',
-            display: 'flex',
-            height:'100%',
             alignItems: 'center',
             transform: `translateX(${window.innerWidth}px)` // Start at window width
         });
@@ -427,7 +425,6 @@ function createAdContainer() {
         
         Object.assign(img.style, {
             width: '100%',
-            MinHeight: '100%',
             borderRadius: '14px',
             marginRight: '20px',
             cursor: 'pointer',
