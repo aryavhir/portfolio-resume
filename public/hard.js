@@ -425,7 +425,7 @@ function createAdContainer() {
         const img = document.createElement('img');
         Object.assign(img.style, {
             width: '100%',
-            minWidth: '90%',
+            minWidth: '80%',
             borderRadius: '14px',
             marginRight: '20px',
             cursor: 'pointer',
