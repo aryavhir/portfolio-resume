@@ -426,7 +426,7 @@ function createAdContainer() {
         Object.assign(img.style, {
             width: '100%',
             borderRadius: '14px',
-            objectFit: 'cover',
+            objectFit: 'fill',
             marginRight: '20px',
             cursor: 'pointer',
             display: 'inline-block'        
