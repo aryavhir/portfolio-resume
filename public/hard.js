@@ -361,7 +361,7 @@ function createAdContainer() {
     adContainer = document.createElement('div');
     const screenWidth = window.innerWidth;
     
-    let containerHeight, bottomPosition;
+    let containerHeight, bottomPosition, Imgheight ;
     if (screenWidth < 576) { // Mobile
         containerHeight = '105px';
         bottomPosition = '1%';
@@ -369,8 +369,9 @@ function createAdContainer() {
         containerHeight = '216px';
         bottomPosition = '2%';
     } else { // Desktop
-        containerHeight = '188px';
+        containerHeight = '163px';
         bottomPosition = '1%';
+        Imgheight = '163px';
     }
 
     Object.assign(adContainer.style, {
@@ -425,7 +426,7 @@ function createAdContainer() {
         const img = document.createElement('img');
         Object.assign(img.style, {
             width: '100%',
-          height: '100%',
+          height: Imgheight,
           minWidth: '100%',
             borderRadius: '14px',
             marginRight: '20px',
