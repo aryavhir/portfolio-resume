@@ -566,10 +566,9 @@ console.log('Click event logged');
         // Speed calculation for 10-second duration per image
         // 10 seconds for one image to complete its journey
         const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
-        // const speed = totalDistance / scrollDuration; // pixels per millisecond
-        const speed = 0;
-        // let position = window.innerWidth;
-        let position = 0;
+        const speed = totalDistance / scrollDuration; // pixels per millisecond
+        let position = window.innerWidth;
+
         let lastTimestamp = 0;
         let animationComplete = false;
     
