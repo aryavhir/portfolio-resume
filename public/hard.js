@@ -425,7 +425,7 @@ function createAdContainer() {
         const img = document.createElement('img');
         Object.assign(img.style, {
             width: '100%',
-            minWidth: '100%',
+            minWidth: '90%',
             borderRadius: '14px',
             marginRight: '20px',
             cursor: 'pointer',
@@ -554,7 +554,8 @@ console.log('Click event logged');
         // Speed calculation for 10-second duration per image
         // 10 seconds for one image to complete its journey
         const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
-        const speed = totalDistance / scrollDuration;
+        const speed = totalDistance / scrollDuration; // pixels per millisecond
+        
         let position = window.innerWidth;
         let lastTimestamp = 0;
         let animationComplete = false;
