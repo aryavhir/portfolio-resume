@@ -361,23 +361,27 @@ function createAdContainer() {
     adContainer = document.createElement('div');
     const screenWidth = window.innerWidth;
     
-    let containerHeight, bottomPosition,MarginOnSide;
+    let containerHeight, bottomPosition, MarginOnSide, ContainerWidth;
     if (screenWidth < 576) { // Mobile
         containerHeight = '105px';
         bottomPosition = '1%';
         MarginOnSide = '2%';
+        ContainerWidth = '96%';
     } else if (screenWidth < 1025) { // Tablet
         containerHeight = '216px';
         bottomPosition = '2%';
         MarginOnSide = '2%';
+        ContainerWidth = '96%';
     } else if (screenWidth < 1955){ // Desktop
         containerHeight = '163px';
         bottomPosition = '1%';
         MarginOnSide = '2%';
+        ContainerWidth = '96%';
     } else {
         containerHeight = '163px';
         bottomPosition = '1%';
         MarginOnSide = '3%';
+        ContainerWidth = '94%';
         }
     
 
@@ -386,7 +390,7 @@ function createAdContainer() {
         position: 'fixed',
         bottom: bottomPosition,
         left: '0',
-        width: '94%',
+        width: ContainerWidth,
         height: containerHeight,
         zIndex: '2147483647',
         overflow: 'hidden',
