@@ -369,7 +369,7 @@ function createAdContainer() {
         containerHeight = '216px';
         bottomPosition = '2%';
     } else { // Desktop
-        containerHeight = '163px';
+        containerHeight = '173px';
         bottomPosition = '1%';
     }
 
