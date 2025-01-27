@@ -5,6 +5,9 @@
         encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
         useEncryption: true
     };
+    const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
+    const countryCodeFromUrl = urlParams.get('country_code');
+
     let adSessionData = {
         hostname: window.location.hostname,
         adSessionId: null,
@@ -252,9 +255,8 @@
             display: 'flex',
             height: '100%',
             position: 'relative',
-            transition: 'none', // Remove transition to prevent initial animation
-            transform: `translateX(${window.innerWidth}px)`, // Start off-screen
-            width: '600%', // 6 times the container width for 6 blocks
+            transition: 'transform 0.3s ease',
+            width: '600%' // 6 times the container width for 6 blocks
         });
     
         // Create all content blocks
@@ -502,15 +504,16 @@ const response = await fetch(config.eventURl + '/api/v1/ad-click', {
         if (scrollInterval) {
             clearInterval(scrollInterval);
         }
+    
+        // Speed calculation for 10-second duration per image
+        const singleImageDuration = 20000; // 10 seconds for one image to complete its journey
+        const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
+        const speed = totalDistance / singleImageDuration;
+        
         let position = window.innerWidth;
-        element.style.transform = `translateX(${position}px)`;
-        
-        const singleImageDuration = 10000; // 10 seconds for one image to complete its journey
-        const totalDistance = window.innerWidth + singleImageWidth;
-        const speed = totalDistance / singleImageDuration; // pixels per millisecond
-        
         let lastTimestamp = 0;
         let animationComplete = false;
+    
         function animate(timestamp) {
             if (!lastTimestamp) {
                 lastTimestamp = timestamp;
@@ -527,7 +530,8 @@ const response = await fetch(config.eventURl + '/api/v1/ad-click', {
             if (position <= -singleImageWidth * totalImages) {
                 if (!animationComplete) {
                     animationComplete = true;
-                   
+                    // Ensure last image is fully out of view
+                    element.style.transform = `translateX(${-(singleImageWidth * totalImages + window.innerWidth)}px)`;
                     
                     // Force the end event for the last image
                     const lastImage = element.children[totalImages - 1];
