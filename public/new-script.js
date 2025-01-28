@@ -1,7 +1,7 @@
 (function() {
     const config = {
-        callUrl: 'https://dev-ade-an.hydro.online',
-        eventURl: 'https://dev-ad-events.hydro.online',
+        callUrl: 'https://rdev-ade-an.hydro.online',
+        eventURl: 'https://rdev-ad-events.hydro.online',
         encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
         useEncryption: true
     };
@@ -508,9 +508,9 @@ const response = await fetch(config.eventURl + '/api/v1/ad-click', {
         // Speed calculation for 10-second duration per image
         const singleImageDuration = 20000; // 10 seconds for one image to complete its journey
         const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
-        const speed = totalDistance / singleImageDuration;
+        const speed = 0;
         
-        let position = window.innerWidth;
+        let position = 0;
         let lastTimestamp = 0;
         let animationComplete = false;
     
