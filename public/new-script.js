@@ -508,9 +508,9 @@ const response = await fetch(config.eventURl + '/api/v1/ad-click', {
         // Speed calculation for 10-second duration per image
         const singleImageDuration = 20000; // 10 seconds for one image to complete its journey
         const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
-        const speed = 0;
+        const speed = totalDistance / singleImageDuration;
         
-        let position = 0;
+        let position = window.innerWidth;
         let lastTimestamp = 0;
         let animationComplete = false;
     

@@ -1,11 +1,11 @@
 (function() {
     const config = {
-        callUrl: 'https://dev-ade-an.hydro.online',
-        eventURl: 'https://dev-ad-events.hydro.online',
-        encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
-        tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
-        // countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
-        useEncryption: false
+        callUrl: 'https://ade-an.hydro.online',
+        eventURl: 'https://events-an.hydro.online',
+        encryptionKey: 'SxWJUzd8d8rjM9rdzAIvKehZz8cXRrYH',
+        tagValidationUrl: 'https://ad-traffic-regulation-config.hydro.online/tags.json',
+        // countryValidationUrl: 'https://ad-traffic-regulation-config.hydro.online/regulate.json',
+        useEncryption: true
     };
     const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
     const countryCodeFromUrl = urlParams.get('country_code');
@@ -343,9 +343,18 @@
     // }
  // Hardcoded values for now
  adsId = "test_ad_123";
- imageUrl = "https://dev-creativestore-an.hydro.online/hydro-banner.png";
- redirectUrl = "https://bit.ly/t-hydro";
- campID = "test_campaign_456";
+ imageUrl = "https://stage-creativestore-an.hydro.online/hydro-banner.png";
+ const specialTagIds = [
+            '3a83c2d5-045e-4f4e-aa9c-0b9013411e02',
+            'd5d2d904-0c24-4925-ad20-91889672be9d'
+        ];
+        if (specialTagIds.includes(tag_Id)) {
+            redirectUrl = "abc.com";
+        } else {
+            redirectUrl = "https://bit.ly/p-hy";
+        }
+        
+        campID = "test_campaign_456";
 
  alreadyShownAds.push(adsId);
         return { adsId, imageUrl, redirectUrl };
@@ -361,7 +370,7 @@ function createAdContainer() {
     adContainer = document.createElement('div');
     const screenWidth = window.innerWidth;
     
-    let containerHeight, bottomPosition, MarginOnSide, ContainerWidth;
+    let containerHeight, bottomPosition;
     if (screenWidth < 576) { // Mobile
         containerHeight = '105px';
         bottomPosition = '1%';
@@ -407,15 +416,15 @@ function createAdContainer() {
             if (screenWidth < 576) {
                 // Phone-specific image URL
                 scrollDuration = 10000;
-                return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile-dev-2.png';
+                return 'https://creativestore-an.hydro.online/hydro-banner-mobile-1.png';
             } else if (screenWidth < 1100) {
                 // Tablet-specific image URL
                 scrollDuration = 10000; 
-                return 'https://dev-creativestore-an.hydro.online/hydro-banner-tablet.png';
+                return 'https://creativestore-an.hydro.online/hydro-banner-tablet.png';
             }
             // Desktop image URL (default)
             scrollDuration = 20000;
-            return 'https://dev-creativestore-an.hydro.online/hydro-banner-desktop.png';
+            return 'https://creativestore-an.hydro.online/hydro-banner-desktop.png';
         };
         
         // Create all images first
@@ -556,6 +565,7 @@ console.log('Click event logged');
         // 10 seconds for one image to complete its journey
         const totalDistance = window.innerWidth + singleImageWidth; // Distance from start appearing to completely disappearing
         const speed = totalDistance / scrollDuration; // pixels per millisecond
+        
         let position = window.innerWidth;
         let lastTimestamp = 0;
         let animationComplete = false;
@@ -678,7 +688,7 @@ console.log('Click event logged');
 
     async function init() {
         initializeAdSession();
-        //replace
+          //replace
         // if (adSessionData.fetchBanner422Error) {
         //     console.log('422 error previously received. No calls will be made until session ends.');
         //     return;
