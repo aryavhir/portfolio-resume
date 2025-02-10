@@ -1,15 +1,14 @@
 (function() {
     const config = {
-        callUrl: 'https://ade-an.hydro.online',
-        eventURl: 'https://events-an.hydro.online',
-        encryptionKey: 'SxWJUzd8d8rjM9rdzAIvKehZz8cXRrYH',
-        tagValidationUrl: 'https://ad-traffic-regulation-config.hydro.online/tags.json',
-        // countryValidationUrl: 'https://ad-traffic-regulation-config.hydro.online/regulate.json',
-        useEncryption: true
+        callUrl: 'https://dev-ade-an.hydro.online',
+        eventURl: 'https://dev-events-an.hydro.online',
+        encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
+        tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
+        countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
+        useEncryption: false
     };
     const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
     const countryCodeFromUrl = urlParams.get('country_code');
-
     let adSessionData = {
         hostname: window.location.hostname,
         adSessionId: null,
@@ -113,27 +112,29 @@
             return adSessionData.isCountryValid;
         }
 
-        console.log('Validating country. Current country code:', adSessionData.countryCode); // Debug log
+        console.log('Validating country. Current country code:', adSessionData.countryCode);
         try {
             const response = await fetch(config.countryValidationUrl);
             if (!response.ok) {
-               console.log('Failed to fetch country validation data');
+                console.log('Failed to fetch country validation data');
+                adSessionData.isCountryValid = false;
+                adSessionData.countryValidated = true;
+                saveAdSession();
+                return false;
             }
             const data = await response.json();
-            console.log('Validation data received:', data); // Debug log
+            console.log('Validation data received:', data);
             
-            // Check if country exists and if ads should be shown
             if (adSessionData.countryCode && 
                 data.countries && 
                 data.countries[adSessionData.countryCode]) {
                 adSessionData.isCountryValid = data.countries[adSessionData.countryCode].show_ad;
-               
             } else {
                 adSessionData.isCountryValid = false;
-                console.log('Country not found in validation data or country code missing'); // Debug log
+                console.log('Country not found in validation data or country code missing');
             }
             
-     adSessionData.countryValidated = true; // Mark as validated
+            adSessionData.countryValidated = true;
             saveAdSession();
             return adSessionData.isCountryValid;
             
@@ -252,34 +253,36 @@
 
     // Send error report to backend
     function sendErrorReport(errorCode, errorMessage) {
-        //replacing error call 
-        // const payload = {
-        //     ad_session_id: adSessionId,
-        //     pot_session_id: window.session_id,
-        //     ad_request_id: currentAdRequestId,
-        //     ad_id: adsId,
-        //     tag_id: tag_Id,
-        //     campaign_id: campID,
-        //     error_code: errorCode,
-        //     error_message: errorMessage,
-        //     request_timestamp: Math.floor(Date.now() / 1000) 
-        // };
-
-        // const processedPayload = preparePayload(payload);
-
-        // fetch(config.eventURl + '/api/v1/ad-error', {
-        //     method: 'POST',
-        //     headers: {
-        //         "Content-Type": 'application/json',
-        //     },
-        //     body: JSON.stringify(processedPayload)
-        // }).then(response => response.json())
-        // .then(responseData => {
-        //     const data = processResponse(responseData);
-        //     console.log('Error report sent:', data);
-        // })
-        // .catch(error => console.error('Error sending error report:', error));
-        console.log('Error:', errorCode, errorMessage);
+        if (adSessionData.isCountryValid) {
+            const payload = {
+                ad_session_id: adSessionId,
+                pot_session_id: window.session_id,
+                ad_request_id: currentAdRequestId,
+                ad_id: adsId,
+                tag_id: tag_Id,
+                campaign_id: campID,
+                error_code: errorCode,
+                error_message: errorMessage,
+                request_timestamp: Math.floor(Date.now() / 1000) 
+            };
+    
+            const processedPayload = preparePayload(payload);
+    
+            fetch(config.eventURl + '/api/v1/ad-error', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify(processedPayload)
+            }).then(response => response.json())
+            .then(responseData => {
+                const data = processResponse(responseData);
+                console.log('Error report sent:', data);
+            })
+            .catch(error => console.error('Error sending error report:', error));
+        } else {
+            console.log('Error:', errorCode, errorMessage);
+        }
     }
 
     // Modify getAdsId function to use the stored adSessionId
@@ -288,82 +291,78 @@
         isFetchingAd = true;   
         try {
             currentAdRequestId = generateAdSessionId();
-    //replacing fetch-banner-call 
-            //         const payload = {
-    //             ad_session_id: adSessionData.adSessionId,
-    //             tag_id: tag_Id,
-    //             ad_request_id: currentAdRequestId,
-    //             impression_count: 6,
-    //             pot_session_id: window.session_id,
-    //             already_shown_ad_ids: alreadyShownAds.join(","),
-    //             country_code: adSessionData.countryCode,
-    //             request_timestamp: Math.floor(Date.now() / 1000) 
-    //         };
-    
-    //         // Encrypt the payload
-    //         const processedPayload = preparePayload(payload);
-    //         const response = await fetch(config.callUrl + '/api/v1/fetchbanner', {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify(processedPayload)
-    //         });
-    
-    //         if (!response.ok) {
-    //             const errorData = await response.json();
-    //             if (response.status === 422) {
-    //             adSessionData.fetchBanner422Error = true;
-    //             saveAdSession();
-    //             throw new Error(JSON.stringify(errorData));
-    //         } else {
-    //             throw new Error(JSON.stringify(errorData));
-    //         }
-    //     }
-    
-    //         const responseData = await response.json();
-    //         const data = processResponse(responseData);
-    //         if (data.reset_ad === true) {
-    //             console.log('Resetting already shown ads array');
-    //             alreadyShownAds = [];
-    //         }
-    //         adsId = data.AdInfo.ad_id;
-    //         imageUrl = data.AdInfo.ad_creative_url;
-    //         redirectUrl = data.AdInfo.redirect_url;
-    //         campID = data.AdInfo.campaign_id;
-    
-    //         if (!imageUrl) throw new Error('Image URL not received');
-    //         alreadyShownAds.push(adsId);
-    //         return { adsId, imageUrl, redirectUrl };
-    //     } catch (error) {
-    //         console.error('Error getting ad data:', error);
-    //         sendErrorReport('FETCH_AD_NEW_SESSION', error.message);
-    //         throw error;
-    //     } finally {
-    //         isFetchingAd = false;
-    //     }
-    // }
- // Hardcoded values for now
- adsId = "test_ad_123";
- imageUrl = "https://stage-creativestore-an.hydro.online/hydro-banner.png";
- const specialTagIds = [
-            '3a83c2d5-045e-4f4e-aa9c-0b9013411e02',
-            'd5d2d904-0c24-4925-ad20-91889672be9d'
-        ];
-        if (specialTagIds.includes(tag_Id)) {
-            redirectUrl = "abc.com";
-        } else {
-            redirectUrl = "https://bit.ly/p-hy";
-        }
-        
-        campID = "test_campaign_456";
+            if (adSessionData.isCountryValid) {
+                // Use actual API calls when country is valid
+                const payload = {
+                    ad_session_id: adSessionData.adSessionId,
+                    tag_id: tag_Id,
+                    ad_request_id: currentAdRequestId,
+                    impression_count: 6,
+                    pot_session_id: window.session_id,
+                    already_shown_ad_ids: alreadyShownAds.join(","),
+                    country_code: adSessionData.countryCode,
+                    request_timestamp: Math.floor(Date.now() / 1000) 
+                };
 
- alreadyShownAds.push(adsId);
-        return { adsId, imageUrl, redirectUrl };
-    } catch (error) {
-        console.error('Error getting ad data:', error);
-    } finally {
-        isFetchingAd = false;
+                const processedPayload = preparePayload(payload);
+                const response = await fetch(config.callUrl + '/api/v1/fetchbanner', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(processedPayload)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    if (response.status === 422) {
+                        adSessionData.fetchBanner422Error = true;
+                        saveAdSession();
+                        throw new Error(JSON.stringify(errorData));
+                    } else {
+                        throw new Error(JSON.stringify(errorData));
+                    }
+                }
+
+                const responseData = await response.json();
+                const data = processResponse(responseData);
+                if (data.reset_ad === true) {
+                    console.log('Resetting already shown ads array');
+                    alreadyShownAds = [];
+                }
+                adsId = data.AdInfo.ad_id;
+                imageUrl = data.AdInfo.ad_creative_url;
+                redirectUrl = data.AdInfo.redirect_url;
+                campID = data.AdInfo.campaign_id;
+
+                if (!imageUrl) throw new Error('Image URL not received');
+            } else {
+                // Use hardcoded values when country is not valid
+                adsId = "test_ad_123";
+                imageUrl = "https://dev-creativestore-an.hydro.online/hydro-banner.png";
+                const tagRedirectMap = {
+                    '3a83c2d5-045e-4f4e-aa9c-0b9013411e02': 'https://www.linkedin.com/company/hydro-on-line/',
+                    'd5d2d904-0c24-4925-ad20-91889672be9d': 'https://www.youtube.com/'
+                };
+
+                if (tag_Id in tagRedirectMap) {
+                    redirectUrl = tagRedirectMap[tag_Id];
+                } else {
+                    redirectUrl = "https://bit.ly/t-hydro";
+                }
+                campID = "test_campaign_456";
+            }
+
+            alreadyShownAds.push(adsId);
+            return { adsId, imageUrl, redirectUrl };
+        } catch (error) {
+            console.error('Error getting ad data:', error);
+            if (adSessionData.isCountryValid) {
+                sendErrorReport('FETCH_AD_NEW_SESSION', error.message);
+            }
+            throw error;
+        } finally {
+            isFetchingAd = false;
+        }
     }
-}
 
     // Create ad container dynamically
 function createAdContainer() {
@@ -413,20 +412,34 @@ function createAdContainer() {
         });
         const getResponsiveImageUrl = () => {
             const screenWidth = window.innerWidth;
-            if (screenWidth < 576) {
-                // Phone-specific image URL
-                scrollDuration = 10000;
-                return 'https://creativestore-an.hydro.online/hydro-banner-mobile-1.png';
-            } else if (screenWidth < 1100) {
-                // Tablet-specific image URL
-                scrollDuration = 10000; 
-                return 'https://creativestore-an.hydro.online/hydro-banner-tablet.png';
-            }
-            // Desktop image URL (default)
+    if (adSessionData.isCountryValid) {
+        // Construct URLs for different resolutions
+          if (screenWidth < 576) {
+            scrollDuration = 10000;
+            return `${imageUrl}/mobile.gif`;
+        } else if (screenWidth < 1100) {
+            scrollDuration = 10000;
+            return `${imageUrl}/tablet.gif`;
+        } else if (screenWidth < 1955) {
             scrollDuration = 20000;
-            return 'https://creativestore-an.hydro.online/hydro-banner-desktop.png';
-        };
-        
+            return `${imageUrl}/desktop.gif`;
+        } else {
+            scrollDuration = 20000;
+            return `${imageUrl}/large.gif`;
+        }
+    } else {
+        // Use hardcoded URLs for invalid country case
+        if (screenWidth < 576) {
+            scrollDuration = 10000;
+            return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile-dev-2.png';
+        } else if (screenWidth < 1100) {
+            scrollDuration = 10000; 
+            return 'https://dev-creativestore-an.hydro.online/hydro-banner-tablet.png';
+        }
+        scrollDuration = 20000;
+        return 'https://dev-creativestore-an.hydro.online/hydro-banner-desktop.png';
+    }
+};
         // Create all images first
         const responsiveImageUrl = getResponsiveImageUrl();
         const totalImages = 6;
@@ -520,42 +533,43 @@ function createAdContainer() {
     }
 
     async function sendClickStatus() {
-        //replacing click status 
-//         try {
-//             const payload = {
-//                 ad_session_id: adSessionId,
-//                 ad_id: adsId,
-//                 pot_session_id: window.session_id,
-//                 ad_request_id: currentAdRequestId,
-//                 campaign_id: campID,
-//                 tag_id: tag_Id,
-//                 redirect_url: redirectUrl,
-//                 request_timestamp: Math.floor(Date.now() / 1000) 
-//             };
+        if (adSessionData.isCountryValid) {
+            try {
+                const payload = {
+                    ad_session_id: adSessionId,
+                    ad_id: adsId,
+                    pot_session_id: window.session_id,
+                    ad_request_id: currentAdRequestId,
+                    campaign_id: campID,
+                    tag_id: tag_Id,
+                    redirect_url: redirectUrl,
+                    request_timestamp: Math.floor(Date.now() / 1000) 
+                };
 
-//             const processedPayload = preparePayload(payload);
+                const processedPayload = preparePayload(payload);
 
-// const response = await fetch(config.eventURl + '/api/v1/ad-click', {
-//     method: 'POST',
-//     headers: { 
-//         'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(processedPayload)
-// });
-//             if (!response.ok) {
-//                 const errorData = await response.json();
-//                 throw new Error(JSON.stringify(errorData));
-//             }
+                const response = await fetch(config.eventURl + '/api/v1/ad-click', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(processedPayload)
+                });
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(JSON.stringify(errorData));
+                }
 
-//             const responseData = await response.json();
-//             const data = processResponse(responseData);
-//             console.log('Click status sent:', data);
-//         } catch (error) {
-//             sendErrorReport('CLICK_TRACK_ERROR', error.message);
-//         }
-console.log('Click event logged');
+                const responseData = await response.json();
+                const data = processResponse(responseData);
+                console.log('Click status sent:', data);
+            } catch (error) {
+                sendErrorReport('CLICK_TRACK_ERROR', error.message);
+            }
+        } else {
+            console.log('Click event logged');
+        }
     }
-
     function startScrolling(element, singleImageWidth) {
         if (scrollInterval) {
             clearInterval(scrollInterval);
@@ -633,41 +647,44 @@ console.log('Click event logged');
     async function sendStatus(event) {
         if (!adsId || (event === lastSentStatus && event !== 'start' && event !== 'middle' && event !== 'end')) return;
         lastSentStatus = event;
-        //replacing display events
-        // try {
-        //     const payload = {
-        //         ad_session_id: adSessionId,
-        //         ad_id: adsId,
-        //         pot_session_id: window.session_id,
-        //         ad_request_id: currentAdRequestId,
-        //         ad_position: event,
-        //         campaign_id: campID,
-        //         tag_id: tag_Id,
-        //         request_timestamp: Math.floor(Date.now() / 1000) 
-        //     };
 
-        //     const processedPayload = preparePayload(payload);
+        if (adSessionData.isCountryValid) {
+            try {
+                const payload = {
+                    ad_session_id: adSessionId,
+                    ad_id: adsId,
+                    pot_session_id: window.session_id,
+                    ad_request_id: currentAdRequestId,
+                    ad_position: event,
+                    campaign_id: campID,
+                    tag_id: tag_Id,
+                    request_timestamp: Math.floor(Date.now() / 1000) 
+                };
 
-        //     const response = await fetch(config.eventURl + '/api/v1/ad-display', {
-        //         method: 'POST',
-        //         headers: { 
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(processedPayload)
-        //     });
-        //     if (!response.ok) {
-        //         const errorData = await response.json();
-        //         throw new Error(JSON.stringify(errorData));
-        //     }
+                const processedPayload = preparePayload(payload);
 
-        //     const responseData = await response.json();
-        //     const data = processResponse(responseData);
-        //     console.log('Status sent:', data);
-        // } catch (error) {
-        //     console.error('Error sending status:', error);
-        //     sendErrorReport('DISPLAY_TRACK_ERROR', error.message);
-        // }
-        console.log('Status event:', event);
+                const response = await fetch(config.eventURl + '/api/v1/ad-display', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(processedPayload)
+                });
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(JSON.stringify(errorData));
+                }
+
+                const responseData = await response.json();
+                const data = processResponse(responseData);
+                console.log('Status sent:', data);
+            } catch (error) {
+                console.error('Error sending status:', error);
+                sendErrorReport('DISPLAY_TRACK_ERROR', error.message);
+            }
+        } else {
+            console.log('Status event:', event);
+        }
     }
 
     async function fetchNewAd() {
@@ -688,50 +705,39 @@ console.log('Click event logged');
 
     async function init() {
         initializeAdSession();
-          //replace
-        // if (adSessionData.fetchBanner422Error) {
-        //     console.log('422 error previously received. No calls will be made until session ends.');
-        //     return;
-        // }
-        //      // Validate country before proceedingantry();         
-        //      if (!adSessionData.countryValidated) {
-        //         const isValid = await validateCountry();
-        //         if (!isValid) {
-        //             console.log('Ads not allowed for country');
-        //             return;
-        //         }
-        //     } else if (!adSessionData.isCountryValid) {
-        //         console.log('Ads not allowed for country (using cached validation)');
-        //         return;
-        //     }
-        //     if (shouldShowAd()) {
-        //         try {
-        //             await getAdsId();
-        //             createAdContainer();
-        //             displayBanner();
-        //         } catch (error) {
-        //             console.error('Failed to initialize ad:', error);
-        //         }
-        //     }
+        
+        // First validate tag ID
         if (!adSessionData.tagRegulateDetailsAvailable) {
             const showAdOnTagID = await validateTagId();
             if (!showAdOnTagID) {
                 console.log('Ads not allowed for this tag');
-                return;
+                return; // Stop here if tag is not valid
             }
         } else if (!adSessionData.showAdOnTagID) {
             console.log('Ads not allowed for this tag (using cached validation)');
+            return; // Stop here if cached tag validation shows invalid
+        }
+    
+        // Only proceed to country validation if tag is valid
+        if (!adSessionData.countryValidated) {
+            await validateCountry();
+        }
+    
+        // Check for 422 error only when country is valid
+        if (adSessionData.isCountryValid && adSessionData.fetchBanner422Error) {
+            console.log('422 error previously received. No calls will be made until session ends.');
             return;
         }
+    
         if (shouldShowAd()) {
-        try {
-            await getAdsId();
-            createAdContainer();
-            displayBanner();
-        } catch (error) {
-            console.error('Failed to initialize ad:', error);
+            try {
+                await getAdsId();
+                createAdContainer();
+                displayBanner();
+            } catch (error) {
+                console.error('Failed to initialize ad:', error);
+            }
         }
-        } 
     }
     init();
     setInterval(() => {
