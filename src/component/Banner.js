@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-// import { Container, Row, Col } from "react-bootstrap";
-// import headerImg from "../asset/img/ron.svg";
-// import { ArrowRightCircle } from 'react-bootstrap-icons';
-import 'animate.css';
-// import TrackVisibility from 'react-on-screen';
+// other imports are commented out in your original code
 
 export const Banner = () => {
   const [loopNum, setLoopNum] = useState(0);
@@ -24,7 +20,21 @@ export const Banner = () => {
     };
   }, [text]);
 
+  useEffect(() => {
+    // Add Stripe script dynamically
+    const script = document.createElement('script');
+    script.src = 'https://js.stripe.com/v3/buy-button.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Clean up on unmount
+      document.body.removeChild(script);
+    };
+  }, []);
+
   const tick = () => {
+    // ... existing tick function logic
     let i = loopNum % toRotate.length;
     let fullText = toRotate[i];
     let updatedText = isDeleting
@@ -51,41 +61,24 @@ export const Banner = () => {
     }
   };
 
-  // const openPdfFile = () => {
-  //   // Replace 'your-pdf-file.pdf' with the actual path to your PDF file
-  //   const pdfPath = '/resume11.pdf';
-  //   window.open(pdfPath, '_blank');
-  // };
-
   return (
     <section className="banner" id="home">
       <h1 style={{textAlign: 'center'}}> Hello</h1>
-    
-      {/* <Container>
-        <Row className="aligh-items-center">
-          <Col xs={12} md={6} xl={7}>
-            <TrackVisibility>
-              {({ isVisible }) => (
-                <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                  <span className="tagline">Welcome to my Portfolio</span>
-                  <h1>{`Hi! I'm Aryavhir, i'm a`} <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Front-end Developer", "Web Developer", "Web Designer", "UI/UX Designer" ]'><span className="wrap">{text}</span></span></h1>
-                  <p>Front end development and web designing have been great interests of mine.</p>
-                  <button onClick={openPdfFile}>Go To Resume <ArrowRightCircle size={25} /></button>
-                </div>
-              )}
-            </TrackVisibility>
-          </Col>
-          <Col xs={12} md={6} xl={5}>
-            <TrackVisibility>
-              {({ isVisible }) => (
-                <div className={isVisible ? "animate__animated animate__zoomIn" : ""}>
-                  <img src={headerImg} alt="Header Img"/>
-                </div>
-              )}
-            </TrackVisibility>
-          </Col>
-        </Row>
-      </Container> */}
+      
+      {/* Stripe Buy Button */}
+      <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+      <script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1QsIZ1FEErnFqFOO01f0YNgw"
+  publishable-key="pk_test_51QDfchFEErnFqFOO0R34Z6QgDqAzjj2dBEjb5I7knAUWM2RKFhksdjGsZwqDxJldw0ecDMNgq6QDfpP6wgLQKdJj003Q3z2WHf"
+>
+</stripe-buy-button>
+      </div>
+      
+      {/* The rest of your commented out code */}
     </section>
   );
 };

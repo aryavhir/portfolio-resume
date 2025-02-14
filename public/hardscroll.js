@@ -1,10 +1,10 @@
 (function() {
     const config = {
-        callUrl: 'https://dev-ade-an.hydro.online',
-        eventURl: 'https://dev-events-an.hydro.online',
+        callUrl: 'https://stage-ade-an.hydro.online',
+        eventURl: 'https://stage-events-an.hydro.online',
         encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
-        tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
-        countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
+        tagValidationUrl: 'https://stage-ad-traffic-regulation-config.hydro.online/tags.json',
+        countryValidationUrl: 'https://stage-ad-traffic-regulation-config.hydro.online/regulate.json',
         useEncryption: false
     };
     const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
@@ -14,7 +14,7 @@
         adSessionId: null,
         adClicked: false,
         clickTimestamp: null,
-        timeDelay: 10000, 
+        timeDelay: 5000,
         fetchBanner422Error: false,
         countryCode: countryCodeFromUrl,
         isCountryValid: null,
@@ -36,10 +36,10 @@
     let isFetchingAd = false;
     let adClicked = false;
     let campID = '';
+    let totalImages = 6;
+    let scrollInterval = null;
     let isPageUnloading = false;
-    let currentAdRequestId = null;
-    let currentImpressionTimer = null; // Added this variable declaration
-    let impressionCount = 0; // Added to track impressions globally
+    let currentAdRequestId = null; // Store current request ID
     const encryptionUtils = {
         encrypt(data) {
             const textToChars = text => text.split('').map(c => c.charCodeAt(0));
@@ -191,7 +191,7 @@
             adSessionId: generateAdSessionId(),
             adClicked: false,
             clickTimestamp: null,
-            timeDelay: 36000000,
+            timeDelay: 5000,
             lastAccessed: Date.now(),
             fetchBanner422Error: false,
             countryCode: countryCodeFromUrl,
@@ -337,7 +337,7 @@
             } else {
                 // Use hardcoded values when country is not valid
                 adsId = "test_ad_123";
-                imageUrl = "https://dev-creativestore-an.hydro.online/hydro-banner.png";
+                imageUrl = "https://stage-creativestore-an.hydro.online/hydro-banner.png";
                 const tagRedirectMap = {
                     '3a83c2d5-045e-4f4e-aa9c-0b9013411e02': 'https://www.linkedin.com/company/hydro-on-line/',
                     'd5d2d904-0c24-4925-ad20-91889672be9d': 'https://www.youtube.com/'
@@ -365,206 +365,173 @@
     }
 
     // Create ad container dynamically
-    function createAdContainer() {
-        adContainer = document.createElement('div');
-        const screenWidth = window.innerWidth;
-        
-        let containerHeight, bottomPosition;
-        if (screenWidth < 576) {
-            containerHeight = '105px';
-            bottomPosition = '1%';
-        } else if (screenWidth < 1025) {
-            containerHeight = '216px';
-            bottomPosition = '2%';
-        } else if (screenWidth < 1955) {
-            containerHeight = '163px';
-            bottomPosition = '1%';
-        } else {
-            containerHeight = '220px';
-            bottomPosition = '1%';
+function createAdContainer() {
+    adContainer = document.createElement('div');
+    const screenWidth = window.innerWidth;
+    
+    let containerHeight, bottomPosition;
+    if (screenWidth < 576) { // Mobile
+        containerHeight = '105px';
+        bottomPosition = '1%';
+    } else if (screenWidth < 1025) { // Tablet
+        containerHeight = '216px';
+        bottomPosition = '2%';
+    } else if (screenWidth < 1955){ // Desktop
+        containerHeight = '163px';
+        bottomPosition = '1%';
+    } else {
+        containerHeight = '220px';
+        bottomPosition = '1%';
         }
 
-        Object.assign(adContainer.style, {
-            position: 'fixed',
-            bottom: bottomPosition,
-            left: '0',
-            width: '96%',
-            height: containerHeight,
-            zIndex: '2147483647',
-            overflow: 'hidden',
-            marginLeft: '2%'
-        });
-        document.body.appendChild(adContainer);
-    }
+    Object.assign(adContainer.style, {
+        position: 'fixed',
+        bottom: bottomPosition,
+        left: '0',
+        width: '96%',
+        height: containerHeight,
+        zIndex: '2147483647',
+        overflow: 'hidden',
+         marginLeft: '2%'
+    });
+    document.body.appendChild(adContainer);
+}
+
     // Display banner ad
     function displayBanner() {
         if (!imageUrl || !adContainer) return;
         adContainer.innerHTML = '';
-    
-        // Base container setup with responsive dimensions
-        const screenWidth = window.innerWidth;
-        let containerHeight, containerWidth, bottomPosition;
+        adContainer.style.display = 'none'; // Hide container initially
         
-        if (screenWidth < 576) {  // Mobile
-            containerHeight = '105px';
-            containerWidth = '96%';
-            bottomPosition = '1%';
-        } else if (screenWidth < 1025) {  // Tablet
-            containerHeight = '216px';
-            containerWidth = '96%';
-            bottomPosition = '2%';
-        } else if (screenWidth < 1955) {  // Desktop
-            containerHeight = '163px';
-            containerWidth = '96%';
-            bottomPosition = '1%';
-        } else {  // Large Desktop
-            containerHeight = '220px';
-            containerWidth = '96%';
-            bottomPosition = '1%';
-        }
-    
-        // Set container styles with flexible dimensions
-        Object.assign(adContainer.style, {
-            position: 'fixed',
-            bottom: bottomPosition,
-            left: '0',
-            width: containerWidth,
-            height: containerHeight,
-            marginLeft: '2%',
-            zIndex: '2147483647',
-            transition: 'all 0.3s ease',
-            display: 'flex',
-            justifyContent: 'center',
+        const scrollWrapper = document.createElement('div');
+        Object.assign(scrollWrapper.style, {
+            whiteSpace: 'nowrap',
+            position: 'absolute',
             alignItems: 'center',
-            overflow: 'hidden'
+            transform: `translateX(${window.innerWidth}px)` // Start at window width
         });
-    
-        const bannerWrapper = document.createElement('div');
-        Object.assign(bannerWrapper.style, {
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            transition: 'all 0.3s ease'
-        });
-    
-        // Get responsive image URL
         const getResponsiveImageUrl = () => {
-            if (adSessionData.isCountryValid) {
-                if (screenWidth < 576) {
-                    return `${imageUrl}/mobile.gif`;
-                } else if (screenWidth < 1100) {
-                    return `${imageUrl}/tablet.gif`;
-                } else if (screenWidth < 1955) {
-                    return `${imageUrl}/desktop.gif`;
-                } else {
-                    return `${imageUrl}/large.gif`;
-                }
-            } else {
-                if (screenWidth < 576) {
-                    return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile-dev-2.png';
-                } else if (screenWidth < 1100) {
-                    return 'https://dev-creativestore-an.hydro.online/hydro-banner-tablet.png';
-                }
-                return 'https://dev-creativestore-an.hydro.online/hydro-banner-desktop.png';
-            }
-        };
-    
-        const img = document.createElement('img');
+            const screenWidth = window.innerWidth;
+    if (adSessionData.isCountryValid) {
+        // Construct URLs for different resolutions
+          if (screenWidth < 576) {
+            scrollDuration = 10000;
+            return `${imageUrl}/mobile.gif`;
+        } else if (screenWidth < 1100) {
+            scrollDuration = 10000;
+            return `${imageUrl}/tablet.gif`;
+        } else if (screenWidth < 1955) {
+            scrollDuration = 20000;
+            return `${imageUrl}/desktop.gif`;
+        } else {
+            scrollDuration = 20000;
+            return `${imageUrl}/large.gif`;
+        }
+    } else {
+        // Use hardcoded URLs for invalid country case
+        if (screenWidth < 576) {
+            scrollDuration = 10000;
+            return 'https://stage-creativestore-an.hydro.online/hydro-banner-mobile-1.png';
+        } else if (screenWidth < 1100) {
+            scrollDuration = 10000; 
+            return 'https://stage-creativestore-an.hydro.online/hydro-banner-tablet.png';
+        }
+        scrollDuration = 20000;
+        return 'https://stage-creativestore-an.hydro.online/hydro-banner-desktop.png';
+    }
+};
+        // Create all images first
+        const responsiveImageUrl = getResponsiveImageUrl();
+        const totalImages = 6;
+     
+        const images = [];
+    for (let i = 0; i < totalImages; i++) {
+        const img = document.createElement('img');  
         Object.assign(img.style, {
-            maxWidth: '100%',
-            maxHeight: '100%',
-            width: 'auto',
-            height: 'auto',
+            width: '100%',
             borderRadius: '14px',
+            marginRight: '20px',
             cursor: 'pointer',
-            display: 'block',
-            transition: 'all 0.3s ease',
-            objectFit: 'contain'  // This ensures the image maintains its aspect ratio
+            display: 'inline-block'        
         });
-    
-        img.src = getResponsiveImageUrl();
-        img.onclick = () => handleAdClick(img, redirectUrl);
-        
-        bannerWrapper.appendChild(img);
-        adContainer.appendChild(bannerWrapper);
-        const handleResize = () => {
-            const newScreenWidth = window.innerWidth;
-            if (newScreenWidth !== screenWidth) {
-                img.src = getResponsiveImageUrl();
-                displayBanner(); // Re-initialize with new dimensions
-            }
-        };
-    
-        // Debounce resize handler for better performance
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(handleResize, 250);
-        });
-    
-        bannerWrapper.appendChild(img);
-        adContainer.appendChild(bannerWrapper);
-        adContainer.style.display = 'block';
-        isAdClosed = false;
-        let impressionCount = 0;
-        const IMPRESSION_INTERVAL = 5000; // 5 seconds
-        const MAX_IMPRESSIONS = 6;
+        img.src = responsiveImageUrl;
+        images.push(img);
+        scrollWrapper.appendChild(img);
+    }
 
-        new Promise((resolve) => {
+    adContainer.appendChild(scrollWrapper);
+    isAdClosed = false;
+
+    Promise.all(images.map(img => {
+        return new Promise((resolve) => {
             if (img.complete) {
                 resolve();
             } else {
                 img.onload = () => resolve();
                 img.onerror = () => resolve();
             }
-        }).then(() => {
-            adContainer.style.display = 'block';
-            
-            if (currentImpressionTimer) {
-                clearInterval(currentImpressionTimer);
-            }
-            
-            // Set up timer for all impressions including the first one
-            currentImpressionTimer = setInterval(() => {
-                if (impressionCount < MAX_IMPRESSIONS) {
-                    sendStatus('middle');
-                    impressionCount++;
-                    
-                    // If this was the last impression, schedule the next ad fetch
-                    if (impressionCount === MAX_IMPRESSIONS) {
-                        clearInterval(currentImpressionTimer);
-                        currentImpressionTimer = null;
-                        setTimeout(() => {
-                            fetchNewAd();
-                        }, 200);
-                    }
-                }
-            }, IMPRESSION_INTERVAL);
         });
-    }
+    })).then(() => {
+        // Only now show the container and set up everything
+        adContainer.style.display = 'block';
+        
+        images.forEach((img, index) => {
+            img.endEventSent = false;
+            img.onclick = () => handleAdClick(img, redirectUrl);
+                
+                       const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !img.startEventSent) {
+                        img.startEventSent = true;
+                        sendStatus('start');
+                        
+                        const checkMiddlePosition = () => {
+                            const rect = img.getBoundingClientRect();
+                            const windowWidth = window.innerWidth;
+                            const imageCenter = rect.left + (rect.width / 2);
+                            
+                            if (imageCenter <= windowWidth/2 && !img.midEventSent) {
+                                img.midEventSent = true;
+                                sendStatus('middle');
+                                cancelAnimationFrame(img.rafId);
+                            }
+                            
+                            if (!img.midEventSent) {
+                                img.rafId = requestAnimationFrame(checkMiddlePosition);
+                            }
+                        };
+                        checkMiddlePosition();
+                    }
+                    
+                    if (!entry.isIntersecting && img.startEventSent && img.midEventSent && !img.endEventSent) {
+                        img.endEventSent = true;
+                        sendStatus('end');
+                    }
+                });
+            }, { threshold: [0] });
+           
+            observer.observe(img);
+        });
+        const singleImageWidth = images[0].offsetWidth;
+        startScrolling(scrollWrapper, singleImageWidth);
+    });
+}
 
     function handleAdClick(img, currentRedirectUrl) {
-        console.log('Ad clicked, starting 10 second timer');
         adSessionData.adClicked = true;
         adSessionData.clickTimestamp = Date.now();
-        adClicked = true;
-        isAdClosed = true; 
         saveAdSession();
         sendClickStatus();
         closeAd();
         window.open(currentRedirectUrl, '_blank');
     }
 
-
     function shouldShowAd() {
-        // Modified to also check the global adClicked state
-        if (!adSessionData.adClicked && !adClicked) return true;
+        if (!adSessionData.adClicked) return true;
         const elapsedTime = Date.now() - adSessionData.clickTimestamp;
         return elapsedTime >= adSessionData.timeDelay;
     }
+
     async function sendClickStatus() {
         if (adSessionData.isCountryValid) {
             try {
@@ -661,31 +628,24 @@
         scrollInterval = requestAnimationFrame(animate);
     }
     function clearAd() {
-        if (currentImpressionTimer) {
-            clearInterval(currentImpressionTimer);
-            currentImpressionTimer = null;
-        }
         if (adContainer) {
             adContainer.style.display = 'none';
             adContainer.innerHTML = '';
             isAdClosed = true;
             imageUrl = redirectUrl = adsId = '';
         }
+        if (scrollInterval) {
+            cancelAnimationFrame(scrollInterval);
+            scrollInterval = null;
+        }
     }
+
     function closeAd() {
         clearAd();
-        // Start a direct timeout for 10 seconds
-        setTimeout(() => {
-            console.log('10 second delay completed, reinitializing ad');
-            adSessionData.adClicked = false;
-            adClicked = false;
-            saveAdSession();
-            init();
-        }, 10000);
     }
 
     async function sendStatus(event) {
-        if (!adsId || event !== 'middle') return;
+        if (!adsId || (event === lastSentStatus && event !== 'start' && event !== 'middle' && event !== 'end')) return;
         lastSentStatus = event;
 
         if (adSessionData.isCountryValid) {
@@ -780,5 +740,15 @@
         }
     }
     init();
-
-})(); // Check every 60 seconds
+    setInterval(() => {
+        if (adSessionData.adClicked && isAdClosed && !isFetchingAd) {
+            const elapsedTime = Date.now() - adSessionData.clickTimestamp;
+            if (elapsedTime >= adSessionData.timeDelay) {
+                console.log('Time delay completed, reinitializing ad');
+                adSessionData.adClicked = false;
+                saveAdSession();
+                init();
+            }
+        }
+    }, 1000); // Check every 60 seconds
+})();
