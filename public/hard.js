@@ -6,7 +6,7 @@
         tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
         countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
         useEncryption: false,
-        HydroDefaultBannerPath: 'https:/dev-creativestore-an.hydro.online/ad_hydro_default'
+        
     };
     const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
     const countryCodeFromUrl = urlParams.get('country_code');
@@ -23,7 +23,7 @@
         showAdOnTagID: null,
         tagRegulateDetailsAvailable: false
     };
-   
+   let HydroDefaultBannerPath = 'https:/dev-creativestore-an.hydro.online/ad_hydro_default';
     let tag_Id = window.Hydro_tagId;
     let adsId = '';
     let adSessionId = generateAdSessionId();
@@ -465,11 +465,11 @@
                 }
             }  else {
                 if (screenWidth < 576) {
-                    return `${config.HydroDefaultBannerPath}/mobile.gif`;
+                    return `${HydroDefaultBannerPath}/mobile.gif`;
                 } else if (screenWidth < 1100) {
-                    return `${config.HydroDefaultBannerPath}/tablet.gif`;
+                    return `${HydroDefaultBannerPath}/tablet.gif`;
                 }
-                return `${config.HydroDefaultBannerPath}/desktop.gif`;
+                return `${HydroDefaultBannerPath}/desktop.gif`;
             }
         };
     
