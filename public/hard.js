@@ -5,7 +5,8 @@
         encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
         tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
         countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
-        useEncryption: false
+        useEncryption: false,
+        HydroDefaultBannerPath: 'https:/dev-creativestore-an.hydro.online/ad_hydro_default'
     };
     const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
     const countryCodeFromUrl = urlParams.get('country_code');
@@ -14,7 +15,7 @@
         adSessionId: null,
         adClicked: false,
         clickTimestamp: null,
-        timeDelay: 10000, 
+        timeDelay: 180000, 
         fetchBanner422Error: false,
         countryCode: countryCodeFromUrl,
         isCountryValid: null,
@@ -191,7 +192,7 @@
             adSessionId: generateAdSessionId(),
             adClicked: false,
             clickTimestamp: null,
-            timeDelay: 36000000,
+            timeDelay: 180000,
             lastAccessed: Date.now(),
             fetchBanner422Error: false,
             countryCode: countryCodeFromUrl,
@@ -462,13 +463,13 @@
                 } else {
                     return `${imageUrl}/large.gif`;
                 }
-            } else {
+            }  else {
                 if (screenWidth < 576) {
-                    return 'https://dev-creativestore-an.hydro.online/hydro-banner-mobile-dev-2.png';
+                    return `${config.HydroDefaultBannerPath}/mobile.gif`;
                 } else if (screenWidth < 1100) {
-                    return 'https://dev-creativestore-an.hydro.online/hydro-banner-tablet.png';
+                    return `${config.HydroDefaultBannerPath}/tablet.gif`;
                 }
-                return 'https://dev-creativestore-an.hydro.online/hydro-banner-desktop.png';
+                return `${config.HydroDefaultBannerPath}/desktop.gif`;
             }
         };
     
@@ -476,8 +477,8 @@
         Object.assign(img.style, {
             maxWidth: '100%',
             maxHeight: '100%',
-            width: 'auto',
-            height: 'auto',
+            width: '100%',
+            height: '100%',
             borderRadius: '14px',
             cursor: 'pointer',
             display: 'block',
@@ -547,24 +548,20 @@
     }
 
     function handleAdClick(img, currentRedirectUrl) {
-        console.log('Ad clicked, starting 10 second timer');
         adSessionData.adClicked = true;
         adSessionData.clickTimestamp = Date.now();
-        adClicked = true;
-        isAdClosed = true; 
         saveAdSession();
         sendClickStatus();
         closeAd();
         window.open(currentRedirectUrl, '_blank');
     }
 
-
     function shouldShowAd() {
-        // Modified to also check the global adClicked state
-        if (!adSessionData.adClicked && !adClicked) return true;
+        if (!adSessionData.adClicked) return true;
         const elapsedTime = Date.now() - adSessionData.clickTimestamp;
         return elapsedTime >= adSessionData.timeDelay;
     }
+
     async function sendClickStatus() {
         if (adSessionData.isCountryValid) {
             try {
@@ -674,14 +671,6 @@
     }
     function closeAd() {
         clearAd();
-        // Start a direct timeout for 10 seconds
-        setTimeout(() => {
-            console.log('10 second delay completed, reinitializing ad');
-            adSessionData.adClicked = false;
-            adClicked = false;
-            saveAdSession();
-            init();
-        }, 10000);
     }
 
     async function sendStatus(event) {
@@ -780,5 +769,15 @@
         }
     }
     init();
-
-})(); // Check every 60 seconds
+    setInterval(() => {
+        if (adSessionData.adClicked && isAdClosed && !isFetchingAd) {
+            const elapsedTime = Date.now() - adSessionData.clickTimestamp;
+            if (elapsedTime >= adSessionData.timeDelay) {
+                console.log('Time delay completed, reinitializing ad');
+                adSessionData.adClicked = false;
+                saveAdSession();
+                init();
+            }
+        }
+    }, 5000); // Check every 60 seconds
+})();
