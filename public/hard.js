@@ -6,7 +6,7 @@
         tagValidationUrl: 'https://stage-ad-traffic-regulation-config.hydro.online/tags.json',
         countryValidationUrl: 'https://stage-ad-traffic-regulation-config.hydro.online/regulate.json',
         useEncryption: false,
-        HydroDefaultBanner: 'https:/stage-creativestore-an.hydro.online/ad_hydro_default'
+        HydroDefaultBanner: 'https://stage-creativestore-an.hydro.online/ad_hydro_default'
     };
     const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
     const countryCodeFromUrl = urlParams.get('country_code');
@@ -465,15 +465,15 @@
                 }
             } else {
                 if (screenWidth < 576) {
-                    return `https:/stage-creativestore-an.hydro.online/ad_hydro_default/mobile.gif`;
+                    return `${config.HydroDefaultBanner}/mobile.gif`;
                 } else if (screenWidth < 1100) {
-                    return `https:/stage-creativestore-an.hydro.online/ad_hydro_default/tablet.gif`;
+                    return `${config.HydroDefaultBanner}/tablet.gif`;
                 }
-                return `https:/stage-creativestore-an.hydro.online/ad_hydro_default/desktop.gif`;
+                return `${config.HydroDefaultBanner}/desktop.gif`;
             }
         };
     
-        const img = document.createElement('img');
+          const img = document.createElement('img');
         Object.assign(img.style, {
             maxWidth: '100%',
             maxHeight: '100%',
