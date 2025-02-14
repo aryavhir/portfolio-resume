@@ -1,12 +1,12 @@
 (function() {
     const config = {
-        callUrl: 'https://dev-ade-an.hydro.online',
-        eventURl: 'https://dev-events-an.hydro.online',
+        callUrl: 'https://stage-ade-an.hydro.online',
+        eventURl: 'https://stage-events-an.hydro.online',
         encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
-        tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
-        countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
+        tagValidationUrl: 'https://stage-ad-traffic-regulation-config.hydro.online/tags.json',
+        countryValidationUrl: 'https://stage-ad-traffic-regulation-config.hydro.online/regulate.json',
         useEncryption: false,
-        
+        HydroDefaultBanner: 'https:/stage-creativestore-an.hydro.online/ad_hydro_default'
     };
     const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
     const countryCodeFromUrl = urlParams.get('country_code');
@@ -15,7 +15,7 @@
         adSessionId: null,
         adClicked: false,
         clickTimestamp: null,
-        timeDelay: 180000, 
+        timeDelay: 1800000, 
         fetchBanner422Error: false,
         countryCode: countryCodeFromUrl,
         isCountryValid: null,
@@ -23,7 +23,7 @@
         showAdOnTagID: null,
         tagRegulateDetailsAvailable: false
     };
-   let HydroDefaultBannerPath = 'https:/dev-creativestore-an.hydro.online/ad_hydro_default';
+   
     let tag_Id = window.Hydro_tagId;
     let adsId = '';
     let adSessionId = generateAdSessionId();
@@ -192,7 +192,7 @@
             adSessionId: generateAdSessionId(),
             adClicked: false,
             clickTimestamp: null,
-            timeDelay: 180000,
+            timeDelay: 1800000,
             lastAccessed: Date.now(),
             fetchBanner422Error: false,
             countryCode: countryCodeFromUrl,
@@ -338,7 +338,7 @@
             } else {
                 // Use hardcoded values when country is not valid
                 adsId = "test_ad_123";
-                imageUrl = "https://dev-creativestore-an.hydro.online/hydro-banner.png";
+                imageUrl = "https://stage-creativestore-an.hydro.online/hydro-banner.png";
                 const tagRedirectMap = {
                     '3a83c2d5-045e-4f4e-aa9c-0b9013411e02': 'https://www.linkedin.com/company/hydro-on-line/',
                     'd5d2d904-0c24-4925-ad20-91889672be9d': 'https://www.youtube.com/'
@@ -463,13 +463,13 @@
                 } else {
                     return `${imageUrl}/large.gif`;
                 }
-            }  else {
+            } else {
                 if (screenWidth < 576) {
-                    return `${HydroDefaultBannerPath}/mobile.gif`;
+                    return `https:/stage-creativestore-an.hydro.online/ad_hydro_default/mobile.gif`;
                 } else if (screenWidth < 1100) {
-                    return `${HydroDefaultBannerPath}/tablet.gif`;
+                    return `https:/stage-creativestore-an.hydro.online/ad_hydro_default/tablet.gif`;
                 }
-                return `${HydroDefaultBannerPath}/desktop.gif`;
+                return `https:/stage-creativestore-an.hydro.online/ad_hydro_default/desktop.gif`;
             }
         };
     
@@ -477,7 +477,7 @@
         Object.assign(img.style, {
             maxWidth: '100%',
             maxHeight: '100%',
-            width: '100%',
+            width: 'auto',
             height: '100%',
             borderRadius: '14px',
             cursor: 'pointer',
