@@ -548,7 +548,7 @@ function createAdContainer() {
 
                 const processedPayload = preparePayload(payload);
 
-                const response = await fetch(config.eventURl + '/api/v1/ad-click', {
+                const response = await fetch(config.eventURl + '/api/v1/ad-clicks', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
