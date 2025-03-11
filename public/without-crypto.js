@@ -1,49 +1,21 @@
-// Add this at the beginning of your script
-function loadCryptoJS() {
-    return new Promise((resolve, reject) => {
-      if (window.CryptoJS) {
-        resolve(window.CryptoJS);
-        return;
-      }
-      
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
-      script.onload = () => resolve(window.CryptoJS);
-      script.onerror = () => reject(new Error('Failed to load CryptoJS'));
-      document.head.appendChild(script);
-    });
-  }
-  
-  loadCryptoJS().then(() => {
-    
-  // Configuration flag for encryption
-  const config = {
-    encryptionEnabled: false // Set to false to disable encryption
-  };
-  
-  // Encryption functions
-  function l() {
-    return 'KMC4SPK'
+// Encryption functions
+function l() {
+    return 'IhtnZ7'
   }
   function s() {
-    return 'XwF99M'
+    return 'tSu3d9'
   }
   function ls(message, k) {
-    // Use encryption only if enabled
-    if (config.encryptionEnabled) {
-      return CryptoJS.AES.encrypt(message, k).toString();
-    } else {
-      return message; // Return message as-is if encryption is disabled
-    }
+    return CryptoJS.AES.encrypt(message, k).toString();
   }
   function se() {
-    return '9doFmB'
+    return 'Kh8UrY'
   }
   function n() {
-    return 'dplR40Q'
+    return 'DnFaCP3IQa'
   }
   function k() {
-    return 'ILzPc6'
+    return 'ebx4Wi'
   }
   function ky() {
     return s() + se() + k() + l() + n()
@@ -57,7 +29,7 @@ function loadCryptoJS() {
     return 'hydro';
   }
   function pi() {
-    return 'https://api';
+    return 'https://pre-prod-api';
   }
   function lin() {
     return 'online';
@@ -74,7 +46,7 @@ function loadCryptoJS() {
   
   // External script URL obfuscation functions
   function dev() {
-    return '';
+    return 'dev';
   }
   function ad() {
     return 'adjs';
@@ -83,7 +55,7 @@ function loadCryptoJS() {
     return 'an';
   }
   function getExternalScriptUrl() {
-    return 'https://' + dev() + ad() + '-' + an() + '.' + dro() + '.' + lin();
+    return 'https://' + dev() + '-' + ad() + '-' + an() + '.' + dro() + '.' + lin();
   }
   
   function ss() {
@@ -171,13 +143,13 @@ function loadCryptoJS() {
         pingStatus = 0
         sendStatusToAPI(pingStatus)
         disconnectTab()
-        resetInactivityTimer()
+        clearInterval(intervalId)
+        intervalId = null
         session_id = generateSessionId()
         updateSessionIdGlobally(session_id); // Update global session ID
       }
     } else {
       // Browser window is restored
-      resetInactivityTimer()
       sendStatusToAPI(1)
       connectTab()
     }
@@ -214,26 +186,15 @@ function loadCryptoJS() {
       }
     }
     
-    // Create the payload
-    const payload = {
+    // Encrypt the payload
+    let p = ls(JSON.stringify({
       status,
       tag_id,
       session_id,
       t_stamp: curt // Add timestamp to payload
-    };
+    }), ky());
     
-    // Convert to string for sending
-    let dataToSend;
-    if (config.encryptionEnabled) {
-      // Encrypt the payload if encryption is enabled
-      dataToSend = ls(JSON.stringify(payload), ky());
-    } else {
-      // Send as regular JSON if encryption is disabled
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      dataToSend = JSON.stringify(payload);
-    }
-    
-    xhr.send(dataToSend);
+    xhr.send(p)
     
     // At this point, the session ID is updated globally, so external script can access it
     updateSessionIdGlobally(session_id);
@@ -329,7 +290,3 @@ function loadCryptoJS() {
       subtree: true,
     })
   }
-  }).catch(error => {
-    console.error('Error loading CryptoJS:', error);
-    // Fallback behavior if CryptoJS fails to load
-  });

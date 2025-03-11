@@ -1,21 +1,23 @@
 (function() {
     const config = {
-        callUrl: 'https://stage-ade-an.hydro.online',
-        eventURl: 'https://stage-events-an.hydro.online',
+        callUrl: 'https://dev-ade-an.hydro.online',
+        eventURl: 'https://dev-events-an.hydro.online',
         encryptionKey: 'u8vB3tY5wQz9LmNp4RfXc2PkSjVh6DnO',
-        tagValidationUrl: 'https://stage-ad-traffic-regulation-config.hydro.online/tags.json',
-        countryValidationUrl: 'https://stage-ad-traffic-regulation-config.hydro.online/regulate.json',
-        useEncryption: false,
-        HydroDefaultBanner: 'https://stage-creativestore-an.hydro.online/ad_hydro_default'
+        tagValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/tags.json',
+        countryValidationUrl: 'https://dev-ad-traffic-regulation-config.hydro.online/regulate.json',
+        useEncryption:true,
+        HydroDefaultBannerPath: 'https://dev-creativestore-an.hydro.online/ad_hydro_default',
+        impressionDelay: 29000 
     };
     const urlParams = new URLSearchParams(document.currentScript.src.split('?')[1]);
     const countryCodeFromUrl = urlParams.get('country_code');
     let adSessionData = {
         hostname: window.location.hostname,
+        
         adSessionId: null,
         adClicked: false,
         clickTimestamp: null,
-        timeDelay: 1800000, 
+        timeDelay: 180000, 
         fetchBanner422Error: false,
         countryCode: countryCodeFromUrl,
         isCountryValid: null,
@@ -23,7 +25,7 @@
         showAdOnTagID: null,
         tagRegulateDetailsAvailable: false
     };
-   
+    let currentAdRefreshTimer = null;
     let tag_Id = window.Hydro_tagId;
     let adsId = '';
     let adSessionId = generateAdSessionId();
@@ -78,10 +80,10 @@
             const response = await fetch(config.tagValidationUrl);
             if (!response.ok) {
                 console.log('Failed to fetch tag validation data');
-                adSessionData.showAdOnTagID = true;
-           adSessionData.tagRegulateDetailsAvailable = true;
+                adSessionData.showAdOnTagID = false;
+           adSessionData.tagRegulateDetailsAvailable = false;
            saveAdSession();
-           return true;
+           return false;
             }
             
             const data = await response.json();
@@ -101,8 +103,8 @@
             
         } catch (error) {
             console.error('Error validating tag ID:', error);
-            adSessionData.showAdOnTagID = true; 
-            adSessionData.tagRegulateDetailsAvailable = true;
+            adSessionData.showAdOnTagID = false; 
+            adSessionData.tagRegulateDetailsAvailable = false;
             saveAdSession();
             return false;
         }
@@ -192,7 +194,7 @@
             adSessionId: generateAdSessionId(),
             adClicked: false,
             clickTimestamp: null,
-            timeDelay: 1800000,
+            timeDelay: 180000,
             lastAccessed: Date.now(),
             fetchBanner422Error: false,
             countryCode: countryCodeFromUrl,
@@ -298,7 +300,7 @@
                     ad_session_id: adSessionData.adSessionId,
                     tag_id: tag_Id,
                     ad_request_id: currentAdRequestId,
-                    impression_count: 6,
+                    impression_count: 1,
                     pot_session_id: window.session_id,
                     already_shown_ad_ids: alreadyShownAds.join(","),
                     country_code: adSessionData.countryCode,
@@ -338,7 +340,7 @@
             } else {
                 // Use hardcoded values when country is not valid
                 adsId = "test_ad_123";
-                imageUrl = "https://stage-creativestore-an.hydro.online/hydro-banner.png";
+                imageUrl = "https://dev-creativestore-an.hydro.online/hydro-banner.png";
                 const tagRedirectMap = {
                     '3a83c2d5-045e-4f4e-aa9c-0b9013411e02': 'https://www.linkedin.com/company/hydro-on-line/',
                     'd5d2d904-0c24-4925-ad20-91889672be9d': 'https://www.youtube.com/'
@@ -401,7 +403,6 @@
     function displayBanner() {
         if (!imageUrl || !adContainer) return;
         adContainer.innerHTML = '';
-    
         // Base container setup with responsive dimensions
         const screenWidth = window.innerWidth;
         let containerHeight, containerWidth, bottomPosition;
@@ -452,7 +453,7 @@
         });
     
         // Get responsive image URL
-        const getResponsiveImageUrl = () => {
+        const getResponsiveImageUrl = (screenWidth) => {
             if (adSessionData.isCountryValid) {
                 if (screenWidth < 576) {
                     return `${imageUrl}/mobile.gif`;
@@ -465,55 +466,82 @@
                 }
             } else {
                 if (screenWidth < 576) {
-                    return `${config.HydroDefaultBanner}/mobile.gif`;
+                    return `${config.HydroDefaultBannerPath}/mobile.gif`;
                 } else if (screenWidth < 1100) {
-                    return `${config.HydroDefaultBanner}/tablet.gif`;
+                    return `${config.HydroDefaultBannerPath}/tablet.gif`;
                 }
-                return `${config.HydroDefaultBanner}/desktop.gif`;
+                return `${config.HydroDefaultBannerPath}/desktop.gif`;
             }
         };
     
-          const img = document.createElement('img');
+        const img = document.createElement('img');
+        img.id = 'hydro-ad-image';
         Object.assign(img.style, {
             maxWidth: '100%',
             maxHeight: '100%',
-            width: 'auto',
+            width: '100%',
             height: '100%',
             borderRadius: '14px',
             cursor: 'pointer',
             display: 'block',
             transition: 'all 0.3s ease',
-            objectFit: 'contain'  // This ensures the image maintains its aspect ratio
+            objectFit: 'contain'
         });
     
-        img.src = getResponsiveImageUrl();
+        img.src = getResponsiveImageUrl(screenWidth);
         img.onclick = () => handleAdClick(img, redirectUrl);
         
         bannerWrapper.appendChild(img);
         adContainer.appendChild(bannerWrapper);
-        const handleResize = () => {
-            const newScreenWidth = window.innerWidth;
-            if (newScreenWidth !== screenWidth) {
-                img.src = getResponsiveImageUrl();
-                displayBanner(); // Re-initialize with new dimensions
-            }
-        };
-    
-        // Debounce resize handler for better performance
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(handleResize, 250);
-        });
-    
-        bannerWrapper.appendChild(img);
-        adContainer.appendChild(bannerWrapper);
         adContainer.style.display = 'block';
         isAdClosed = false;
-        let impressionCount = 0;
-        const IMPRESSION_INTERVAL = 5000; // 5 seconds
-        const MAX_IMPRESSIONS = 6;
-
+    
+        // Create a global resize handler function
+        window.updateAdBannerSize = function() {
+            const currentScreenWidth = window.innerWidth;
+            
+            // Update container dimensions
+            let newHeight, newWidth, newBottomPosition;
+            
+            if (currentScreenWidth < 576) {  // Mobile
+                newHeight = '105px';
+                newWidth = '96%';
+                newBottomPosition = '1%';
+            } else if (currentScreenWidth < 1025) {  // Tablet
+                newHeight = '216px';
+                newWidth = '96%';
+                newBottomPosition = '2%';
+            } else if (currentScreenWidth < 1955) {  // Desktop
+                newHeight = '163px';
+                newWidth = '96%';
+                newBottomPosition = '1%';
+            } else {  // Large Desktop
+                newHeight = '220px';
+                newWidth = '96%';
+                newBottomPosition = '1%';
+            }
+            
+            // Apply new dimensions
+            if (adContainer) {
+                adContainer.style.height = newHeight;
+                adContainer.style.width = newWidth;
+                adContainer.style.bottom = newBottomPosition;
+            }
+            
+            // Update image source based on new size
+            const adImage = document.getElementById('hydro-ad-image');
+            if (adImage) {
+                adImage.src = getResponsiveImageUrl(currentScreenWidth);
+            }
+        };
+        
+        // Debounce resize handler for better performance
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(window.updateAdBannerSize, 250);
+        });
+    
         new Promise((resolve) => {
             if (img.complete) {
                 resolve();
@@ -524,26 +552,29 @@
         }).then(() => {
             adContainer.style.display = 'block';
             
+            // Only send impression and set timer on initial display, not on resize
             if (currentImpressionTimer) {
-                clearInterval(currentImpressionTimer);
+                clearTimeout(currentImpressionTimer);
+                currentImpressionTimer = null;
+            }
+    
+            // Send impression for every new ad display after 1 second
+            currentImpressionTimer = setTimeout(() => {
+                sendStatus('middle');
+                currentImpressionTimer = null;
+            }, 1000);
+            
+            // Clear any existing ad refresh timer
+            if (currentAdRefreshTimer) {
+                clearTimeout(currentAdRefreshTimer);
+                currentAdRefreshTimer = null;
             }
             
-            // Set up timer for all impressions including the first one
-            currentImpressionTimer = setInterval(() => {
-                if (impressionCount < MAX_IMPRESSIONS) {
-                    sendStatus('middle');
-                    impressionCount++;
-                    
-                    // If this was the last impression, schedule the next ad fetch
-                    if (impressionCount === MAX_IMPRESSIONS) {
-                        clearInterval(currentImpressionTimer);
-                        currentImpressionTimer = null;
-                        setTimeout(() => {
-                            fetchNewAd();
-                        }, 200);
-                    }
-                }
-            }, IMPRESSION_INTERVAL);
+            // Set a new timer to fetch the next ad after the configured delay
+            currentAdRefreshTimer = setTimeout(() => {
+                fetchNewAd();
+                currentAdRefreshTimer = null;
+            }, config.impressionDelay);
         });
     }
 
@@ -661,6 +692,10 @@
         if (currentImpressionTimer) {
             clearInterval(currentImpressionTimer);
             currentImpressionTimer = null;
+        }
+        if (currentAdRefreshTimer) {
+            clearTimeout(currentAdRefreshTimer);
+            currentAdRefreshTimer = null;
         }
         if (adContainer) {
             adContainer.style.display = 'none';
