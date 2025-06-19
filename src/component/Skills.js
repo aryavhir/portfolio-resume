@@ -1,7 +1,7 @@
-// import meter1 from "../asset/img/meter1.svg";
-// import meter2 from "../asset/img/meter2.svg";
-// import meter3 from "../asset/img/meter3.svg";
-// import Carousel from 'react-multi-carousel';
+import meter1 from "../asset/img/meter1.svg";
+import meter2 from "../asset/img/meter2.svg";
+import meter3 from "../asset/img/meter3.svg";
+import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 import colorSharp from "../asset/img/color-sharp.png"
@@ -31,7 +31,7 @@ export const Skills = () => {
     <section className="skill" id="skills">
         <div className="container">
 
-            {/* <div className="row">
+            <div className="row">
                 <div className="col-12">
                     <div className="skill-bx wow zoomIn">
                         <h2>Skills</h2>
@@ -80,7 +80,7 @@ export const Skills = () => {
                         </Carousel>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </div>
         <img className="background-image-left" src={colorSharp} alt="color" />
     </section>
