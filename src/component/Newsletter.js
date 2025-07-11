@@ -1,29 +1,50 @@
+
 import { useState } from "react";
 import { Col, Row, Alert } from "react-bootstrap";
 import emailjs from 'emailjs-com';
 
-export const Newsletter = ({ status, message }) => {
+export const Newsletter = () => {
   const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('');
+  const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email && email.indexOf("@") > -1) {
       setSending(true);
-      // Send email using EmailJS
-      emailjs.send(
-        'Aryavhir123',  // Replace with your EmailJS service ID
-        'template_zlgcdbf',  // Replace with your EmailJS template ID
-        { to_email: email }, // Replace with the variables your template expects
-        'wKOTaMefm5dYIMivs'       // Replace with your EmailJS user ID
-      ).then((result) => {
-        setSending(false);
-        setEmail('');
-        alert('Email sent successfully!');
-      }, (error) => {
-        setSending(false);
-        alert('Failed to send email.');
-      });
+      setStatus('');
+      setMessage('');
+      
+      // Your actual EmailJS credentials
+      const serviceId = 'Aryavhir123';
+      const templateId = 'template_zlgcdbf';
+      const publicKey = 'wKOTaMefm5dYIMivs';
+      
+      // Template parameters - make sure these match your EmailJS template variables
+      const templateParams = {
+        to_email: email,
+        user_email: email,
+        message: `User ${email} wants to receive details about your portfolio.`,
+        from_name: 'Portfolio Website'
+      };
+
+      emailjs.send(serviceId, templateId, templateParams, publicKey)
+        .then((result) => {
+          setSending(false);
+          setStatus('success');
+          setMessage('Details will be sent to your email successfully!');
+          setEmail('');
+          console.log('Email sent successfully:', result);
+        }, (error) => {
+          setSending(false);
+          setStatus('error');
+          setMessage('Failed to send email. Please try again.');
+          console.error('EmailJS error:', error);
+        });
+    } else {
+      setStatus('error');
+      setMessage('Please enter a valid email address.');
     }
   };
 
@@ -44,9 +65,12 @@ export const Newsletter = ({ status, message }) => {
                   value={email}
                   type="email"
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Recipient Email Address"
+                  placeholder="Enter your email address"
+                  required
                 />
-                <button type="submit">Send Email</button>
+                <button type="submit" disabled={sending}>
+                  {sending ? 'Sending...' : 'Send Details'}
+                </button>
               </div>
             </form>
           </Col>
