@@ -1,7 +1,6 @@
+import "./App.css";
 
-import './App.css';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { NavBar } from "./component/NavBar";
 import { Banner } from "./component/Banner";
 import { Skills } from "./component/Skills";
@@ -16,10 +15,12 @@ function App() {
     <div className="App">
       <NavBar />
       <Banner />
+
       <Skills />
-      <Projects />
-      <GitHubDashboard />
       <Terminal />
+
+      <GitHubDashboard />
+      <Projects />
       <Contact />
       <Footer />
     </div>
