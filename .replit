@@ -10,3 +10,15 @@ run = ["sh", "-c", "npm run start"]
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[workflows]
+runButton = "Start Portfolio"
+
+[[workflows.workflow]]
+name = "Start Portfolio"
+author = 43948119
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run start"
