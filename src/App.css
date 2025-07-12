@@ -663,7 +663,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-weight: 700;
   color: #fff;
   margin-bottom: 20px;
-  background: linear-gradient(45deg, #F85D7F, #AA367C);
+  background: linear-gradient(45deg, #AA367C, #4A2FBD);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -681,22 +681,24 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .github-stat-card {
-  background: linear-gradient(135deg, rgba(170, 54, 124, 0.1) 0%, rgba(74, 47, 189, 0.1) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.15) 0%, rgba(74, 47, 189, 0.15) 100%);
+  border: 1px solid rgba(170, 54, 124, 0.3);
+  border-radius: 20px;
   margin-bottom: 20px;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
 }
 
 .github-stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(170, 54, 124, 0.3);
-  border-color: rgba(248, 93, 127, 0.5);
+  box-shadow: 0 15px 40px rgba(170, 54, 124, 0.4);
+  border-color: rgba(170, 54, 124, 0.6);
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.25) 0%, rgba(74, 47, 189, 0.25) 100%);
 }
 
 .github-stat-card .card-body {
-  padding: 20px;
+  padding: 25px;
+  background: transparent !important;
 }
 
 .github-stat-card h3 {
@@ -704,63 +706,91 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-weight: 700;
   color: #fff;
   margin-bottom: 5px;
+  text-shadow: 0 0 10px rgba(170, 54, 124, 0.5);
 }
 
 .github-stat-card p {
   color: #B8B8B8;
   font-size: 14px;
   margin-bottom: 0;
+  font-weight: 500;
 }
 
 .github-section-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(21, 21, 21, 0.9) 0%, rgba(18, 18, 18, 0.9) 100%);
+  border: 1px solid rgba(170, 54, 124, 0.2);
+  border-radius: 20px;
   margin-bottom: 20px;
   height: 100%;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .github-section-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  border-color: rgba(248, 93, 127, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(170, 54, 124, 0.3);
+  border-color: rgba(170, 54, 124, 0.4);
 }
 
 .github-section-card .card-header {
-  background: linear-gradient(135deg, rgba(170, 54, 124, 0.1) 0%, rgba(74, 47, 189, 0.1) 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 15px 20px;
-  border-radius: 12px 12px 0 0;
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.2) 0%, rgba(74, 47, 189, 0.2) 100%);
+  border-bottom: 1px solid rgba(170, 54, 124, 0.3);
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
 }
 
 .github-section-card h4 {
   color: #fff;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.3rem;
+  font-weight: 700;
   margin-bottom: 0;
+  text-shadow: 0 0 5px rgba(170, 54, 124, 0.3);
 }
 
 .github-section-card .card-body {
-  padding: 20px;
+  padding: 25px;
   max-height: 400px;
   overflow-y: auto;
+  background: transparent !important;
+}
+
+.github-section-card .card-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.github-section-card .card-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.github-section-card .card-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #AA367C, #4A2FBD);
+  border-radius: 3px;
 }
 
 .commit-item {
-  padding: 15px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(170, 54, 124, 0.2);
+  transition: all 0.3s ease;
 }
 
 .commit-item:last-child {
   border-bottom: none;
 }
 
+.commit-item:hover {
+  background: rgba(170, 54, 124, 0.1);
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .commit-message {
   color: #fff;
   font-size: 14px;
   margin-bottom: 8px;
+  font-weight: 500;
 }
 
 .commit-meta {
@@ -770,9 +800,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .commit-repo {
-  color: #F85D7F;
+  color: #AA367C;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  background: rgba(170, 54, 124, 0.1);
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(170, 54, 124, 0.3);
 }
 
 .commit-date {
@@ -781,12 +815,20 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .repo-item {
-  padding: 15px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(170, 54, 124, 0.2);
+  transition: all 0.3s ease;
 }
 
 .repo-item:last-child {
   border-bottom: none;
+}
+
+.repo-item:hover {
+  background: rgba(170, 54, 124, 0.1);
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .repo-header {
@@ -799,16 +841,19 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .repo-header h5 {
   margin: 0;
   font-size: 16px;
+  font-weight: 600;
 }
 
 .repo-header h5 a {
-  color: #F85D7F;
+  color: #AA367C;
   text-decoration: none;
   transition: color 0.3s ease;
+  font-weight: 700;
 }
 
 .repo-header h5 a:hover {
   color: #fff;
+  text-shadow: 0 0 8px rgba(170, 54, 124, 0.6);
 }
 
 .repo-stats {
@@ -818,17 +863,19 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 .repo-stats .badge {
   font-size: 10px;
-  padding: 4px 8px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 10px;
+  background: linear-gradient(45deg, rgba(170, 54, 124, 0.2), rgba(74, 47, 189, 0.2));
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(170, 54, 124, 0.4);
+  border-radius: 12px;
+  font-weight: 600;
 }
 
 .repo-description {
   color: #B8B8B8;
   font-size: 13px;
-  margin-bottom: 10px;
-  line-height: 1.4;
+  margin-bottom: 12px;
+  line-height: 1.5;
 }
 
 .repo-meta {
@@ -842,6 +889,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   align-items: center;
   color: #B8B8B8;
   font-size: 12px;
+  font-weight: 500;
 }
 
 .language-color {
@@ -849,6 +897,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   height: 12px;
   border-radius: 50%;
   margin-right: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .repo-updated {
@@ -860,14 +909,22 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
+  padding: 20px;
 }
 
 .github-stats-img,
 .github-streak-img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.github-stats-img:hover,
+.github-streak-img:hover {
+  transform: scale(1.02);
 }
 
 @media (max-width: 768px) {
@@ -898,18 +955,24 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   .commit-meta {
     flex-direction: column;
     align-items: flex-start;
-    gap: 5px;
+    gap: 8px;
   }
   
   .contribution-graph {
     flex-direction: column;
+    padding: 15px;
+    gap: 20px;
   }
   
   .github-stat-card .card-body {
-    padding: 15px;
+    padding: 20px;
   }
   
   .github-stat-card h3 {
     font-size: 2rem;
+  }
+  
+  .github-section-card .card-body {
+    padding: 20px;
   }
 }
