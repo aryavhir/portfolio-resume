@@ -15,10 +15,12 @@ function App() {
     <div className="App">
       <NavBar />
       <Banner />
+
       <Skills />
-      <Projects />
-      <GitHubDashboard />
       <Terminal />
+
+      <GitHubDashboard />
+      <Projects />
       <Contact />
       <Footer />
     </div>

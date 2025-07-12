@@ -817,28 +817,21 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .github-section-card {
-  background: #151515;
-  border-radius: 64px;
+  background: linear-gradient(135deg, rgba(21, 21, 21, 0.9) 0%, rgba(18, 18, 18, 0.9) 100%);
+  border-radius: 20px;
   margin-bottom: 20px;
   height: 100%;
   backdrop-filter: blur(15px);
   transition: all 0.3s ease;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(170, 54, 124, 0.2);
 }
 
-.github-section-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 60px rgba(170, 54, 124, 0.3);
-  border-color: rgba(170, 54, 124, 0.4);
-}
 
 .github-section-card .card-header {
   background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
   border-bottom: 1px solid rgba(170, 54, 124, 0.3);
   padding: 20px;
-  border-radius: 64px 64px 0 0;
+  border-radius: 20px 20px 0 0;
 }
 
 .github-section-card h4 {
@@ -853,7 +846,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   padding: 25px;
   max-height: 400px;
   overflow-y: auto;
-  background: #151515;
+  background: black;
 }
 
 .github-section-card .card-body::-webkit-scrollbar {
@@ -1076,7 +1069,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 .terminal-section::before {
   content: "";
-  background: url('./asset/img/color-sharp.png') no-repeat center center;
+  background: url('./asset/img/color-sharp2.png') no-repeat center center;
   background-size: cover;
   position: absolute;
   width: 100%;
@@ -1084,34 +1077,26 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   top: 0;
   left: 0;
   z-index: -1;
-  opacity: 0.3;
+  opacity: 0.1;
 }
 
 .terminal-container {
   max-width: 900px;
   margin: 0 auto;
-  background: #151515;
-  border-radius: 64px;
+  background: #1a1a1a;
+  border-radius: 12px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
   overflow: hidden;
-  border: 1px solid rgba(170, 54, 124, 0.2);
-  transition: all 0.3s ease;
-}
-
-.terminal-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 60px rgba(170, 54, 124, 0.3);
-  border-color: rgba(170, 54, 124, 0.4);
+  border: 1px solid #333;
 }
 
 .terminal-header {
-  background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
+  background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
   padding: 12px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(170, 54, 124, 0.3);
-  border-radius: 64px 64px 0 0;
+  border-bottom: 1px solid #333;
 }
 
 .terminal-buttons {
@@ -1142,15 +1127,14 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .terminal-title {
-  color: #fff;
+  color: #888;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 500;
   font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
-  text-shadow: 0 0 5px rgba(170, 54, 124, 0.3);
 }
 
 .terminal-body {
-  background: #151515;
+  background: #0d1117;
   padding: 20px;
   min-height: 500px;
   max-height: 600px;
