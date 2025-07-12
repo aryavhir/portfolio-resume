@@ -1,5 +1,6 @@
 import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
 import { ProjectCard } from "./ProjectCard";
+import { Workspace3D } from "./Workspace3D";
 import projImg1 from "../asset/img/7.png";
 import projImg2 from "../asset/img/5.png";
 import projImg3 from "../asset/img/cert.png";
@@ -114,6 +115,10 @@ const vidURl = "https://www.youtube.com/watch?v=ZBCUegTZF7M&t=2343s"
                         <ReactPlayer url= {vidURl} 
                         playing= {false}
                         controls= {true}/>
+                        </div>
+                        
+                        <div style={{ marginTop: '40px' }}>
+                          <Workspace3D />
                         </div>
                     </Tab.Pane>
                   </Tab.Content>
