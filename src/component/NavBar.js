@@ -50,12 +50,12 @@ export const NavBar = () => {
             </Nav>
             <span className="navbar-text">
               <div className="social-icon">
-                <a href="https://www.linkedin.com/in/aryavhir-koul-04a08k/" className="social-link-micro"><img src={navIcon1} alt="" /></a>
-                <a href="https://www.github.com/aryavhir" className="social-link-micro"><img src={navIcon2} alt="" /></a>
-                <a href="https://www.instagram.com/aryavhir_koul/" className="social-link-micro"><img src={navIcon3} alt="" /></a>
+                <a href="https://www.linkedin.com/in/aryavhir-koul-04a08k/"><img src={navIcon1} alt="" /></a>
+                <a href="https://www.github.com/aryavhir"><img src={navIcon2} alt="" /></a>
+                <a href="https://www.instagram.com/aryavhir_koul/"><img src={navIcon3} alt="" /></a>
               </div>
               <HashLink to='#connect'>
-                <button className="vvd connect-btn-micro"><span>Let's Connect</span></button>
+                <button className="vvd"><span>Let’s Connect</span></button>
               </HashLink>
             </span>
           </Navbar.Collapse>
