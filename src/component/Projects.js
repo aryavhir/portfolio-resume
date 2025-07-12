@@ -108,11 +108,8 @@ export const Projects = () => {
                       </Row>
                     </Tab.Pane>
                     <Tab.Pane eventKey="third">
-                        <div className="learning-section">
-                          <h3>Learning Three.js</h3>
-                          <p>Currently exploring 3D web development with Three.js. This interactive workspace showcases my progress in creating immersive 3D experiences for the web, featuring realistic lighting, animations, and interactive controls.</p>
-                          <Workspace3D />
-                        </div>
+                      <p>Still Learning Three.js - Currently exploring 3D web development with Three.js. This interactive workspace showcases my progress in creating immersive 3D experiences for the web, featuring realistic lighting, animations, and interactive controls.</p>
+                      <Workspace3D />
                     </Tab.Pane>
                   </Tab.Content>
                 </Tab.Container>

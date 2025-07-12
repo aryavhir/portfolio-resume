@@ -474,45 +474,27 @@ const LoadingFallback = () => (
 // Main component
 export const Workspace3D = () => {
   return (
-    <section className="workspace-3d" id="workspace">
-      <Container>
-        <Row>
-          <Col lg={12}>
-            <div className="workspace-3d-bx">
-              <h2>My 3D Workspace</h2>
-              <p>
-                Explore my interactive developer workspace in 3D! This model
-                represents my actual coding setup with animated elements and
-                realistic details.
-              </p>
-
-              <div className="canvas-container">
-                <Canvas
-                  shadows
-                  camera={{ position: [6, 4, 6], fov: 50 }}
-                  style={{ height: "600px", borderRadius: "20px" }}
-                  gl={{ antialias: true, alpha: true }}
-                >
-                  <Suspense fallback={<LoadingFallback />}>
-                    <Scene />
-                  </Suspense>
-                </Canvas>
-              </div>
-
-              <div className="workspace-controls-info">
-                <p>
-                  <strong>Interactive Controls:</strong> Drag to rotate • Scroll
-                  to zoom • Right-click to pan
-                </p>
-                <p>
-                  <strong>Features:</strong> Animated screen glows • Spinning
-                  CPU fan • Coffee steam • Floating code symbols
-                </p>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+    <div className="canvas-container" style={{ marginTop: '20px' }}>
+      <Canvas
+        shadows
+        camera={{ position: [6, 4, 6], fov: 50 }}
+        style={{ height: "600px", borderRadius: "20px" }}
+        gl={{ antialias: true, alpha: true }}
+      >
+        <Suspense fallback={<LoadingFallback />}>
+          <Scene />
+        </Suspense>
+      </Canvas>
+      <div className="workspace-controls-info">
+        <p>
+          <strong>Interactive Controls:</strong> Drag to rotate • Scroll
+          to zoom • Right-click to pan
+        </p>
+        <p>
+          <strong>Features:</strong> Animated screen glows • Spinning
+          CPU fan • Coffee steam • Floating code symbols
+        </p>
+      </div>
+    </div>
   );
 };
