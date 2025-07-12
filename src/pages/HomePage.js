@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Banner } from "../component/Banner";
 import { Skills } from "../component/Skills";
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Monitor, MessageCircle } from 'lucide-react';
+//import { ArrowRight, Code, Monitor, MessageCircle } from 'lucide-react'; // Removed lucide-react import
 
 export const HomePage = () => {
   const quickLinks = [
@@ -12,21 +11,24 @@ export const HomePage = () => {
       title: "View My Projects",
       description: "Explore my latest work and coding achievements",
       link: "/projects",
-      icon: <Code size={40} />,
+      //icon: <Code size={40} />, // Removed lucide-react component
+      icon: null, // Placeholder if no icon is desired
       color: "#AA367C"
     },
     {
       title: "3D Workspace",
       description: "Interactive 3D model of my development setup",
       link: "/workspace",
-      icon: <Monitor size={40} />,
+      //icon: <Monitor size={40} />, // Removed lucide-react component
+      icon: null, // Placeholder if no icon is desired
       color: "#4A2FBD"
     },
     {
       title: "Get In Touch",
       description: "Let's connect and discuss opportunities",
       link: "/contact",
-      icon: <MessageCircle size={40} />,
+      //icon: <MessageCircle size={40} />, // Removed lucide-react component
+      icon: null, // Placeholder if no icon is desired
       color: "#7ee787"
     }
   ];
@@ -35,7 +37,7 @@ export const HomePage = () => {
     <div>
       <Banner />
       <Skills />
-      
+
       {/* Quick Navigation Section */}
       <section className="quick-nav-section" style={{ padding: '80px 0', background: '#121212' }}>
         <Container>
@@ -87,7 +89,7 @@ export const HomePage = () => {
                         fontSize: '16px',
                         fontWeight: '600'
                       }}>
-                        Explore <ArrowRight size={20} style={{ marginLeft: '8px' }} />
+                        Explore {/*<ArrowRight size={20} style={{ marginLeft: '8px' }} />*/}
                       </div>
                     </Card.Body>
                   </Card>
