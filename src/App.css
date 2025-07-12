@@ -991,7 +991,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 .contribution-graph {
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 25px;
   padding: 20px;
@@ -1422,9 +1421,11 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -1457,29 +1458,29 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   .workspace-3d {
     padding: 60px 0;
   }
-  
+
   .workspace-3d-bx {
     padding: 40px 25px;
     border-radius: 32px;
   }
-  
+
   .workspace-3d-bx h2 {
     font-size: 32px;
   }
-  
+
   .workspace-3d-bx p {
     font-size: 16px;
     margin-bottom: 30px;
   }
-  
+
   .canvas-container {
     margin: 30px 0;
   }
-  
+
   .canvas-container canvas {
     height: 400px !important;
   }
-  
+
   .workspace-controls-info p {
     font-size: 12px;
   }
@@ -1489,13 +1490,12 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   .workspace-3d-bx {
     padding: 30px 20px;
   }
-  
+
   .workspace-3d-bx h2 {
     font-size: 28px;
   }
-  
+
   .canvas-container canvas {
     height: 300px !important;
   }
 }
-
