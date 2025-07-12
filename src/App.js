@@ -7,6 +7,7 @@ import { Skills } from "./component/Skills";
 import { Projects } from "./component/Projects";
 import { GitHubDashboard } from "./component/GitHubDashboard";
 import { Terminal } from "./component/Terminal";
+import { Workspace3D } from "./component/Workspace3D";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
 
@@ -18,6 +19,7 @@ function App() {
 
       <Skills />
       <Terminal />
+      <Workspace3D />
 
       <GitHubDashboard />
       <Projects />
