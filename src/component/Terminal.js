@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -14,21 +15,9 @@ export const Terminal = () => {
   // Welcome message on component mount
   useEffect(() => {
     const welcomeMessages = [
-      { type: 'system', content: '🚀 Welcome to Aryavhir\'s Interactive Portfolio Terminal!' },
+      { type: 'system', content: 'Welcome to Aryavhir\'s Interactive Terminal! 🚀' },
+      { type: 'system', content: 'Type "help" to see available commands or start exploring!' },
       { type: 'system', content: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
-      { type: 'system', content: '👋 Hi there! I\'m a passionate Full Stack Developer who loves building' },
-      { type: 'system', content: '   amazing web experiences. Navigate my portfolio using commands below:' },
-      { type: 'system', content: '' },
-      { type: 'system', content: '🎯 Quick Start Commands:' },
-      { type: 'system', content: '   help       - View all available commands' },
-      { type: 'system', content: '   whoami     - Learn more about me' },
-      { type: 'system', content: '   skills     - Check out my technical skills' },
-      { type: 'system', content: '   projects   - Explore my latest projects' },
-      { type: 'system', content: '   contact    - Get in touch with me' },
-      { type: 'system', content: '' },
-      { type: 'system', content: '💡 Pro tip: Use arrow keys ↑↓ to navigate command history!' },
-      { type: 'system', content: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
-      { type: 'system', content: 'Ready to explore? Type a command and press Enter! 🎮' },
     ];
     setOutput(welcomeMessages);
   }, []);
@@ -79,9 +68,9 @@ export const Terminal = () => {
     return new Promise((resolve) => {
       const loadingFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
       let frameIndex = 0;
-
+      
       setOutput(prev => [...prev, { type: 'loading', content: `${loadingFrames[0]} Loading...` }]);
-
+      
       const timer = setInterval(() => {
         frameIndex = (frameIndex + 1) % loadingFrames.length;
         setOutput(prev => {
@@ -105,7 +94,7 @@ export const Terminal = () => {
   // Command processing
   const processCommand = async (cmd) => {
     const command = cmd.trim().toLowerCase();
-
+    
     setOutput(prev => [...prev, { type: 'command', content: `aryavhir@portfolio:${currentPath}$ ${cmd}` }]);
 
     // Add to command history
@@ -124,7 +113,7 @@ export const Terminal = () => {
   whoami            - About Aryavhir
   ls                - List directory contents
   pwd               - Print working directory
-
+  
 🛠️  Developer Commands:
   skills --list     - Show technical skills
   skills --details  - Detailed skill breakdown
@@ -132,14 +121,14 @@ export const Terminal = () => {
   projects --all    - Show all projects
   experience        - Work experience
   education         - Educational background
-
+  
 🎯 Interactive Commands:
   github            - GitHub statistics
   contact           - Contact information
   resume            - Download resume
   ascii             - Random ASCII art
   matrix            - Matrix rain effect
-
+  
 🎮 Fun Commands:
   joke              - Random programming joke
   quote             - Inspirational quote
@@ -147,7 +136,7 @@ export const Terminal = () => {
   music             - Current playlist
   weather           - Check weather
   time              - Current time
-
+  
 🔧 System Commands:
   neofetch          - System information
   ps                - Running processes
@@ -209,11 +198,11 @@ Machine Learning  ████████             40%`);
 1. 📱 Portfolio Website
    Tech: React, Bootstrap, GitHub API
    Live: https://aryavhir.vercel.app
-
+   
 2. 🛒 E-Commerce Platform
    Tech: MERN Stack, Stripe API
    Status: In Development
-
+   
 3. 🤖 AI Chatbot
    Tech: Python, OpenAI API, Flask
    Status: Completed
@@ -245,7 +234,7 @@ Visit my GitHub for source code! 🔗`);
    • Full-stack web development
    • Client consultation and project management
    • React, Node.js, MongoDB projects
-
+   
 🎓 Computer Science Student (2022 - Present)
    • Relevant coursework in algorithms, data structures
    • Group projects and hackathon participation
@@ -345,11 +334,11 @@ drwxr-xr-x  education/
    ████████████    Uptime: Always Online
    ████████████    Packages: npm, yarn
    ████████████    Shell: Interactive Terminal
-   ████████████    Resolution: Responsive
-     ██████████    Terminal: Custom React Terminal
-       ██████      CPU: Full Stack Developer
+     ██████████    Resolution: Responsive
+       ██████      Terminal: Custom React Terminal
+                   CPU: Full Stack Developer
                    Memory: Creative Ideas
-
+                   
                    🚀 Powered by passion & coffee!`);
         break;
 
@@ -461,7 +450,7 @@ Type 'help' to see available commands.`);
                 </div>
                 <div className="terminal-title">Aryavhir@portfolio: ~/interactive-terminal</div>
               </div>
-
+              
               <div 
                 className="terminal-body" 
                 ref={terminalRef}
@@ -472,7 +461,7 @@ Type 'help' to see available commands.`);
                     {line.content}
                   </div>
                 ))}
-
+                
                 {!isTyping && (
                   <form onSubmit={handleSubmit} className="terminal-input-form">
                     <span className="terminal-prompt">

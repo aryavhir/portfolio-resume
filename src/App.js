@@ -6,6 +6,7 @@ import { Banner } from "./component/Banner";
 import { Skills } from "./component/Skills";
 import { Projects } from "./component/Projects";
 import { GitHubDashboard } from "./component/GitHubDashboard";
+import { Terminal } from "./component/Terminal";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
 
@@ -14,7 +15,10 @@ function App() {
     <div className="App">
       <NavBar />
       <Banner />
+
       <Skills />
+      <Terminal />
+
       <GitHubDashboard />
       <Projects />
       <Contact />

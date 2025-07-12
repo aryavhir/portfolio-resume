@@ -272,133 +272,82 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 /************ Banner Css ************/
 .banner {
   margin-top: 0;
-  padding: 160px 0 60px 0;
-  background-image: url('./asset/img/banner-bg.png');
+  padding: 260px 0 100px 0;
+
   background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-}
-
-.banner-intro {
-  text-align: center;
-  margin-bottom: 40px;
 }
 
 .banner .tagline {
   font-weight: 700;
   letter-spacing: 0.8px;
-  padding: 8px 16px;
-  background: linear-gradient(90.21deg, rgba(126, 231, 135, 0.8) -5.91%, rgba(121, 192, 255, 0.8) 111.58%);
-  border: 1px solid rgba(126, 231, 135, 0.5);
-  font-size: 18px;
-  margin-bottom: 20px;
+  padding: 8px 10px;
+  background: linear-gradient(90.21deg, rgba(170, 54, 124, 0.5) -5.91%, rgba(74, 47, 189, 0.5) 111.58%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  margin-bottom: 16px;
   display: inline-block;
-  border-radius: 8px;
-  font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
-  color: #0d1117;
-  font-weight: 800;
 }
 
 .banner h1 {
-  font-size: 48px;
+  font-size: 65px;
   font-weight: 700;
   letter-spacing: 0.8px;
-  line-height: 1.2;
-  margin-bottom: 10px;
+  line-height: 1;
+  margin-bottom: 20px;
   display: block;
 }
 
-.banner h1 .highlight {
-  background: linear-gradient(45deg, #AA367C, #4A2FBD);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.banner .rotating-text {
-  font-size: 28px;
-  font-weight: 600;
-  color: #B8B8B8;
-  margin-bottom: 30px;
-  line-height: 1.4;
-}
-
-.banner .terminal-intro {
+.banner p {
   color: #B8B8B8;
   font-size: 18px;
   letter-spacing: 0.8px;
-  line-height: 1.6em;
-  max-width: 800px;
-  margin: 0 auto 30px auto;
+  line-height: 1.5em;
+  width: 96%;
 }
 
-.banner .terminal-intro code {
-  background: rgba(126, 231, 135, 0.1);
-  color: #7ee787;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
-  font-size: 16px;
-}
-
-.terminal-hint {
-  color: #ffa657;
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 40px;
+.banner button {
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  margin-top: 60px;
+  letter-spacing: 0.8px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
 }
 
-.terminal-hint .blink {
-  animation: blink 1.5s infinite;
-  color: #7ee787;
-  font-size: 18px;
+.banner button svg {
+  font-size: 25px;
+  margin-left: 10px;
+  transition: 0.3s ease-in-out;
+  line-height: 1;
 }
 
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+.banner button:hover svg {
+  margin-left: 25px;
 }
 
-.txt-rotate > .wrap {
-  border-right: 0.08em solid #7ee787;
-  color: #7ee787;
+.banner img {
+  animation: updown 3s linear infinite;
 }
 
-/* Make terminal section part of banner flow */
-.banner .terminal-section {
-  padding: 0;
-  background: transparent;
-  margin-top: 0;
-}
-
-.banner .terminal-section::before {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .banner {
-    padding: 120px 0 40px 0;
+@keyframes updown {
+  0% {
+    transform: translateY(-20px);
   }
 
-  .banner h1 {
-    font-size: 36px;
+  50% {
+    transform: translateY(20px);
   }
 
-  .banner .rotating-text {
-    font-size: 22px;
+  100% {
+    transform: translateY(-20px);
   }
+}
 
-  .banner .terminal-intro {
-    font-size: 16px;
-    padding: 0 20px;
-  }
+.txt-rotate>.wrap {
+  border-right: 0.08em solid #666;
 }
 
 /************ Skills Css ************/
@@ -986,7 +935,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-weight: 700;
 }
 
-.repo-item:hover .repo_name {
+.repo-item:hover .repo-name {
   color: #fff;
   text-shadow: 0 0 8px rgba(170, 54, 124, 0.6);
 }
@@ -1508,29 +1457,29 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   .workspace-3d {
     padding: 60px 0;
   }
-
+  
   .workspace-3d-bx {
     padding: 40px 25px;
     border-radius: 32px;
   }
-
+  
   .workspace-3d-bx h2 {
     font-size: 32px;
   }
-
+  
   .workspace-3d-bx p {
     font-size: 16px;
     margin-bottom: 30px;
   }
-
+  
   .canvas-container {
     margin: 30px 0;
   }
-
+  
   .canvas-container canvas {
     height: 400px !important;
   }
-
+  
   .workspace-controls-info p {
     font-size: 12px;
   }
@@ -1540,12 +1489,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   .workspace-3d-bx {
     padding: 30px 20px;
   }
-
+  
   .workspace-3d-bx h2 {
     font-size: 28px;
   }
-
+  
   .canvas-container canvas {
     height: 300px !important;
   }
 }
+

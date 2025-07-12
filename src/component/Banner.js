@@ -1,15 +1,77 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import { Terminal } from "./Terminal";
-import 'animate.css';
-import TrackVisibility from 'react-on-screen';
+import './a.css';
 
+// XMoney API Configuration
+const XMONEY_API_ROOT = "https://merchants.api.sandbox.crypto.xmoney.com/api/stores/orders"; // Use sandbox for testing: "https://merchants.api.sandbox.crypto.xmoney.com/api/stores/orders"
+const XMONEY_API_KEY = "u_test_api_41940342-91ed-4c7c-b7a4-da50ea5ee6bc"; // Replace with your actual API key or fetch from environment variables
+
+// XMoney API Service
+const xMoneyApi = {
+  createOrder:
+    fetch(XMONEY_API_ROOT, {
+      method: "POST",
+      headers: {
+        "content-type": "application/vnd.api+json",
+        authorization: "Bearer " + XMONEY_API_KEY,
+      },
+      body: JSON.stringify({
+        "data": {
+        "type": "orders",
+        "attributes": {
+        "order": {
+        "reference": "order-1977",
+        "amount": {
+        "total": "1.00",
+        "currency": "USD",
+        "details": {
+        "subtotal": "98.00",
+        "shipping": "10.00",
+        "tax": "3.00",
+        "discount": "2.00"
+        }
+        },
+        "return_urls": {
+        "return_url": "http://example.com/return",
+        "cancel_url": "http://example.com/cancel",
+        "callback_url": "http://example.com/callback"
+        },
+        "line_items": [
+        {
+        "sku": "tsh-6110",
+        "name": "T-Shirt White Large",
+        "price": "100.00",
+        "currency": "USD",
+        "quantity": 5
+        }
+        ]
+        },
+        "customer": {
+        "name": "John Doe",
+        "first_name": "",
+        "last_name": "",
+        "email": "john@example.com",
+        "billing_address": "118 Main St",
+        "address1": "",
+        "address2": "",
+        "city": "New York",
+        "state": "New York",
+        "postcode": "",
+        "country": "US"
+        }
+        }
+        }
+        }),
+    }).then(response => response.json()),
+};
+
+// Main Banner Component
 export const Banner = () => {
   const [loopNum, setLoopNum] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState('');
   const [delta, setDelta] = useState(300 - Math.random() * 100);
-  const toRotate = [ "Full Stack Developer", "React Specialist", "Problem Solver", "Code Artist" ];
+  const [index, setIndex] = useState(1);
+  const toRotate = ["Front-end Developer", "Web Developer", "Web Designer", "UI/UX Designer"];
   const period = 2000;
 
   useEffect(() => {
@@ -17,67 +79,52 @@ export const Banner = () => {
       tick();
     }, delta);
 
-    return () => { clearInterval(ticker) };
-  }, [text])
+    return () => {
+      clearInterval(ticker);
+    };
+  }, [text]);
 
   const tick = () => {
     let i = loopNum % toRotate.length;
     let fullText = toRotate[i];
-    let updatedText = isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1);
+    let updatedText = isDeleting
+      ? fullText.substring(0, text.length - 1)
+      : fullText.substring(0, text.length + 1);
 
     setText(updatedText);
 
     if (isDeleting) {
-      setDelta(prevDelta => prevDelta / 2);
+      setDelta((prevDelta) => prevDelta / 2);
     }
 
     if (!isDeleting && updatedText === fullText) {
       setIsDeleting(true);
+      setIndex((prevIndex) => prevIndex - 1);
       setDelta(period);
-    } else if (isDeleting && updatedText === '') {
+    } else if (isDeleting && updatedText === "") {
       setIsDeleting(false);
       setLoopNum(loopNum + 1);
+      setIndex(1);
       setDelta(500);
+    } else {
+      setIndex((prevIndex) => prevIndex + 1);
     }
-  }
+  };
 
   return (
     <section className="banner" id="home">
-      <Container>
-        <Row className="align-items-center">
-          <Col xs={12}>
-            <TrackVisibility>
-              {({ isVisible }) =>
-              <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                <div className="banner-intro">
-                  <span className="tagline">$ whoami</span>
-                  <h1>Hi! I'm <span className="highlight">Aryavhir Koul</span></h1>
-                  <h2 className="rotating-text">
-                    I'm a <span className="txt-rotate"><span className="wrap">{text}</span></span>
-                  </h2>
-                  <p className="terminal-intro">
-                    Welcome to my interactive portfolio! Use the terminal below to explore my projects, skills, and experience. 
-                    Type <code>help</code> to get started, or try commands like <code>skills</code>, <code>projects</code>, or <code>contact</code>.
-                  </p>
-                  <div className="terminal-hint">
-                    <span className="blink">▶</span> Click on the terminal and start typing commands
-                  </div>
-                </div>
-              </div>}
-            </TrackVisibility>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <TrackVisibility>
-              {({ isVisible }) =>
-                <div className={isVisible ? "animate__animated animate__slideInUp" : ""}>
-                  <Terminal />
-                </div>}
-            </TrackVisibility>
-          </Col>
-        </Row>
-      </Container>
+      <h1 style={{textAlign: 'center'}}> Hello</h1>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '10px',
+      }}>
+        <div className="txt-rotate">
+          <span>I am a </span>
+          <span>{text}</span>
+        </div>
+      </div>
+      {/* Payment form removed as per request */}
     </section>
-  )
-}
+  );
+};
