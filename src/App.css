@@ -632,13 +632,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 /************ GitHub Dashboard Css ************/
 .github-dashboard {
   padding: 80px 0;
-  background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
+  background-color: #121212;
   position: relative;
 }
 
 .github-dashboard::before {
   content: "";
-  background: url('./asset/img/color-sharp.png') no-repeat center center;
+  background: url('./asset/img/color-sharp2.png') no-repeat center center;
   background-size: cover;
   position: absolute;
   width: 100%;
@@ -646,6 +646,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   top: 0;
   left: 0;
   z-index: -1;
+  opacity: 0.3;
 }
 
 .github-bx {
@@ -653,14 +654,19 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   border-radius: 64px;
   text-align: center;
   padding: 60px 50px;
-  margin-top: -60px;
+  margin-top: 0;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .github-bx h2 {
   font-size: 45px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #F85D7F, #AA367C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .github-bx p {
@@ -669,19 +675,24 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   letter-spacing: 0.8px;
   line-height: 1.5em;
   margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .github-stat-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.1) 0%, rgba(74, 47, 189, 0.1) 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   margin-bottom: 20px;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 .github-stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 40px rgba(170, 54, 124, 0.3);
+  border-color: rgba(248, 93, 127, 0.5);
 }
 
 .github-stat-card .card-body {
@@ -702,17 +713,26 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .github-section-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   margin-bottom: 20px;
   height: 100%;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.github-section-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-color: rgba(248, 93, 127, 0.3);
 }
 
 .github-section-card .card-header {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.1) 0%, rgba(74, 47, 189, 0.1) 100%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 15px 20px;
+  border-radius: 12px 12px 0 0;
 }
 
 .github-section-card h4 {
@@ -851,12 +871,22 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 @media (max-width: 768px) {
+  .github-dashboard {
+    padding: 60px 0;
+  }
+  
   .github-bx {
     padding: 40px 25px;
+    border-radius: 32px;
   }
   
   .github-bx h2 {
     font-size: 32px;
+  }
+  
+  .github-bx p {
+    font-size: 16px;
+    margin-bottom: 30px;
   }
   
   .repo-header {
@@ -873,5 +903,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   
   .contribution-graph {
     flex-direction: column;
+  }
+  
+  .github-stat-card .card-body {
+    padding: 15px;
+  }
+  
+  .github-stat-card h3 {
+    font-size: 2rem;
   }
 }

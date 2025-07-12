@@ -15,7 +15,7 @@ export const GitHubDashboard = () => {
 
   useEffect(() => {
     fetchGithubData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchGithubData = async () => {
     try {
@@ -136,8 +136,8 @@ export const GitHubDashboard = () => {
         <Row>
           <Col lg={12}>
             <div className="github-bx">
-              <h2>GitHub Activity</h2>
-              <p>Here's what I've been working on recently</p>
+              <h2>GitHub Portfolio</h2>
+              <p>Explore my coding journey through repositories, contributions, and development activity</p>
 
               {/* GitHub Stats Overview */}
               <Row className="mb-4">
