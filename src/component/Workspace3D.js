@@ -1,6 +1,6 @@
-import React, { Suspense, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Box, Sphere, Cylinder, Plane, Text, Html } from '@react-three/drei';
+import React, { Suspense, useRef, useState, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { OrbitControls, Box, Sphere, Cylinder, Plane, Text, Html, useTexture, Stars, Cloud, Sparkles } from '@react-three/drei';
 import { Container, Row, Col } from 'react-bootstrap';
 import * as THREE from 'three';
 
@@ -106,8 +106,32 @@ const Desk = () => {
   );
 };
 
-// Monitor Component with Screen Glow
+// Interactive Monitor Component
 const Monitor = () => {
+  const [isClicked, setIsClicked] = useState(false);
+  const [screenContent, setScreenContent] = useState(0);
+  const screenRef = useRef();
+
+  useFrame((state) => {
+    if (screenRef.current && isClicked) {
+      screenRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 2) * 0.1;
+    }
+  });
+
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+    setScreenContent((prev) => (prev + 1) % 3);
+  };
+
+  const getScreenColor = () => {
+    switch (screenContent) {
+      case 0: return "#0066cc";
+      case 1: return "#ff6b6b";
+      case 2: return "#4ecdc4";
+      default: return "#0066cc";
+    }
+  };
+
   return (
     <group position={[0, 0, -0.8]}>
       {/* Monitor base */}
@@ -125,8 +149,33 @@ const Monitor = () => {
         <meshStandardMaterial color="#000" />
       </Box>
 
-      {/* Screen glow effect */}
-      <ScreenGlow position={[0, 0.2, 0.06]} />
+      {/* Interactive screen content */}
+      <Plane 
+        ref={screenRef}
+        position={[0, 0.2, 0.06]} 
+        args={[1.18, 0.78]} 
+        onClick={handleClick}
+        onPointerOver={() => document.body.style.cursor = 'pointer'}
+        onPointerOut={() => document.body.style.cursor = 'auto'}
+      >
+        <meshStandardMaterial 
+          color={getScreenColor()}
+          emissive={getScreenColor()}
+          emissiveIntensity={isClicked ? 0.8 : 0.3}
+          transparent
+          opacity={0.8}
+        />
+      </Plane>
+
+      {/* Screen reflection */}
+      <Plane position={[0, 0.2, 0.055]} args={[1.18, 0.78]}>
+        <meshStandardMaterial 
+          color="#ffffff"
+          transparent
+          opacity={0.1}
+          reflectivity={0.9}
+        />
+      </Plane>
     </group>
   );
 };
@@ -327,6 +376,187 @@ const CPUTower = () => {
   );
 };
 
+// Holographic Display Component
+const HolographicDisplay = () => {
+  const meshRef = useRef();
+  const [isHovered, setIsHovered] = useState(false);
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.5;
+      meshRef.current.position.y = 1.5 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
+      
+      const scale = isHovered ? 1.2 : 1;
+      meshRef.current.scale.setScalar(scale);
+    }
+  });
+
+  return (
+    <group 
+      ref={meshRef} 
+      position={[0, 1.5, 0]}
+      onPointerOver={() => setIsHovered(true)}
+      onPointerOut={() => setIsHovered(false)}
+    >
+      {/* Holographic frame */}
+      <Box args={[0.8, 0.6, 0.02]}>
+        <meshStandardMaterial 
+          color="#00ffff" 
+          emissive="#00ffff" 
+          emissiveIntensity={0.3}
+          transparent
+          opacity={0.6}
+        />
+      </Box>
+      
+      {/* Holographic content */}
+      <Text
+        position={[0, 0, 0.02]}
+        fontSize={0.08}
+        color="#00ffff"
+        anchorX="center"
+        anchorY="middle"
+        font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
+      >
+        {isHovered ? "INTERACTIVE MODE\nENGAGED" : "PORTFOLIO\nSYSTEM ONLINE"}
+      </Text>
+
+      {/* Holographic particles */}
+      <Sparkles count={20} scale={0.5} size={2} speed={0.5} color="#00ffff" />
+    </group>
+  );
+};
+
+// Interactive Particle System
+const InteractiveParticles = () => {
+  const { camera, mouse } = useThree();
+  const particlesRef = useRef();
+
+  useFrame((state) => {
+    if (particlesRef.current) {
+      particlesRef.current.rotation.x = mouse.y * 0.1;
+      particlesRef.current.rotation.y = mouse.x * 0.1;
+    }
+  });
+
+  return (
+    <group ref={particlesRef}>
+      <Sparkles 
+        count={100} 
+        scale={8} 
+        size={3} 
+        speed={0.3} 
+        color="#AA367C"
+        opacity={0.6}
+      />
+    </group>
+  );
+};
+
+// Floating Workspace Tools
+const FloatingTools = () => {
+  const toolsRef = useRef();
+
+  useFrame((state) => {
+    if (toolsRef.current) {
+      toolsRef.current.children.forEach((child, index) => {
+        child.position.y = Math.sin(state.clock.elapsedTime * 2 + index) * 0.2;
+        child.rotation.y = state.clock.elapsedTime * 0.5 + index;
+      });
+    }
+  });
+
+  const tools = [
+    { position: [3, 2, 0], color: "#ff6b6b", symbol: "💻" },
+    { position: [-3, 2, 0], color: "#4ecdc4", symbol: "⚙️" },
+    { position: [2, 2.5, 2], color: "#ffa657", symbol: "🚀" },
+    { position: [-2, 2.5, 2], color: "#7ee787", symbol: "🎨" },
+  ];
+
+  return (
+    <group ref={toolsRef}>
+      {tools.map((tool, index) => (
+        <group key={index} position={tool.position}>
+          <Sphere args={[0.15]}>
+            <meshStandardMaterial 
+              color={tool.color}
+              emissive={tool.color}
+              emissiveIntensity={0.3}
+              transparent
+              opacity={0.8}
+            />
+          </Sphere>
+          <Text
+            position={[0, 0, 0.2]}
+            fontSize={0.15}
+            color="#fff"
+            anchorX="center"
+            anchorY="middle"
+          >
+            {tool.symbol}
+          </Text>
+        </group>
+      ))}
+    </group>
+  );
+};
+
+// Enhanced Coffee Cup with Interactive Steam
+const EnhancedCoffeeCup = () => {
+  const [isHot, setIsHot] = useState(true);
+  const cupRef = useRef();
+
+  useFrame((state) => {
+    if (cupRef.current) {
+      cupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+    }
+  });
+
+  return (
+    <group 
+      ref={cupRef}
+      position={[-1.5, -0.35, 0.5]}
+      onClick={() => setIsHot(!isHot)}
+      onPointerOver={() => document.body.style.cursor = 'pointer'}
+      onPointerOut={() => document.body.style.cursor = 'auto'}
+    >
+      {/* Cup */}
+      <Cylinder position={[0, 0.15, 0]} args={[0.15, 0.12, 0.25]} castShadow>
+        <meshStandardMaterial color={isHot ? "#8B4513" : "#654321"} />
+      </Cylinder>
+
+      {/* Coffee */}
+      <Cylinder position={[0, 0.22, 0]} args={[0.14, 0.14, 0.05]} castShadow>
+        <meshStandardMaterial color={isHot ? "#4A2C2A" : "#3A1C1A"} />
+      </Cylinder>
+
+      {/* Handle */}
+      <Cylinder position={[0.2, 0.15, 0]} args={[0.02, 0.02, 0.15]} castShadow>
+        <meshStandardMaterial color="#8B4513" />
+      </Cylinder>
+
+      {/* Interactive steam */}
+      {isHot && (
+        <>
+          <CoffeeSteam position={[0, 0.25, 0]} />
+          <CoffeeSteam position={[0.05, 0.25, 0.05]} />
+          <CoffeeSteam position={[-0.05, 0.25, -0.05]} />
+          
+          {/* Steam particles */}
+          <Sparkles 
+            count={15} 
+            scale={0.3} 
+            size={1} 
+            speed={1} 
+            color="#ffffff"
+            position={[0, 0.4, 0]}
+          />
+        </>
+      )}
+    </group>
+  );
+};
+
 // Main Scene Component
 const Scene = () => {
   return (
@@ -358,12 +588,22 @@ const Scene = () => {
       <Desk />
       <Monitor />
       <Laptop />
-      <CoffeeCup />
+      <EnhancedCoffeeCup />
       <Keyboard />
       <Mouse />
       <Books />
       <Plant />
       <CPUTower />
+
+      {/* New interactive elements */}
+      <HolographicDisplay />
+      <InteractiveParticles />
+      <FloatingTools />
+      
+      {/* Environment effects */}
+      <Stars radius={50} depth={50} count={1000} factor={4} saturation={0.5} speed={0.5} />
+      <Cloud position={[-10, 5, -10]} speed={0.2} opacity={0.3} />
+      <Cloud position={[10, 5, 10]} speed={0.3} opacity={0.2} />
 
       {/* Floating code particles */}
       <FloatingParticle position={[2, 1, 1]} color="#AA367C" symbol="{}" />
@@ -420,8 +660,9 @@ export const Workspace3D = () => {
             <div className="workspace-3d-bx">
               <h2>My 3D Workspace</h2>
               <p>
-                Explore my interactive developer workspace in 3D! This model represents 
-                my actual coding setup with animated elements and realistic details.
+                Explore my fully interactive 3D developer workspace! Click the monitor to change screens, 
+                interact with the coffee cup, and watch the holographic display respond to your presence. 
+                This immersive environment showcases my technical skills with dynamic animations and interactive elements.
               </p>
 
               <div className="canvas-container">
@@ -439,10 +680,15 @@ export const Workspace3D = () => {
 
               <div className="workspace-controls-info">
                 <p>
-                  <strong>Interactive Controls:</strong> Drag to rotate • Scroll to zoom • Right-click to pan
+                  <strong>Interactive Controls:</strong> Drag to rotate • Scroll to zoom • Right-click to pan • Click objects to interact
                 </p>
                 <p>
-                  <strong>Features:</strong> Animated screen glows • Spinning CPU fan • Coffee steam • Floating code symbols
+                  <strong>Interactive Features:</strong> Clickable monitor screens • Interactive coffee cup • Holographic display • 
+                  Mouse-responsive particles • Floating workspace tools • Starfield environment
+                </p>
+                <p>
+                  <strong>Animations:</strong> Screen glows • Spinning CPU fan • Steam effects • Floating elements • 
+                  Dynamic lighting • Particle systems
                 </p>
               </div>
             </div>
