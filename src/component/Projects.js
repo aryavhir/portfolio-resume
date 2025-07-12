@@ -9,13 +9,11 @@ import projImg5 from "../asset/img/cert1.png";
 import projImg6 from "../asset/img/6.png";
 import projImg7 from "../asset/img/2.png";
 import colorSharp2 from "../asset/img/color-sharp2.png";
-import ReactPlayer from "react-player";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
 
 
 export const Projects = () => {
-const vidURl = "https://www.youtube.com/watch?v=ZBCUegTZF7M&t=2343s"
   const projects = [
     {
       title: "React.js",
@@ -110,14 +108,9 @@ const vidURl = "https://www.youtube.com/watch?v=ZBCUegTZF7M&t=2343s"
                       </Row>
                     </Tab.Pane>
                     <Tab.Pane eventKey="third">
-                        <p>Still Learning.</p>
-                        <div className="video-container">
-                        <ReactPlayer url= {vidURl} 
-                        playing= {false}
-                        controls= {true}/>
-                        </div>
-                        
-                        <div style={{ marginTop: '40px' }}>
+                        <div className="learning-section">
+                          <h3>Learning Three.js</h3>
+                          <p>Currently exploring 3D web development with Three.js. This interactive workspace showcases my progress in creating immersive 3D experiences for the web, featuring realistic lighting, animations, and interactive controls.</p>
                           <Workspace3D />
                         </div>
                     </Tab.Pane>
