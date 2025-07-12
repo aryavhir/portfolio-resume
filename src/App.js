@@ -14,12 +14,11 @@ function App() {
   return (
     <div className="App">
       <NavBar />
+
       <Banner />
-
-      <Skills />
       <Terminal />
-
       <GitHubDashboard />
+      <Skills />
       <Projects />
       <Contact />
       <Footer />
