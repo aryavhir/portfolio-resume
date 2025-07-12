@@ -1,6 +1,5 @@
-
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Badge, Spinner } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Card, Badge, Spinner } from "react-bootstrap";
 
 export const GitHubDashboard = () => {
   const [githubData, setGithubData] = useState({
@@ -8,10 +7,10 @@ export const GitHubDashboard = () => {
     repos: [],
     commits: [],
     loading: true,
-    error: null
+    error: null,
   });
 
-  const USERNAME = 'your-github-username'; // Replace with your GitHub username
+  const USERNAME = "aryavhir"; // Replace with your GitHub username
   const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN; // Optional: for higher rate limits
 
   useEffect(() => {
@@ -20,23 +19,36 @@ export const GitHubDashboard = () => {
 
   const fetchGithubData = async () => {
     try {
-      const headers = GITHUB_TOKEN ? { 'Authorization': `token ${GITHUB_TOKEN}` } : {};
-      
+      const headers = GITHUB_TOKEN
+        ? { Authorization: `token ${GITHUB_TOKEN}` }
+        : {};
+
       // Fetch user data
-      const userResponse = await fetch(`https://api.github.com/users/${USERNAME}`, { headers });
+      const userResponse = await fetch(
+        `https://api.github.com/users/${USERNAME}`,
+        { headers },
+      );
       const userData = await userResponse.json();
 
       // Fetch pinned repositories
-      const reposResponse = await fetch(`https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=6`, { headers });
+      const reposResponse = await fetch(
+        `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=6`,
+        { headers },
+      );
       const reposData = await reposResponse.json();
 
       // Fetch recent commits from public repos
-      const commitsPromises = reposData.slice(0, 3).map(repo => 
-        fetch(`https://api.github.com/repos/${USERNAME}/${repo.name}/commits?per_page=3`, { headers })
-          .then(res => res.json())
-          .then(commits => commits.map(commit => ({ ...commit, repo: repo.name })))
+      const commitsPromises = reposData.slice(0, 3).map((repo) =>
+        fetch(
+          `https://api.github.com/repos/${USERNAME}/${repo.name}/commits?per_page=3`,
+          { headers },
+        )
+          .then((res) => res.json())
+          .then((commits) =>
+            commits.map((commit) => ({ ...commit, repo: repo.name })),
+          ),
       );
-      
+
       const commitsArrays = await Promise.all(commitsPromises);
       const allCommits = commitsArrays.flat().slice(0, 5);
 
@@ -45,41 +57,41 @@ export const GitHubDashboard = () => {
         repos: reposData.slice(0, 6),
         commits: allCommits,
         loading: false,
-        error: null
+        error: null,
       });
     } catch (error) {
-      setGithubData(prev => ({
+      setGithubData((prev) => ({
         ...prev,
         loading: false,
-        error: 'Failed to fetch GitHub data'
+        error: "Failed to fetch GitHub data",
       }));
     }
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
     });
   };
 
   const getLanguageColor = (language) => {
     const colors = {
-      JavaScript: '#f1e05a',
-      TypeScript: '#3178c6',
-      Python: '#3776ab',
-      Java: '#b07219',
-      React: '#61dafb',
-      HTML: '#e34c26',
-      CSS: '#1572b6',
-      C: '#555555',
-      'C++': '#f34b7d',
-      Go: '#00add8',
-      Rust: '#dea584',
-      PHP: '#4f5d95'
+      JavaScript: "#f1e05a",
+      TypeScript: "#3178c6",
+      Python: "#3776ab",
+      Java: "#b07219",
+      React: "#61dafb",
+      HTML: "#e34c26",
+      CSS: "#1572b6",
+      C: "#555555",
+      "C++": "#f34b7d",
+      Go: "#00add8",
+      Rust: "#dea584",
+      PHP: "#4f5d95",
     };
-    return colors[language] || '#586069';
+    return colors[language] || "#586069";
   };
 
   if (githubData.loading) {
@@ -126,7 +138,7 @@ export const GitHubDashboard = () => {
             <div className="github-bx">
               <h2>GitHub Activity</h2>
               <p>Here's what I've been working on recently</p>
-              
+
               {/* GitHub Stats Overview */}
               <Row className="mb-4">
                 <Col md={3}>
@@ -174,11 +186,15 @@ export const GitHubDashboard = () => {
                       {githubData.commits.map((commit, index) => (
                         <div key={index} className="commit-item">
                           <div className="commit-message">
-                            <strong>{commit.commit.message.split('\n')[0]}</strong>
+                            <strong>
+                              {commit.commit.message.split("\n")[0]}
+                            </strong>
                           </div>
                           <div className="commit-meta">
                             <span className="commit-repo">{commit.repo}</span>
-                            <span className="commit-date">{formatDate(commit.commit.author.date)}</span>
+                            <span className="commit-date">
+                              {formatDate(commit.commit.author.date)}
+                            </span>
                           </div>
                         </div>
                       ))}
@@ -197,27 +213,41 @@ export const GitHubDashboard = () => {
                         <div key={index} className="repo-item">
                           <div className="repo-header">
                             <h5>
-                              <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+                              <a
+                                href={repo.html_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
                                 {repo.name}
                               </a>
                             </h5>
                             <div className="repo-stats">
-                              <Badge variant="outline-primary">⭐ {repo.stargazers_count}</Badge>
-                              <Badge variant="outline-secondary">🍴 {repo.forks_count}</Badge>
+                              <Badge variant="outline-primary">
+                                ⭐ {repo.stargazers_count}
+                              </Badge>
+                              <Badge variant="outline-secondary">
+                                🍴 {repo.forks_count}
+                              </Badge>
                             </div>
                           </div>
                           <p className="repo-description">{repo.description}</p>
                           <div className="repo-meta">
                             {repo.language && (
                               <span className="repo-language">
-                                <span 
-                                  className="language-color" 
-                                  style={{ backgroundColor: getLanguageColor(repo.language) }}
+                                <span
+                                  className="language-color"
+                                  style={{
+                                    backgroundColor: getLanguageColor(
+                                      repo.language,
+                                    ),
+                                  }}
                                 ></span>
                                 {repo.language}
                               </span>
                             )}
-                            <span className="repo-updated">Updated {formatDate(repo.updated_at)}</span>
+                            <span className="repo-updated">
+                              Updated {formatDate(repo.updated_at)}
+                            </span>
                           </div>
                         </div>
                       ))}
@@ -235,12 +265,12 @@ export const GitHubDashboard = () => {
                     </Card.Header>
                     <Card.Body>
                       <div className="contribution-graph">
-                        <img 
+                        <img
                           src={`https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&title_color=F85D7F&icon_color=F85D7F&text_color=FFFFFF`}
                           alt="GitHub Stats"
                           className="github-stats-img"
                         />
-                        <img 
+                        <img
                           src={`https://github-readme-streak-stats.herokuapp.com/?user=${USERNAME}&theme=dark&hide_border=true&background=0D1117&stroke=F85D7F&ring=F85D7F&fire=F85D7F&currStreakLabel=FFFFFF`}
                           alt="GitHub Streak"
                           className="github-streak-img"
