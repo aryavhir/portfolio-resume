@@ -137,7 +137,10 @@ export const GitHubDashboard = () => {
           <Col lg={12}>
             <div className="github-bx">
               <h2>GitHub Portfolio</h2>
-              <p>Explore my coding journey through repositories, contributions, and development activity</p>
+              <p>
+                Explore my coding journey through repositories, contributions,
+                and development activity
+              </p>
 
               {/* Repositories Grid */}
               <Row>
@@ -170,7 +173,9 @@ export const GitHubDashboard = () => {
                                   </Badge>
                                 </div>
                               </div>
-                              <p className="repo-description">{repo.description}</p>
+                              <p className="repo-description">
+                                {repo.description}
+                              </p>
                               <div className="repo-meta">
                                 {repo.language && (
                                   <span className="repo-language">
