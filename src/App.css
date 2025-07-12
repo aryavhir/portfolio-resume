@@ -628,3 +628,250 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   max-width: 100%;
   height: auto;
 }
+
+/************ GitHub Dashboard Css ************/
+.github-dashboard {
+  padding: 80px 0;
+  background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
+  position: relative;
+}
+
+.github-dashboard::before {
+  content: "";
+  background: url('./asset/img/color-sharp.png') no-repeat center center;
+  background-size: cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.github-bx {
+  background: #151515;
+  border-radius: 64px;
+  text-align: center;
+  padding: 60px 50px;
+  margin-top: -60px;
+}
+
+.github-bx h2 {
+  font-size: 45px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.github-bx p {
+  color: #B8B8B8;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  margin-bottom: 40px;
+}
+
+.github-stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.github-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.github-stat-card .card-body {
+  padding: 20px;
+}
+
+.github-stat-card h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.github-stat-card p {
+  color: #B8B8B8;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.github-section-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  height: 100%;
+}
+
+.github-section-card .card-header {
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px 20px;
+}
+
+.github-section-card h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.github-section-card .card-body {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.commit-item {
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.commit-item:last-child {
+  border-bottom: none;
+}
+
+.commit-message {
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.commit-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commit-repo {
+  color: #F85D7F;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.commit-date {
+  color: #B8B8B8;
+  font-size: 12px;
+}
+
+.repo-item {
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.repo-item:last-child {
+  border-bottom: none;
+}
+
+.repo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.repo-header h5 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.repo-header h5 a {
+  color: #F85D7F;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.repo-header h5 a:hover {
+  color: #fff;
+}
+
+.repo-stats {
+  display: flex;
+  gap: 8px;
+}
+
+.repo-stats .badge {
+  font-size: 10px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.repo-description {
+  color: #B8B8B8;
+  font-size: 13px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.repo-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.repo-language {
+  display: flex;
+  align-items: center;
+  color: #B8B8B8;
+  font-size: 12px;
+}
+
+.language-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.repo-updated {
+  color: #B8B8B8;
+  font-size: 12px;
+}
+
+.contribution-graph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.github-stats-img,
+.github-streak-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .github-bx {
+    padding: 40px 25px;
+  }
+  
+  .github-bx h2 {
+    font-size: 32px;
+  }
+  
+  .repo-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .commit-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .contribution-graph {
+    flex-direction: column;
+  }
+}
