@@ -6,7 +6,6 @@ export const GitHubDashboard = () => {
     user: null,
     repos: [],
     commits: [],
-    totalCommits: 0,
     loading: true,
     error: null,
   });
@@ -53,31 +52,10 @@ export const GitHubDashboard = () => {
       const commitsArrays = await Promise.all(commitsPromises);
       const allCommits = commitsArrays.flat().slice(0, 5);
 
-      // Calculate total commits across all repos
-      const totalCommitsPromises = reposData.map((repo) =>
-        fetch(
-          `https://api.github.com/repos/${USERNAME}/${repo.name}/commits?per_page=1`,
-          { headers },
-        )
-          .then((res) => {
-            const linkHeader = res.headers.get('Link');
-            if (linkHeader) {
-              const match = linkHeader.match(/page=(\d+)>; rel="last"/);
-              return match ? parseInt(match[1]) : 1;
-            }
-            return 1;
-          })
-          .catch(() => 0)
-      );
-
-      const commitCounts = await Promise.all(totalCommitsPromises);
-      const totalCommits = commitCounts.reduce((sum, count) => sum + count, 0);
-
       setGithubData({
         user: userData,
         repos: reposData.slice(0, 6),
         commits: allCommits,
-        totalCommits: totalCommits,
         loading: false,
         error: null,
       });
@@ -159,53 +137,14 @@ export const GitHubDashboard = () => {
           <Col lg={12}>
             <div className="github-bx">
               <h2>GitHub Portfolio</h2>
-              <p>
-                Explore my coding journey through repositories, contributions,
-                and development activity
-              </p>
-
-              {/* GitHub Stats Cards */}
-              <Row className="mb-4">
-                <Col md={3} sm={6} className="mb-3">
-                  <Card className="github-stat-card">
-                    <Card.Body>
-                      <h3>{githubData.user?.public_repos || 0}</h3>
-                      <p>Public Repositories</p>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={3} sm={6} className="mb-3">
-                  <Card className="github-stat-card">
-                    <Card.Body>
-                      <h3>{githubData.totalCommits || 0}</h3>
-                      <p>Total Commits</p>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={3} sm={6} className="mb-3">
-                  <Card className="github-stat-card">
-                    <Card.Body>
-                      <h3>{githubData.user?.followers || 0}</h3>
-                      <p>Followers</p>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={3} sm={6} className="mb-3">
-                  <Card className="github-stat-card">
-                    <Card.Body>
-                      <h3>{githubData.user?.following || 0}</h3>
-                      <p>Following</p>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
+              <p>Explore my coding journey through repositories, contributions, and development activity</p>
 
               {/* Repositories Grid */}
               <Row>
                 <Col lg={12}>
                   <Card className="github-section-card">
                     <Card.Header>
-                      <h4>Recent Repositories</h4>
+                      <h4>Top Repositories</h4>
                     </Card.Header>
                     <Card.Body>
                       <Row>
@@ -231,9 +170,7 @@ export const GitHubDashboard = () => {
                                   </Badge>
                                 </div>
                               </div>
-                              <p className="repo-description">
-                                {repo.description}
-                              </p>
+                              <p className="repo-description">{repo.description}</p>
                               <div className="repo-meta">
                                 {repo.language && (
                                   <span className="repo-language">
