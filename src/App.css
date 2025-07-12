@@ -815,20 +815,20 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .repo-item {
-  padding: 18px 0;
-  border-bottom: 1px solid rgba(170, 54, 124, 0.2);
+  padding: 20px;
+  border: 1px solid rgba(170, 54, 124, 0.3);
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.1) 0%, rgba(74, 47, 189, 0.1) 100%);
   transition: all 0.3s ease;
-}
-
-.repo-item:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
+  height: 100%;
 }
 
 .repo-item:hover {
-  background: rgba(170, 54, 124, 0.1);
-  border-radius: 8px;
-  padding-left: 10px;
-  padding-right: 10px;
+  transform: translateY(-8px);
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.25) 0%, rgba(74, 47, 189, 0.25) 100%);
+  border-color: rgba(170, 54, 124, 0.6);
+  box-shadow: 0 20px 45px rgba(170, 54, 124, 0.4);
 }
 
 .repo-header {

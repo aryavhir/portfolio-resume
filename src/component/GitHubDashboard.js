@@ -139,118 +139,60 @@ export const GitHubDashboard = () => {
               <h2>GitHub Portfolio</h2>
               <p>Explore my coding journey through repositories, contributions, and development activity</p>
 
-              {/* GitHub Stats Overview */}
-              <Row className="mb-4">
-                <Col md={3}>
-                  <Card className="github-stat-card">
-                    <Card.Body className="text-center">
-                      <h3>{githubData.user?.public_repos || 0}</h3>
-                      <p>Repositories</p>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={3}>
-                  <Card className="github-stat-card">
-                    <Card.Body className="text-center">
-                      <h3>{githubData.user?.followers || 0}</h3>
-                      <p>Followers</p>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={3}>
-                  <Card className="github-stat-card">
-                    <Card.Body className="text-center">
-                      <h3>{githubData.user?.following || 0}</h3>
-                      <p>Following</p>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={3}>
-                  <Card className="github-stat-card">
-                    <Card.Body className="text-center">
-                      <h3>{githubData.user?.public_gists || 0}</h3>
-                      <p>Gists</p>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
-
-              {/* Recent Commits */}
+              {/* Repositories Grid */}
               <Row>
-                <Col md={6}>
-                  <Card className="github-section-card">
-                    <Card.Header>
-                      <h4>Recent Commits</h4>
-                    </Card.Header>
-                    <Card.Body>
-                      {githubData.commits.map((commit, index) => (
-                        <div key={index} className="commit-item">
-                          <div className="commit-message">
-                            <strong>
-                              {commit.commit.message.split("\n")[0]}
-                            </strong>
-                          </div>
-                          <div className="commit-meta">
-                            <span className="commit-repo">{commit.repo}</span>
-                            <span className="commit-date">
-                              {formatDate(commit.commit.author.date)}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </Card.Body>
-                  </Card>
-                </Col>
-
-                {/* Pinned Repositories */}
-                <Col md={6}>
+                <Col lg={12}>
                   <Card className="github-section-card">
                     <Card.Header>
                       <h4>Top Repositories</h4>
                     </Card.Header>
                     <Card.Body>
-                      {githubData.repos.map((repo, index) => (
-                        <div key={index} className="repo-item">
-                          <div className="repo-header">
-                            <h5>
-                              <a
-                                href={repo.html_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {repo.name}
-                              </a>
-                            </h5>
-                            <div className="repo-stats">
-                              <Badge variant="outline-primary">
-                                ⭐ {repo.stargazers_count}
-                              </Badge>
-                              <Badge variant="outline-secondary">
-                                🍴 {repo.forks_count}
-                              </Badge>
+                      <Row>
+                        {githubData.repos.map((repo, index) => (
+                          <Col md={6} key={index} className="mb-4">
+                            <div className="repo-item">
+                              <div className="repo-header">
+                                <h5>
+                                  <a
+                                    href={repo.html_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {repo.name}
+                                  </a>
+                                </h5>
+                                <div className="repo-stats">
+                                  <Badge variant="outline-primary">
+                                    ⭐ {repo.stargazers_count}
+                                  </Badge>
+                                  <Badge variant="outline-secondary">
+                                    🍴 {repo.forks_count}
+                                  </Badge>
+                                </div>
+                              </div>
+                              <p className="repo-description">{repo.description}</p>
+                              <div className="repo-meta">
+                                {repo.language && (
+                                  <span className="repo-language">
+                                    <span
+                                      className="language-color"
+                                      style={{
+                                        backgroundColor: getLanguageColor(
+                                          repo.language,
+                                        ),
+                                      }}
+                                    ></span>
+                                    {repo.language}
+                                  </span>
+                                )}
+                                <span className="repo-updated">
+                                  Updated {formatDate(repo.updated_at)}
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                          <p className="repo-description">{repo.description}</p>
-                          <div className="repo-meta">
-                            {repo.language && (
-                              <span className="repo-language">
-                                <span
-                                  className="language-color"
-                                  style={{
-                                    backgroundColor: getLanguageColor(
-                                      repo.language,
-                                    ),
-                                  }}
-                                ></span>
-                                {repo.language}
-                              </span>
-                            )}
-                            <span className="repo-updated">
-                              Updated {formatDate(repo.updated_at)}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
+                          </Col>
+                        ))}
+                      </Row>
                     </Card.Body>
                   </Card>
                 </Col>
