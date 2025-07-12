@@ -2,7 +2,6 @@ import React, { Suspense, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Box, Sphere, Cylinder, Plane, Text, Html } from '@react-three/drei';
 import { Container, Row, Col } from 'react-bootstrap';
-import * as THREE from 'three';
 
 // Animated Coffee Steam Component
 const CoffeeSteam = ({ position }) => {
