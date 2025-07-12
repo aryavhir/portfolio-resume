@@ -928,14 +928,14 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-weight: 600;
 }
 
-.repo-header h5 a {
+.repo-name {
   color: #F85D7F;
   text-decoration: none;
   transition: color 0.3s ease;
   font-weight: 700;
 }
 
-.repo-header h5 a:hover {
+.repo-item:hover .repo-name {
   color: #fff;
   text-shadow: 0 0 8px rgba(170, 54, 124, 0.6);
 }

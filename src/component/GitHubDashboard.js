@@ -153,16 +153,16 @@ export const GitHubDashboard = () => {
                       <Row>
                         {githubData.repos.map((repo, index) => (
                           <Col md={6} key={index} className="mb-4">
-                            <div className="repo-item">
+                            <div 
+                              className="repo-item"
+                              onClick={() => window.open(repo.html_url, '_blank')}
+                              style={{ cursor: 'pointer' }}
+                            >
                               <div className="repo-header">
                                 <h5>
-                                  <a
-                                    href={repo.html_url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                  >
+                                  <span className="repo-name">
                                     {repo.name}
-                                  </a>
+                                  </span>
                                 </h5>
                                 <div className="repo-stats">
                                   <Badge variant="outline-primary">
