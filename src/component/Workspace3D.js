@@ -1,8 +1,7 @@
 import React, { Suspense, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Box, Sphere, Cylinder, Plane, Text, Html, useTexture, Stars, Cloud, Sparkles } from '@react-three/drei';
+import { OrbitControls, Box, Sphere, Cylinder, Plane, Text, Html, Stars, Sparkles } from '@react-three/drei';
 import { Container, Row, Col } from 'react-bootstrap';
-import * as THREE from 'three';
 
 // Integrated Terminal Component inside the 3D Monitor
 const IntegratedTerminal = ({ isFullscreen, onToggleFullscreen }) => {
@@ -377,32 +376,86 @@ const SpinningFan = ({ position }) => {
   );
 };
 
-// Desk Component
-const Desk = () => {
+// Enhanced Room with Better Design
+const Room = () => {
   return (
     <group>
-      {/* Desk surface */}
-      <Box position={[0, -0.5, 0]} args={[4, 0.1, 2.5]} castShadow receiveShadow>
-        <meshStandardMaterial color="#8B4513" />
-      </Box>
+      {/* Floor with better texture */}
+      <Plane position={[0, -2, 0]} args={[12, 12]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <meshStandardMaterial color="#2a2a2a" roughness={0.8} metalness={0.1} />
+      </Plane>
 
-      {/* Desk legs */}
-      {[
-        [-1.8, -1.2, 1],
-        [1.8, -1.2, 1],
-        [-1.8, -1.2, -1],
-        [1.8, -1.2, -1]
-      ].map((pos, index) => (
-        <Box key={index} position={pos} args={[0.1, 1.4, 0.1]} castShadow>
-          <meshStandardMaterial color="#654321" />
-        </Box>
-      ))}
+      {/* Back wall */}
+      <Plane position={[0, 1, -4]} args={[12, 6]} receiveShadow>
+        <meshStandardMaterial color="#1a1a1a" roughness={0.9} />
+      </Plane>
+
+      {/* Side walls */}
+      <Plane position={[-6, 1, 0]} args={[8, 6]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
+        <meshStandardMaterial color="#1a1a1a" roughness={0.9} />
+      </Plane>
+      <Plane position={[6, 1, 0]} args={[8, 6]} rotation={[0, -Math.PI / 2, 0]} receiveShadow>
+        <meshStandardMaterial color="#1a1a1a" roughness={0.9} />
+      </Plane>
+
+      {/* Ceiling */}
+      <Plane position={[0, 4, 0]} args={[12, 12]} rotation={[Math.PI / 2, 0, 0]} receiveShadow>
+        <meshStandardMaterial color="#0f0f0f" roughness={0.9} />
+      </Plane>
     </group>
   );
 };
 
-// Interactive Monitor Component with Integrated Terminal
-const Monitor = ({ isFullscreen, onToggleFullscreen }) => {
+// Modern Desk Setup
+const ModernDesk = () => {
+  const [lightsOn, setLightsOn] = useState(true);
+
+  return (
+    <group 
+      onClick={() => setLightsOn(!lightsOn)}
+      onPointerOver={() => document.body.style.cursor = 'pointer'}
+      onPointerOut={() => document.body.style.cursor = 'auto'}
+    >
+      {/* Main desk surface */}
+      <Box position={[0, -0.5, 0]} args={[5, 0.1, 3]} castShadow receiveShadow>
+        <meshStandardMaterial color="#1a1a1a" roughness={0.3} metalness={0.7} />
+      </Box>
+
+      {/* Desk legs with modern design */}
+      <Box position={[-2.2, -1.2, 1.2]} args={[0.15, 1.4, 0.15]} castShadow>
+        <meshStandardMaterial color="#333" metalness={0.8} roughness={0.2} />
+      </Box>
+      <Box position={[2.2, -1.2, 1.2]} args={[0.15, 1.4, 0.15]} castShadow>
+        <meshStandardMaterial color="#333" metalness={0.8} roughness={0.2} />
+      </Box>
+      <Box position={[-2.2, -1.2, -1.2]} args={[0.15, 1.4, 0.15]} castShadow>
+        <meshStandardMaterial color="#333" metalness={0.8} roughness={0.2} />
+      </Box>
+      <Box position={[2.2, -1.2, -1.2]} args={[0.15, 1.4, 0.15]} castShadow>
+        <meshStandardMaterial color="#333" metalness={0.8} roughness={0.2} />
+      </Box>
+
+      {/* RGB lighting strips */}
+      <Box position={[0, -0.45, 1.4]} args={[4.8, 0.05, 0.1]} castShadow>
+        <meshStandardMaterial 
+          color={lightsOn ? "#AA367C" : "#333"} 
+          emissive={lightsOn ? "#AA367C" : "#000"}
+          emissiveIntensity={lightsOn ? 0.5 : 0}
+        />
+      </Box>
+      <Box position={[0, -0.45, -1.4]} args={[4.8, 0.05, 0.1]} castShadow>
+        <meshStandardMaterial 
+          color={lightsOn ? "#4A2FBD" : "#333"} 
+          emissive={lightsOn ? "#4A2FBD" : "#000"}
+          emissiveIntensity={lightsOn ? 0.5 : 0}
+        />
+      </Box>
+    </group>
+  );
+};
+
+// Enhanced Monitor Setup
+const MonitorSetup = ({ isFullscreen, onToggleFullscreen }) => {
   const [isHovered, setIsHovered] = useState(false);
   const screenRef = useRef();
 
@@ -415,26 +468,26 @@ const Monitor = ({ isFullscreen, onToggleFullscreen }) => {
 
   return (
     <group position={[0, 0, -0.8]}>
+      {/* Monitor arm */}
+      <Box position={[0, 0.1, -0.2]} args={[0.08, 0.6, 0.08]} castShadow>
+        <meshStandardMaterial color="#333" metalness={0.8} roughness={0.2} />
+      </Box>
+
       {/* Monitor base */}
-      <Cylinder position={[0, -0.35, 0]} args={[0.15, 0.15, 0.1]} castShadow>
-        <meshStandardMaterial color="#333" />
+      <Cylinder position={[0, -0.35, 0]} args={[0.2, 0.2, 0.1]} castShadow>
+        <meshStandardMaterial color="#1a1a1a" metalness={0.9} roughness={0.1} />
       </Cylinder>
 
-      {/* Monitor stand */}
-      <Box position={[0, -0.15, 0]} args={[0.05, 0.3, 0.05]} castShadow>
-        <meshStandardMaterial color="#333" />
+      {/* Monitor bezel */}
+      <Box position={[0, 0.2, 0]} args={[1.3, 0.9, 0.12]} castShadow>
+        <meshStandardMaterial color="#0a0a0a" metalness={0.8} roughness={0.2} />
       </Box>
 
-      {/* Monitor screen */}
-      <Box position={[0, 0.2, 0]} args={[1.2, 0.8, 0.1]} castShadow>
-        <meshStandardMaterial color="#000" />
-      </Box>
-
-      {/* Interactive screen content */}
+      {/* Interactive screen */}
       <Plane 
         ref={screenRef}
-        position={[0, 0.2, 0.06]} 
-        args={[1.18, 0.78]} 
+        position={[0, 0.2, 0.07]} 
+        args={[1.2, 0.8]} 
         onClick={onToggleFullscreen}
         onPointerOver={() => {
           setIsHovered(true);
@@ -448,15 +501,28 @@ const Monitor = ({ isFullscreen, onToggleFullscreen }) => {
         <meshStandardMaterial 
           color="#0d1117"
           emissive="#0d1117"
-          emissiveIntensity={0.3}
+          emissiveIntensity={isHovered ? 0.5 : 0.3}
           transparent
           opacity={0.9}
         />
       </Plane>
 
+      {/* Screen glow effect */}
+      {isHovered && (
+        <Plane position={[0, 0.2, 0.08]} args={[1.4, 1]} transparent>
+          <meshStandardMaterial 
+            color="#AA367C" 
+            emissive="#AA367C"
+            emissiveIntensity={0.2}
+            transparent
+            opacity={0.3}
+          />
+        </Plane>
+      )}
+
       {/* Terminal HTML overlay */}
       <Html
-        position={[0, 0.2, 0.07]}
+        position={[0, 0.2, 0.08]}
         transform
         distanceFactor={1}
         style={{
@@ -474,84 +540,56 @@ const Monitor = ({ isFullscreen, onToggleFullscreen }) => {
   );
 };
 
-// Laptop Component
-const Laptop = () => {
-  return (
-    <group position={[1.5, -0.35, 0.5]}>
-      {/* Laptop base */}
-      <Box position={[0, 0, 0]} args={[1.2, 0.1, 0.8]} castShadow>
-        <meshStandardMaterial color="#c0c0c0" />
-      </Box>
-
-      {/* Laptop screen */}
-      <Box position={[0, 0.4, -0.35]} args={[1.2, 0.8, 0.05]} castShadow>
-        <meshStandardMaterial color="#333" />
-      </Box>
-
-      {/* Laptop screen glow */}
-      <Plane position={[0, 0.4, -0.32]} args={[1.1, 0.7]}>
-        <meshStandardMaterial 
-          color="#0066cc" 
-          emissive="#0066cc" 
-          emissiveIntensity={0.2}
-          transparent
-          opacity={0.6}
-        />
-      </Plane>
-
-      {/* Laptop keyboard */}
-      <Plane position={[0, 0.06, 0.1]} args={[1, 0.6]} rotation={[-Math.PI / 2, 0, 0]}>
-        <meshStandardMaterial color="#222" />
-      </Plane>
-    </group>
-  );
-};
-
-// Coffee Cup Component with Steam
-const EnhancedCoffeeCup = () => {
+// Interactive Coffee Setup
+const InteractiveCoffee = () => {
   const [isHot, setIsHot] = useState(true);
+  const [coffeeLevel, setCoffeeLevel] = useState(0.8);
   const cupRef = useRef();
 
   useFrame((state) => {
     if (cupRef.current) {
-      cupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+      cupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.05;
     }
   });
+
+  const handleCoffeeClick = () => {
+    setIsHot(!isHot);
+    setCoffeeLevel(prev => prev > 0.2 ? prev - 0.1 : 1.0);
+  };
 
   return (
     <group 
       ref={cupRef}
-      position={[-1.5, -0.35, 0.5]}
-      onClick={() => setIsHot(!isHot)}
+      position={[-1.8, -0.35, 0.8]}
+      onClick={handleCoffeeClick}
       onPointerOver={() => document.body.style.cursor = 'pointer'}
       onPointerOut={() => document.body.style.cursor = 'auto'}
     >
-      {/* Cup */}
+      {/* Coffee cup */}
       <Cylinder position={[0, 0.15, 0]} args={[0.15, 0.12, 0.25]} castShadow>
-        <meshStandardMaterial color={isHot ? "#8B4513" : "#654321"} />
+        <meshStandardMaterial color="#2a2a2a" roughness={0.1} metalness={0.9} />
       </Cylinder>
 
-      {/* Coffee */}
-      <Cylinder position={[0, 0.22, 0]} args={[0.14, 0.14, 0.05]} castShadow>
-        <meshStandardMaterial color={isHot ? "#4A2C2A" : "#3A1C1A"} />
+      {/* Coffee liquid */}
+      <Cylinder position={[0, 0.05 + (coffeeLevel * 0.2), 0]} args={[0.14, 0.14, coffeeLevel * 0.2]} castShadow>
+        <meshStandardMaterial color={isHot ? "#3a2317" : "#2a1a0f"} roughness={0.8} />
       </Cylinder>
 
       {/* Handle */}
       <Cylinder position={[0.2, 0.15, 0]} args={[0.02, 0.02, 0.15]} castShadow>
-        <meshStandardMaterial color="#8B4513" />
+        <meshStandardMaterial color="#2a2a2a" roughness={0.1} metalness={0.9} />
       </Cylinder>
 
-      {/* Interactive steam */}
-      {isHot && (
+      {/* Steam effects */}
+      {isHot && coffeeLevel > 0.3 && (
         <>
           <CoffeeSteam position={[0, 0.25, 0]} />
           <CoffeeSteam position={[0.05, 0.25, 0.05]} />
           <CoffeeSteam position={[-0.05, 0.25, -0.05]} />
-          
-          {/* Steam particles */}
+
           <Sparkles 
-            count={15} 
-            scale={0.3} 
+            count={8} 
+            scale={0.2} 
             size={1} 
             speed={1} 
             color="#ffffff"
@@ -559,268 +597,145 @@ const EnhancedCoffeeCup = () => {
           />
         </>
       )}
-    </group>
-  );
-};
 
-// Keyboard Component
-const Keyboard = () => {
-  return (
-    <group position={[0.5, -0.4, 0.8]}>
-      {/* Keyboard base */}
-      <Box position={[0, 0.03, 0]} args={[1.5, 0.06, 0.5]} castShadow>
-        <meshStandardMaterial color="#333" />
-      </Box>
-
-      {/* Keys */}
-      {Array.from({ length: 10 }, (_, i) => (
-        <Box key={i} position={[(-0.6 + i * 0.15), 0.065, 0]} args={[0.12, 0.02, 0.12]} castShadow>
-          <meshStandardMaterial color="#666" />
-        </Box>
-      ))}
-    </group>
-  );
-};
-
-// Mouse Component
-const Mouse = () => {
-  return (
-    <group position={[0.5, -0.4, 0.3]}>
-      <Box position={[0, 0.03, 0]} args={[0.12, 0.06, 0.18]} castShadow>
-        <meshStandardMaterial color="#333" />
-      </Box>
-    </group>
-  );
-};
-
-// Books Component
-const Books = () => {
-  return (
-    <group position={[1.8, -0.35, -0.8]}>
-      {/* Book 1 */}
-      <Box position={[0, 0.1, 0]} args={[0.3, 0.2, 0.05]} castShadow>
-        <meshStandardMaterial color="#8B0000" />
-      </Box>
-
-      {/* Book 2 */}
-      <Box position={[0, 0.1, 0.06]} args={[0.3, 0.2, 0.05]} castShadow>
-        <meshStandardMaterial color="#0066cc" />
-      </Box>
-
-      {/* Book 3 */}
-      <Box position={[0, 0.1, 0.12]} args={[0.3, 0.2, 0.05]} castShadow>
-        <meshStandardMaterial color="#228B22" />
-      </Box>
-    </group>
-  );
-};
-
-// Plant Component
-const Plant = () => {
-  return (
-    <group position={[-1.8, -0.35, -0.8]}>
-      {/* Pot */}
-      <Cylinder position={[0, 0.1, 0]} args={[0.15, 0.12, 0.2]} castShadow>
-        <meshStandardMaterial color="#8B4513" />
-      </Cylinder>
-
-      {/* Soil */}
-      <Cylinder position={[0, 0.18, 0]} args={[0.14, 0.14, 0.05]} castShadow>
-        <meshStandardMaterial color="#654321" />
-      </Cylinder>
-
-      {/* Plant stem */}
-      <Cylinder position={[0, 0.35, 0]} args={[0.02, 0.02, 0.3]} castShadow>
-        <meshStandardMaterial color="#228B22" />
-      </Cylinder>
-
-      {/* Leaves */}
-      <Sphere position={[-0.1, 0.5, 0]} args={[0.08]} castShadow>
-        <meshStandardMaterial color="#32CD32" />
-      </Sphere>
-      <Sphere position={[0.1, 0.45, 0]} args={[0.06]} castShadow>
-        <meshStandardMaterial color="#32CD32" />
-      </Sphere>
-      <Sphere position={[0, 0.55, 0.1]} args={[0.07]} castShadow>
-        <meshStandardMaterial color="#32CD32" />
-      </Sphere>
-    </group>
-  );
-};
-
-// CPU Tower with Spinning Fan
-const CPUTower = () => {
-  return (
-    <group position={[-1.8, -0.8, 0.5]}>
-      {/* Main tower */}
-      <Box position={[0, 0.4, 0]} args={[0.3, 0.8, 0.4]} castShadow>
-        <meshStandardMaterial color="#2a2a2a" />
-      </Box>
-
-      {/* Front panel */}
-      <Box position={[0.16, 0.4, 0]} args={[0.02, 0.75, 0.35]} castShadow>
-        <meshStandardMaterial color="#1a1a1a" />
-      </Box>
-
-      {/* Power button */}
-      <Cylinder position={[0.17, 0.6, 0]} args={[0.03, 0.03, 0.01]} castShadow>
-        <meshStandardMaterial color="#00ff00" emissive="#00ff00" emissiveIntensity={0.5} />
-      </Cylinder>
-
-      {/* Spinning fan */}
-      <SpinningFan position={[0.17, 0.2, 0]} />
-    </group>
-  );
-};
-
-// Floating Code Particles
-const FloatingParticle = ({ position, color, symbol }) => {
-  const meshRef = useRef();
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2 + position[0]) * 0.2;
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.5;
-    }
-  });
-
-  return (
-    <group ref={meshRef} position={position}>
+      {/* Coffee status indicator */}
       <Text
-        fontSize={0.1}
-        color={color}
+        position={[0, 0.5, 0]}
+        fontSize={0.08}
+        color={isHot ? "#ff6b6b" : "#4ecdc4"}
         anchorX="center"
         anchorY="middle"
-        font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
       >
-        {symbol}
+        {isHot ? "HOT" : "COLD"}
       </Text>
     </group>
   );
 };
 
-// Holographic Display Component
-const HolographicDisplay = () => {
-  const meshRef = useRef();
-  const [isHovered, setIsHovered] = useState(false);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.5;
-      meshRef.current.position.y = 1.5 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
-      
-      const scale = isHovered ? 1.2 : 1;
-      meshRef.current.scale.setScalar(scale);
-    }
-  });
-
+// Modern Peripheral Setup
+const PeripheralSetup = () => {
   return (
-    <group 
-      ref={meshRef} 
-      position={[0, 1.5, 0]}
-      onPointerOver={() => setIsHovered(true)}
-      onPointerOut={() => setIsHovered(false)}
-    >
-      {/* Holographic frame */}
-      <Box args={[0.8, 0.6, 0.02]}>
+    <group>
+      {/* Gaming keyboard */}
+      <Box position={[0.5, -0.4, 0.8]} args={[1.6, 0.08, 0.6]} castShadow>
+        <meshStandardMaterial color="#1a1a1a" roughness={0.3} metalness={0.7} />
+      </Box>
+
+      {/* RGB key highlights */}
+      {Array.from({ length: 12 }, (_, i) => (
+        <Box key={i} position={[(-0.7 + i * 0.12), -0.35, 0.8]} args={[0.1, 0.03, 0.1]} castShadow>
+          <meshStandardMaterial 
+            color="#AA367C" 
+            emissive="#AA367C" 
+            emissiveIntensity={0.3}
+          />
+        </Box>
+      ))}
+
+      {/* Gaming mouse */}
+      <Box position={[0.8, -0.38, 0.3]} args={[0.14, 0.08, 0.2]} castShadow>
+        <meshStandardMaterial color="#1a1a1a" roughness={0.1} metalness={0.9} />
+      </Box>
+
+      {/* Mouse RGB glow */}
+      <Cylinder position={[0.8, -0.35, 0.3]} args={[0.08, 0.08, 0.02]} castShadow>
         <meshStandardMaterial 
-          color="#00ffff" 
-          emissive="#00ffff" 
-          emissiveIntensity={0.3}
+          color="#4A2FBD" 
+          emissive="#4A2FBD" 
+          emissiveIntensity={0.4}
           transparent
           opacity={0.6}
         />
+      </Cylinder>
+
+      {/* Mousepad */}
+      <Plane position={[0.8, -0.44, 0.3]} args={[0.8, 0.6]} rotation={[-Math.PI / 2, 0, 0]}>
+        <meshStandardMaterial color="#222" roughness={0.9} />
+      </Plane>
+    </group>
+  );
+};
+
+// Tech Accessories
+const TechAccessories = () => {
+  return (
+    <group>
+      {/* Modern plant pot */}
+      <Cylinder position={[-2.2, -0.3, -0.8]} args={[0.18, 0.15, 0.25]} castShadow>
+        <meshStandardMaterial color="#2a2a2a" roughness={0.2} metalness={0.8} />
+      </Cylinder>
+
+      {/* Plant */}
+      <Cylinder position={[-2.2, -0.1, -0.8]} args={[0.02, 0.02, 0.4]} castShadow>
+        <meshStandardMaterial color="#2d5a2d" />
+      </Cylinder>
+
+      <Sphere position={[-2.15, 0.15, -0.8]} args={[0.08]} castShadow>
+        <meshStandardMaterial color="#3a7a3a" />
+      </Sphere>
+      <Sphere position={[-2.25, 0.12, -0.8]} args={[0.06]} castShadow>
+        <meshStandardMaterial color="#3a7a3a" />
+      </Sphere>
+
+      {/* Modern speaker */}
+      <Cylinder position={[2.2, -0.2, -0.8]} args={[0.15, 0.15, 0.3]} castShadow>
+        <meshStandardMaterial color="#1a1a1a" roughness={0.1} metalness={0.9} />
+      </Cylinder>
+
+      {/* Speaker grill */}
+      <Cylinder position={[2.2, -0.05, -0.8]} args={[0.12, 0.12, 0.02]} castShadow>
+        <meshStandardMaterial color="#333" roughness={0.8} />
+      </Cylinder>
+
+      {/* CPU Tower */}
+      <Box position={[-2.2, -0.6, 0.8]} args={[0.4, 1, 0.5]} castShadow>
+        <meshStandardMaterial color="#1a1a1a" roughness={0.1} metalness={0.9} />
       </Box>
-      
-      {/* Holographic content */}
-      <Text
-        position={[0, 0, 0.02]}
-        fontSize={0.08}
-        color="#00ffff"
-        anchorX="center"
-        anchorY="middle"
-        font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
-      >
-        {isHovered ? "INTERACTIVE MODE\nENGAGED" : "PORTFOLIO\nSYSTEM ONLINE"}
-      </Text>
 
-      {/* Holographic particles */}
-      <Sparkles count={20} scale={0.5} size={2} speed={0.5} color="#00ffff" />
+      {/* CPU Power LED */}
+      <Cylinder position={[-2, 0.1, 0.8]} args={[0.03, 0.03, 0.02]} castShadow>
+        <meshStandardMaterial 
+          color="#00ff00" 
+          emissive="#00ff00" 
+          emissiveIntensity={0.8}
+        />
+      </Cylinder>
+
+      {/* CPU Fan */}
+      <SpinningFan position={[-2, -0.2, 1.05]} />
     </group>
   );
 };
 
-// Interactive Particle System
-const InteractiveParticles = () => {
-  const { camera, mouse } = useThree();
-  const particlesRef = useRef();
-
-  useFrame((state) => {
-    if (particlesRef.current) {
-      particlesRef.current.rotation.x = mouse.y * 0.1;
-      particlesRef.current.rotation.y = mouse.x * 0.1;
-    }
-  });
-
+// Enhanced Lighting System
+const LightingSystem = () => {
   return (
-    <group ref={particlesRef}>
-      <Sparkles 
-        count={100} 
-        scale={8} 
-        size={3} 
-        speed={0.3} 
-        color="#AA367C"
-        opacity={0.6}
+    <>
+      {/* Main ambient lighting */}
+      <ambientLight intensity={0.3} />
+
+      {/* Key light */}
+      <directionalLight
+        position={[5, 8, 5]}
+        intensity={1.2}
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-camera-far={50}
+        shadow-camera-left={-8}
+        shadow-camera-right={8}
+        shadow-camera-top={8}
+        shadow-camera-bottom={-8}
       />
-    </group>
-  );
-};
 
-// Floating Workspace Tools
-const FloatingTools = () => {
-  const toolsRef = useRef();
+      {/* Accent lighting */}
+      <pointLight position={[0, 2, 0]} intensity={0.6} color="#ffffff" />
+      <pointLight position={[-3, 1, 2]} intensity={0.4} color="#AA367C" />
+      <pointLight position={[3, 1, 2]} intensity={0.4} color="#4A2FBD" />
 
-  useFrame((state) => {
-    if (toolsRef.current) {
-      toolsRef.current.children.forEach((child, index) => {
-        child.position.y = Math.sin(state.clock.elapsedTime * 2 + index) * 0.2;
-        child.rotation.y = state.clock.elapsedTime * 0.5 + index;
-      });
-    }
-  });
-
-  const tools = [
-    { position: [3, 2, 0], color: "#ff6b6b", symbol: "💻" },
-    { position: [-3, 2, 0], color: "#4ecdc4", symbol: "⚙️" },
-    { position: [2, 2.5, 2], color: "#ffa657", symbol: "🚀" },
-    { position: [-2, 2.5, 2], color: "#7ee787", symbol: "🎨" },
-  ];
-
-  return (
-    <group ref={toolsRef}>
-      {tools.map((tool, index) => (
-        <group key={index} position={tool.position}>
-          <Sphere args={[0.15]}>
-            <meshStandardMaterial 
-              color={tool.color}
-              emissive={tool.color}
-              emissiveIntensity={0.3}
-              transparent
-              opacity={0.8}
-            />
-          </Sphere>
-          <Text
-            position={[0, 0, 0.2]}
-            fontSize={0.15}
-            color="#fff"
-            anchorX="center"
-            anchorY="middle"
-          >
-            {tool.symbol}
-          </Text>
-        </group>
-      ))}
-    </group>
+      {/* Monitor glow */}
+      <pointLight position={[0, 0.5, -0.5]} intensity={0.3} color="#0d1117" />
+    </>
   );
 };
 
@@ -898,61 +813,26 @@ const FullscreenTerminal = ({ isFullscreen, onToggleFullscreen }) => {
 const Scene = ({ isFullscreen, onToggleFullscreen }) => {
   return (
     <>
-      {/* Lighting */}
-      <ambientLight intensity={0.4} />
-      <directionalLight
-        position={[5, 10, 5]}
-        intensity={1}
-        castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
-        shadow-camera-far={50}
-        shadow-camera-left={-10}
-        shadow-camera-right={10}
-        shadow-camera-top={10}
-        shadow-camera-bottom={-10}
-      />
-      <pointLight position={[0, 2, 0]} intensity={0.5} />
-      <pointLight position={[-2, 1, 2]} intensity={0.3} color="#ff6b6b" />
-      <pointLight position={[2, 1, 2]} intensity={0.3} color="#4ecdc4" />
+      <LightingSystem />
 
-      {/* Floor */}
-      <Plane position={[0, -2, 0]} args={[20, 20]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <meshStandardMaterial color="#f0f0f0" />
-      </Plane>
+      <Room />
+      <ModernDesk />
+      <MonitorSetup isFullscreen={isFullscreen} onToggleFullscreen={onToggleFullscreen} />
+      <InteractiveCoffee />
+      <PeripheralSetup />
+      <TechAccessories />
 
-      {/* Workspace components */}
-      <Desk />
-      <Monitor isFullscreen={isFullscreen} onToggleFullscreen={onToggleFullscreen} />
-      <Laptop />
-      <EnhancedCoffeeCup />
-      <Keyboard />
-      <Mouse />
-      <Books />
-      <Plant />
-      <CPUTower />
-
-      {/* Environment effects */}
-      <Stars radius={50} depth={50} count={1000} factor={4} saturation={0.5} speed={0.5} />
-      <Cloud position={[-10, 5, -10]} speed={0.2} opacity={0.3} />
-      <Cloud position={[10, 5, 10]} speed={0.3} opacity={0.2} />
-
-      {/* Floating code particles */}
-      <FloatingParticle position={[2, 1, 1]} color="#AA367C" symbol="{}" />
-      <FloatingParticle position={[-2, 1.5, 1]} color="#4A2FBD" symbol="</>" />
-      <FloatingParticle position={[1, 2, -1]} color="#7ee787" symbol="()" />
-      <FloatingParticle position={[-1, 1.8, -1]} color="#ffa657" symbol="[]" />
-      <FloatingParticle position={[0, 2.5, 0]} color="#79c0ff" symbol=";" />
-      <FloatingParticle position={[2.5, 1.2, -0.5]} color="#f85149" symbol="<>" />
+      {/* Subtle environment effects */}
+      <Stars radius={50} depth={50} count={500} factor={2} saturation={0.3} speed={0.3} />
 
       {/* Controls */}
       <OrbitControls
         enablePan={!isFullscreen}
         enableZoom={!isFullscreen}
         enableRotate={!isFullscreen}
-        minDistance={3}
-        maxDistance={12}
-        maxPolarAngle={Math.PI / 2}
+        minDistance={4}
+        maxDistance={15}
+        maxPolarAngle={Math.PI / 2.2}
         minPolarAngle={Math.PI / 6}
         autoRotate={false}
         enableDamping={true}
@@ -996,11 +876,11 @@ export const Workspace3D = () => {
         <Row>
           <Col lg={12}>
             <div className="workspace-3d-bx">
-              <h2>My 3D Interactive Workspace</h2>
+              <h2>My Modern 3D Workspace</h2>
               <p>
-                Experience a fully interactive 3D developer workspace with an integrated terminal! 
-                Click the monitor screen to access the built-in terminal in fullscreen mode. 
-                The terminal runs inside the 3D environment and features full command functionality.
+                Experience a professionally designed 3D developer workspace with realistic lighting and interactive elements. 
+                Click the monitor screen to access the integrated terminal in fullscreen mode. Interact with various objects 
+                like the coffee cup and RGB lighting to see dynamic responses.
               </p>
 
               <div className="canvas-container">
@@ -1021,16 +901,16 @@ export const Workspace3D = () => {
 
               <div className="workspace-controls-info">
                 <p>
-                  <strong>Interactive Features:</strong> Click the monitor screen to access the integrated terminal in fullscreen mode!
+                  <strong>Interactive Features:</strong> Click monitor for terminal • Click coffee cup to toggle temperature • Click desk for RGB lighting
                 </p>
                 <p>
-                  <strong>Terminal Commands:</strong> Type "help" in the terminal to see available commands • Full command history • Interactive responses
+                  <strong>Terminal Commands:</strong> Type "help" for available commands • Full command history • Interactive system responses
                 </p>
                 <p>
-                  <strong>Navigation:</strong> Drag to rotate • Scroll to zoom • Right-click to pan • ESC to exit fullscreen terminal
+                  <strong>Navigation:</strong> Drag to rotate • Scroll to zoom • ESC to exit fullscreen terminal mode
                 </p>
                 <p>
-                  <strong>3D Elements:</strong> Interactive coffee cup • Spinning CPU fan • Floating particles • Dynamic lighting • Steam effects
+                  <strong>Modern Elements:</strong> RGB lighting effects • Realistic materials • Dynamic shadows • Professional aesthetics
                 </p>
               </div>
             </div>
