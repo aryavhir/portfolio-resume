@@ -9,7 +9,6 @@ export const Terminal = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [currentPath, setCurrentPath] = useState("~");
   const [isAIMode, setIsAIMode] = useState(false);
-  const [aiConversation, setAiConversation] = useState([]);
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -196,7 +195,6 @@ export const Terminal = () => {
     if (isAIMode) {
       if (command === "end") {
         setIsAIMode(false);
-        setAiConversation([]);
         await typeWriter(`🤖 AI Session Ended
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Goodbye! You're back to the regular terminal.
@@ -216,8 +214,8 @@ Type your next question or 'end' to exit AI mode.`);
       case "help":
         await typeWriter(`Available Commands:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🤖 NEW! AI Assistant:
-  ai                - Chat with Gemini AI (type 'end' to exit)
+\x1b[32m🤖 NEW! AI Assistant:
+  ai                - Chat with Gemini AI (type 'end' to exit)\x1b[0m
 
 📋 General Commands:
   help              - Show this help menu
@@ -230,7 +228,6 @@ Type your next question or 'end' to exit AI mode.`);
   skills --details  - Detailed skill breakdown
   projects          - Show recent projects
   experience        - Work experience
-  education         - Educational background
 
 🎯 Interactive Commands:
   github            - GitHub statistics
@@ -360,8 +357,8 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
       case "contact":
         await typeWriter(`📞 Contact Information:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📧 Email: aryavhir.koul@example.com
-💼 LinkedIn: linkedin.com/in/aryavhir-koul
+📧 Email: aryavhirkoul1@gmail.com
+💼 LinkedIn: linkedin.com/in/aryavhir-koul-04a08k
 🐙 GitHub: github.com/aryavhir
 📱 Instagram: @aryavhir_koul
 
