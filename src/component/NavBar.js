@@ -28,11 +28,11 @@ export const NavBar = () => {
   useEffect(() => {
     // Apply theme to document body
     if (isDarkMode) {
-      document.body.classList.remove('light-mode');
-      document.body.classList.add('dark-mode');
+      document.body.classList.remove("light-mode");
+      document.body.classList.add("dark-mode");
     } else {
-      document.body.classList.remove('dark-mode');
-      document.body.classList.add('light-mode');
+      document.body.classList.remove("dark-mode");
+      document.body.classList.add("light-mode");
     }
   }, [isDarkMode]);
 
@@ -91,7 +91,7 @@ export const NavBar = () => {
                 }
                 onClick={() => onUpdateActiveLink("projects")}
               >
-                Attestations
+                Courses
               </Nav.Link>
             </Nav>
             <span className="navbar-text">
