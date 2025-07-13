@@ -544,6 +544,28 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
         );
         break;
 
+      case "resume":
+        await showLoading(1000);
+        await typeWriter(`📄 Resume Download:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 Downloading Aryavhir's Resume...
+📋 File: Aryavhir_Resume.pdf
+💾 Starting download now...`);
+        
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = '/attached_assets/Aryavhir_Resume (8)_1752396294063.pdf';
+        link.download = 'Aryavhir_Koul_Resume.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        setTimeout(async () => {
+          await typeWriter(`✅ Resume downloaded successfully!
+📧 For any inquiries: aryavhirkoul1@gmail.com`);
+        }, 1000);
+        break;
+
       case "ai":
         setIsAIMode(true);
         await typeWriter(`🤖 Gemini AI Assistant Activated
