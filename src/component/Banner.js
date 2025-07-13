@@ -4,15 +4,37 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./a.css";
 
-// Floating Astronaut Component
-const FloatingAstronaut = () => {
+// Shooting Stars Component
+const ShootingStars = () => {
+  const createShootingStar = (index) => {
+    const symbols = ['✦', '✧', '⭐', '✨', '⋆', '★', '☆', '✩'];
+    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+    const delay = Math.random() * 8;
+    const duration = 3 + Math.random() * 4;
+    const startX = Math.random() * 100;
+    const startY = Math.random() * 100;
+    
+    return (
+      <div
+        key={index}
+        className="shooting-star"
+        style={{
+          '--delay': `${delay}s`,
+          '--duration': `${duration}s`,
+          '--start-x': `${startX}%`,
+          '--start-y': `${startY}%`,
+          color: Math.random() > 0.5 ? 'rgba(170, 54, 124, 0.8)' : 'rgba(74, 47, 189, 0.8)',
+          fontSize: `${12 + Math.random() * 8}px`,
+        }}
+      >
+        {symbol}
+      </div>
+    );
+  };
+
   return (
-    <div className="floating-astronaut">
-      <img 
-        src="/logo.svg" 
-        alt="Floating Astronaut" 
-        className="astronaut-logo"
-      />
+    <div className="shooting-stars-container">
+      {Array.from({ length: 15 }, (_, i) => createShootingStar(i))}
     </div>
   );
 };
@@ -109,7 +131,7 @@ export const Banner = () => {
   return (
     <section className="banner" id="home">
       <NetworkBackground />
-      <FloatingAstronaut />
+      <ShootingStars />
       <h1 style={{ textAlign: "center" }}> Hello</h1>
       <div
         style={{
