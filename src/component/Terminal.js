@@ -18,7 +18,7 @@ export const Terminal = () => {
     const welcomeMessages = [
       {
         type: "system",
-        content: "Welcome to Aryavhir's Interactive Terminal! 🚀",
+        content: "Welcome to Aryavhir's Portfolio Terminal! 🚀",
       },
       {
         type: "system",
@@ -221,7 +221,7 @@ Type your next question or 'end' to exit AI mode.`);
         // Add green AI assistant section
         setOutput((prev) => [
           ...prev,
-          { type: "success", content: "🤖 NEW! AI Assistant:" },
+          { type: "success", content: "🤖 AI Assistant:" },
           {
             type: "success",
             content:
