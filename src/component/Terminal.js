@@ -10,8 +10,18 @@ export const Terminal = () => {
   const [currentPath, setCurrentPath] = useState("~");
   const [isAIMode, setIsAIMode] = useState(false);
   const [commandCount, setCommandCount] = useState(0);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedSuggestion, setSelectedSuggestion] = useState(-1);
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Available commands for suggestions
+  const availableCommands = [
+    'help', 'clear', 'whoami', 'history', 'ai', 'skills --list', 'skills --details',
+    'projects', 'experience', 'github', 'contact', 'joke', 'quote', 'music',
+    'time', 'matrix', 'ascii', 'resume'
+  ];
 
   // Welcome message on component mount
   useEffect(() => {
@@ -614,8 +624,66 @@ Type 'help' to see available commands.`);
     }
   };
 
+  // Handle input changes and show suggestions
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInput(value);
+    
+    if (value.trim() && !isAIMode) {
+      const filtered = availableCommands.filter(cmd => 
+        cmd.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filtered.slice(0, 5));
+      setShowSuggestions(filtered.length > 0);
+      setSelectedSuggestion(-1);
+    } else {
+      setShowSuggestions(false);
+      setSuggestions([]);
+    }
+  };
+
   // Handle key navigation
   const handleKeyDown = (e) => {
+    if (showSuggestions && suggestions.length > 0) {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setSelectedSuggestion(prev => 
+          prev < suggestions.length - 1 ? prev + 1 : prev
+        );
+        return;
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (selectedSuggestion > 0) {
+          setSelectedSuggestion(prev => prev - 1);
+        } else {
+          // Normal history navigation when no suggestion selected
+          if (commandHistory.length > 0) {
+            const newIndex =
+              historyIndex === -1
+                ? commandHistory.length - 1
+                : Math.max(0, historyIndex - 1);
+            setHistoryIndex(newIndex);
+            setInput(commandHistory[newIndex]);
+            setShowSuggestions(false);
+          }
+        }
+        return;
+      } else if (e.key === "Tab" || e.key === "Enter") {
+        if (selectedSuggestion >= 0) {
+          e.preventDefault();
+          setInput(suggestions[selectedSuggestion]);
+          setShowSuggestions(false);
+          setSelectedSuggestion(-1);
+          return;
+        }
+      } else if (e.key === "Escape") {
+        setShowSuggestions(false);
+        setSelectedSuggestion(-1);
+        return;
+      }
+    }
+    
+    // Original navigation logic
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (commandHistory.length > 0) {
@@ -625,6 +693,7 @@ Type 'help' to see available commands.`);
             : Math.max(0, historyIndex - 1);
         setHistoryIndex(newIndex);
         setInput(commandHistory[newIndex]);
+        setShowSuggestions(false);
       }
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -637,6 +706,7 @@ Type 'help' to see available commands.`);
           setHistoryIndex(newIndex);
           setInput(commandHistory[newIndex]);
         }
+        setShowSuggestions(false);
       }
     }
   };
@@ -670,22 +740,64 @@ Type 'help' to see available commands.`);
                 ))}
 
                 {!isTyping && (
-                  <form onSubmit={handleSubmit} className="terminal-input-form">
-                    <span className="terminal-prompt">
-                      {isAIMode ? "ai@gemini" : "aryavhir@portfolio"}:
-                      {currentPath}$
-                    </span>
-                    <input
-                      ref={inputRef}
-                      type="text"
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      className="terminal-input"
-                      autoComplete="off"
-                      autoFocus
-                    />
-                  </form>
+                  <div className="terminal-input-wrapper">
+                    <form onSubmit={handleSubmit} className="terminal-input-form">
+                      <span className="terminal-prompt">
+                        {isAIMode ? "ai@gemini" : "aryavhir@portfolio"}:
+                        {currentPath}$
+                      </span>
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={input}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyDown}
+                        onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+                        onFocus={() => {
+                          if (input.trim() && suggestions.length > 0) {
+                            setShowSuggestions(true);
+                          }
+                        }}
+                        className="terminal-input"
+                        autoComplete="off"
+                        autoFocus
+                        placeholder={isAIMode ? "Ask AI anything..." : "Type 'help' for commands or start typing..."}
+                      />
+                    </form>
+                    
+                    {showSuggestions && suggestions.length > 0 && (
+                      <div className="terminal-suggestions">
+                        {suggestions.map((suggestion, index) => (
+                          <div
+                            key={suggestion}
+                            className={`terminal-suggestion ${index === selectedSuggestion ? 'selected' : ''}`}
+                            onClick={() => {
+                              setInput(suggestion);
+                              setShowSuggestions(false);
+                              setSelectedSuggestion(-1);
+                              inputRef.current?.focus();
+                            }}
+                          >
+                            <span className="suggestion-command">{suggestion}</span>
+                            <span className="suggestion-hint">
+                              {suggestion === 'help' && '- Show all commands'}
+                              {suggestion === 'ai' && '- Chat with AI'}
+                              {suggestion === 'skills --list' && '- View technical skills'}
+                              {suggestion === 'projects' && '- Show recent projects'}
+                              {suggestion === 'contact' && '- Get contact info'}
+                              {suggestion === 'github' && '- GitHub statistics'}
+                              {suggestion === 'resume' && '- Download resume'}
+                              {suggestion === 'joke' && '- Random programming joke'}
+                              {suggestion === 'clear' && '- Clear terminal'}
+                            </span>
+                          </div>
+                        ))}
+                        <div className="suggestion-footer">
+                          <span>↑↓ navigate • Tab/Enter select • Esc close</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
