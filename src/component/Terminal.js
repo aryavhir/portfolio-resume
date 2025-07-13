@@ -80,8 +80,8 @@ export const Terminal = () => {
   const callGeminiAPI = async (message) => {
     try {
       const API_KEY = 'AIzaSyC5MZQ4yNPMTPHm7_7Lgo3KhMDfT7sTZiI';
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
-      
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+
       const requestBody = {
         contents: [{
           parts: [{
@@ -111,7 +111,7 @@ export const Terminal = () => {
       }
 
       const data = await response.json();
-      
+
       if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
         return data.candidates[0].content.parts[0].text;
       } else {
@@ -123,6 +123,8 @@ export const Terminal = () => {
         return "❌ API key authentication failed. Please check the API key configuration.";
       } else if (error.message.includes('HTTP error! status: 429')) {
         return "⚠️ Rate limit exceeded. Please try again in a moment.";
+      } else if (error.message.includes('models/gemini-pro is not found') || error.message.includes('models/gemini-1.5-flash is not found')) {
+        return "❌ The model is no longer available. Updated to use gemini-2.0-flash.";
       } else {
         return `❌ Error connecting to AI service: ${error.message}. Please try again later.`;
       }
