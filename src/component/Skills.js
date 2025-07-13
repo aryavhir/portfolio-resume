@@ -26,23 +26,23 @@ export const Skills = () => {
     }
   };
 
-  // Skills data with modest percentages
+  // Skills data with React.js as highest at 70%
   const skills = [
-    { name: "React.js", percentage: 85 },
-    { name: "JavaScript", percentage: 80 },
-    { name: "HTML5", percentage: 90 },
-    { name: "TypeScript", percentage: 70 },
-    { name: "Node.js", percentage: 75 },
-    { name: "CSS3", percentage: 85 },
-    { name: "React Native", percentage: 65 },
-    { name: "RESTful APIs", percentage: 70 },
-    { name: "Git", percentage: 80 },
-    { name: "SQL", percentage: 60 },
-    { name: "Go", percentage: 50 },
-    { name: "Swift", percentage: 45 },
-    { name: "AWS", percentage: 40 },
-    { name: "Figma", percentage: 55 },
-    { name: "LaTeX", percentage: 35 }
+    { name: "React.js", percentage: 70 },
+    { name: "JavaScript", percentage: 65 },
+    { name: "HTML5", percentage: 68 },
+    { name: "TypeScript", percentage: 55 },
+    { name: "Node.js", percentage: 60 },
+    { name: "CSS3", percentage: 65 },
+    { name: "React Native", percentage: 50 },
+    { name: "RESTful APIs", percentage: 58 },
+    { name: "Git", percentage: 62 },
+    { name: "SQL", percentage: 45 },
+    { name: "Go", percentage: 40 },
+    { name: "Swift", percentage: 35 },
+    { name: "AWS", percentage: 30 },
+    { name: "Figma", percentage: 42 },
+    { name: "LaTeX", percentage: 25 }
   ];
 
   // Component to create dynamic circular progress meter
