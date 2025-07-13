@@ -305,15 +305,27 @@ Visit my GitHub for source code! 🔗`);
         await showLoading(1500);
         await typeWriter(`💼 Work Experience:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏢 Freelance Developer (2023 - Present)
-   • Full-stack web development
-   • Client consultation and project management
-   • React, Node.js, MongoDB projects
+🏢 Software Development Engineer | Hydro Online (August 2024 – Present)
 
-🎓 Bachelor's in Information Technology (2022 - Present)
-   • Relevant coursework in algorithms, data structures
-   • Group projects and hackathon participation
-   • GPA: 3.8/4.0`);
+Ad Platform Engineering:
+• Developed JavaScript-based, OpenRTB-compliant ad banner script with dynamic placement and real-time viewability tracking
+• Built Advertisers Portal using React.js, TypeScript, and Go for campaign management
+• Developed Publisher Rewards Calculation Website using Go and React
+
+Payment Integrations:
+• Developed Web Application with React.js and Web3 integration for MetaMask cryptocurrency purchases
+• Integrated MoonPay SDK for onramp functionality as crypto payment option
+• Implemented PayPal webhook integration and frontend SDK for seamless payment processing
+
+Website Development & Management:
+• Managed and expanded Hydro Online website using Webflow
+• Optimized website structure and navigation for improved accessibility and user engagement
+• Collaborated with designers and content creators for consistent branding
+
+Current Project:
+• Implementation of decentralized file transfer system for secure, peer-to-peer data sharing
+
+Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
         break;
 
       case "github":
