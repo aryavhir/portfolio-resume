@@ -149,15 +149,13 @@ export const Terminal = () => {
 🎮 Fun Commands:
   joke              - Random programming joke
   quote             - Inspirational quote
-  coffee            - Coffee status
-  music             - Current playlist
+  music             - Current Spotify playlist
   weather           - Check weather
   time              - Current time
   
 🔧 System Commands:
   neofetch          - System information
   ps                - Running processes
-  top               - System monitor
   history           - Command history
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
         break;
@@ -167,7 +165,7 @@ export const Terminal = () => {
         await typeWriter(`👨‍💻 Aryavhir Koul
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎯 Full Stack Developer & Tech Enthusiast
-🎓 Computer Science Student
+🎓 Bachelor's in Information Technology
 🌟 Passionate about creating innovative solutions
 
 💡 Current Focus:
@@ -183,29 +181,30 @@ export const Terminal = () => {
         await showLoading(1000);
         await typeWriter(`🛠️  Technical Skills:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Frontend:    React, JavaScript, HTML5, CSS3, Bootstrap
-Backend:     Node.js, Express.js, Python, Flask
-Database:    MongoDB, MySQL, PostgreSQL
-Tools:       Git, Docker, VS Code, Figma
-Cloud:       AWS, Vercel, Netlify
-Mobile:      React Native, Flutter basics
-Others:      REST APIs, GraphQL, Socket.io`);
+Programming Languages: JavaScript, TypeScript, Go, Swift, React Native
+Frontend Technologies: React.js, HTML5, CSS3, SCSS
+Backend Technologies: Node.js, RESTful APIs
+Development Tools: Git, Figma, Latex
+Miscellaneous: SQL, MetaMask Integration
+Cloud Platforms: Amazon Web Services`);
         break;
 
       case "skills --details":
         await showLoading(2000);
         await typeWriter(`📊 Detailed Skill Breakdown:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-JavaScript       ████████████████████ 95%
-React.js          ████████████████████ 90%
-Node.js           ██████████████████   85%
-Python            ████████████████     80%
-CSS/HTML          ████████████████████ 95%
-Git/GitHub        ██████████████████   85%
-MongoDB           ███████████████      75%
-AWS               ████████████         60%
-Docker            ██████████           50%
-Machine Learning  ████████             40%`);
+JavaScript        ██████████████████   80%
+TypeScript        ████████████████     70%
+React.js          ██████████████████   75%
+Go                ████████████         55%
+Swift             ███████████          50%
+React Native      █████████████        60%
+Node.js           ██████████████████   75%
+HTML5/CSS3        ██████████████████   80%
+Git               ████████████████     70%
+AWS               ███████████          50%
+SQL               █████████████        60%
+RESTful APIs      ██████████████████   75%`);
         break;
 
       case "projects":
@@ -252,28 +251,26 @@ Visit my GitHub for source code! 🔗`);
    • Client consultation and project management
    • React, Node.js, MongoDB projects
    
-🎓 Computer Science Student (2022 - Present)
+🎓 Bachelor's in Information Technology (2022 - Present)
    • Relevant coursework in algorithms, data structures
    • Group projects and hackathon participation
    • GPA: 3.8/4.0`);
         break;
 
       case "github":
-        await showLoading(2000);
-        await typeWriter(`📊 GitHub Statistics:
+        await typeWriter(`🔗 Redirecting to GitHub Dashboard section...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👤 Username: aryavhir
-📚 Public Repos: 25+
-⭐ Total Stars: 150+
-🔄 Total Commits: 1000+
-📈 Current Streak: 45 days
-🏆 Contributions: Active daily
-
-🔥 Most Used Languages:
-   JavaScript  40%
-   Python      25%
-   HTML/CSS    20%
-   Others      15%`);
+📊 Scroll up to view detailed GitHub statistics, 
+   contribution graphs, and repository information!
+   
+✨ Or visit: https://github.com/aryavhir`);
+        // Scroll to GitHub section
+        setTimeout(() => {
+          const githubSection = document.getElementById('github');
+          if (githubSection) {
+            githubSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 1000);
         break;
 
       case "contact":
@@ -315,14 +312,20 @@ Visit my GitHub for source code! 🔗`);
         );
         break;
 
-      case "coffee":
+      case "music":
         await showLoading(1000);
-        await typeWriter(`☕ Coffee Status:
+        await typeWriter(`🎵 Current Spotify Playlist:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Current Level: ████████████████████ 100%
-Cups Today: 4 ☕☕☕☕
-Last Refill: 30 minutes ago
-Status: FULLY CAFFEINATED & READY TO CODE! 🚀`);
+🎧 Now Playing: Coding Flow Mix
+📻 Status: Active
+
+🎶 Featured Tracks:
+  • Lo-fi Hip Hop Beats
+  • Ambient Electronic
+  • Synthwave Classics
+  • Focus & Deep Work Music
+  
+🔗 Listen along while I code! 🚀`);
         break;
 
       case "clear":
