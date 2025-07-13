@@ -1,23 +1,31 @@
-
-import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
 export const Terminal = () => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [output, setOutput] = useState([]);
   const [commandHistory, setCommandHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [isTyping, setIsTyping] = useState(false);
-  const [currentPath, setCurrentPath] = useState('~');
+  const [currentPath, setCurrentPath] = useState("~");
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
   // Welcome message on component mount
   useEffect(() => {
     const welcomeMessages = [
-      { type: 'system', content: 'Welcome to Aryavhir\'s Interactive Terminal! 🚀' },
-      { type: 'system', content: 'Type "help" to see available commands or start exploring!' },
-      { type: 'system', content: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
+      {
+        type: "system",
+        content: "Welcome to Aryavhir's Interactive Terminal! 🚀",
+      },
+      {
+        type: "system",
+        content: 'Type "help" to see available commands or start exploring!',
+      },
+      {
+        type: "system",
+        content: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      },
     ];
     setOutput(welcomeMessages);
   }, []);
@@ -37,19 +45,22 @@ export const Terminal = () => {
   };
 
   // Typing animation effect
-  const typeWriter = (text, delay = 50) => {
+  const typeWriter = (text, delay = 20) => {
     return new Promise((resolve) => {
       setIsTyping(true);
       let index = 0;
       const timer = setInterval(() => {
         if (index < text.length) {
-          setOutput(prev => {
+          setOutput((prev) => {
             const newOutput = [...prev];
             const lastItem = newOutput[newOutput.length - 1];
-            if (lastItem && lastItem.type === 'typing') {
+            if (lastItem && lastItem.type === "typing") {
               lastItem.content = text.substring(0, index + 1);
             } else {
-              newOutput.push({ type: 'typing', content: text.substring(0, index + 1) });
+              newOutput.push({
+                type: "typing",
+                content: text.substring(0, index + 1),
+              });
             }
             return newOutput;
           });
@@ -66,17 +77,20 @@ export const Terminal = () => {
   // Fake loading animation
   const showLoading = (duration = 2000) => {
     return new Promise((resolve) => {
-      const loadingFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+      const loadingFrames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
       let frameIndex = 0;
-      
-      setOutput(prev => [...prev, { type: 'loading', content: `${loadingFrames[0]} Loading...` }]);
-      
+
+      setOutput((prev) => [
+        ...prev,
+        { type: "loading", content: `${loadingFrames[0]} Loading...` },
+      ]);
+
       const timer = setInterval(() => {
         frameIndex = (frameIndex + 1) % loadingFrames.length;
-        setOutput(prev => {
+        setOutput((prev) => {
           const newOutput = [...prev];
           const lastItem = newOutput[newOutput.length - 1];
-          if (lastItem && lastItem.type === 'loading') {
+          if (lastItem && lastItem.type === "loading") {
             lastItem.content = `${loadingFrames[frameIndex]} Loading...`;
           }
           return newOutput;
@@ -85,7 +99,7 @@ export const Terminal = () => {
 
       setTimeout(() => {
         clearInterval(timer);
-        setOutput(prev => prev.filter(item => item.type !== 'loading'));
+        setOutput((prev) => prev.filter((item) => item.type !== "loading"));
         resolve();
       }, duration);
     });
@@ -94,17 +108,20 @@ export const Terminal = () => {
   // Command processing
   const processCommand = async (cmd) => {
     const command = cmd.trim().toLowerCase();
-    
-    setOutput(prev => [...prev, { type: 'command', content: `aryavhir@portfolio:${currentPath}$ ${cmd}` }]);
+
+    setOutput((prev) => [
+      ...prev,
+      { type: "command", content: `aryavhir@portfolio:${currentPath}$ ${cmd}` },
+    ]);
 
     // Add to command history
     if (cmd.trim()) {
-      setCommandHistory(prev => [...prev, cmd]);
+      setCommandHistory((prev) => [...prev, cmd]);
       setHistoryIndex(-1);
     }
 
     switch (command) {
-      case 'help':
+      case "help":
         await typeWriter(`Available Commands:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📋 General Commands:
@@ -145,7 +162,7 @@ export const Terminal = () => {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
         break;
 
-      case 'whoami':
+      case "whoami":
         await showLoading(1500);
         await typeWriter(`👨‍💻 Aryavhir Koul
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -162,7 +179,7 @@ export const Terminal = () => {
 🚀 Always learning, always building!`);
         break;
 
-      case 'skills --list':
+      case "skills --list":
         await showLoading(1000);
         await typeWriter(`🛠️  Technical Skills:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -175,7 +192,7 @@ Mobile:      React Native, Flutter basics
 Others:      REST APIs, GraphQL, Socket.io`);
         break;
 
-      case 'skills --details':
+      case "skills --details":
         await showLoading(2000);
         await typeWriter(`📊 Detailed Skill Breakdown:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -191,7 +208,7 @@ Docker            ██████████           50%
 Machine Learning  ████████             40%`);
         break;
 
-      case 'projects':
+      case "projects":
         await showLoading(1200);
         await typeWriter(`🚀 Recent Projects:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -210,10 +227,10 @@ Machine Learning  ████████             40%`);
 Type 'projects --all' for complete list!`);
         break;
 
-      case 'projects --all':
+      case "projects --all":
         await showLoading(2000);
         await typeWriter(`📂 All Projects:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━pe�━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. Portfolio Website (React) - Live
 2. E-Commerce Platform (MERN) - In Development
 3. AI Chatbot (Python/Flask) - Completed
@@ -226,7 +243,7 @@ Type 'projects --all' for complete list!`);
 Visit my GitHub for source code! 🔗`);
         break;
 
-      case 'experience':
+      case "experience":
         await showLoading(1500);
         await typeWriter(`💼 Work Experience:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -241,7 +258,7 @@ Visit my GitHub for source code! 🔗`);
    • GPA: 3.8/4.0`);
         break;
 
-      case 'github':
+      case "github":
         await showLoading(2000);
         await typeWriter(`📊 GitHub Statistics:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -259,7 +276,7 @@ Visit my GitHub for source code! 🔗`);
    Others      15%`);
         break;
 
-      case 'contact':
+      case "contact":
         await typeWriter(`📞 Contact Information:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📧 Email: aryavhir.koul@example.com
@@ -272,29 +289,33 @@ Visit my GitHub for source code! 🔗`);
 ⏰ Response Time: Usually within 24 hours`);
         break;
 
-      case 'joke':
+      case "joke":
         const jokes = [
           "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
           "How many programmers does it take to change a light bulb? None, that's a hardware problem! 💡",
           "Why do Java developers wear glasses? Because they can't C#! 👓",
           "A SQL query goes into a bar, walks up to two tables and asks: 'Can I join you?' 🍺",
-          "Why did the programmer quit his job? He didn't get arrays! 📊"
+          "Why did the programmer quit his job? He didn't get arrays! 📊",
         ];
-        await typeWriter(`😄 ${jokes[Math.floor(Math.random() * jokes.length)]}`);
+        await typeWriter(
+          `😄 ${jokes[Math.floor(Math.random() * jokes.length)]}`,
+        );
         break;
 
-      case 'quote':
+      case "quote":
         const quotes = [
           '"Code is like humor. When you have to explain it, it\'s bad." - Cory House',
           '"First, solve the problem. Then, write the code." - John Johnson',
           '"Experience is the name everyone gives to their mistakes." - Oscar Wilde',
           '"In order to be irreplaceable, one must always be different." - Coco Chanel',
-          '"The best way to predict the future is to invent it." - Alan Kay'
+          '"The best way to predict the future is to invent it." - Alan Kay',
         ];
-        await typeWriter(`💭 ${quotes[Math.floor(Math.random() * quotes.length)]}`);
+        await typeWriter(
+          `💭 ${quotes[Math.floor(Math.random() * quotes.length)]}`,
+        );
         break;
 
-      case 'coffee':
+      case "coffee":
         await showLoading(1000);
         await typeWriter(`☕ Coffee Status:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -304,11 +325,11 @@ Last Refill: 30 minutes ago
 Status: FULLY CAFFEINATED & READY TO CODE! 🚀`);
         break;
 
-      case 'clear':
+      case "clear":
         setOutput([]);
         break;
 
-      case 'ls':
+      case "ls":
         await typeWriter(`📁 Directory Contents:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 drwxr-xr-x  projects/
@@ -320,11 +341,11 @@ drwxr-xr-x  education/
 -rw-r--r--  contact.txt`);
         break;
 
-      case 'pwd':
+      case "pwd":
         await typeWriter(`/home/aryavhir/portfolio`);
         break;
 
-      case 'neofetch':
+      case "neofetch":
         await showLoading(1500);
         await typeWriter(`                   aryavhir@portfolio
                    ──────────────────────
@@ -342,25 +363,30 @@ drwxr-xr-x  education/
                    🚀 Powered by passion & coffee!`);
         break;
 
-      case 'history':
+      case "history":
         if (commandHistory.length === 0) {
-          await typeWriter('No command history available.');
+          await typeWriter("No command history available.");
         } else {
-          const historyText = commandHistory.map((cmd, index) => 
-            `${(index + 1).toString().padStart(3, ' ')}  ${cmd}`
-          ).join('\n');
-          await typeWriter(`Command History:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${historyText}`);
+          const historyText = commandHistory
+            .map(
+              (cmd, index) =>
+                `${(index + 1).toString().padStart(3, " ")}  ${cmd}`,
+            )
+            .join("\n");
+          await typeWriter(
+            `Command History:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${historyText}`,
+          );
         }
         break;
 
-      case 'time':
+      case "time":
         const now = new Date();
         await typeWriter(`🕐 Current Time: ${now.toLocaleString()}
 🌍 Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
-📅 Day: ${now.toLocaleDateString('en-US', { weekday: 'long' })}`);
+📅 Day: ${now.toLocaleDateString("en-US", { weekday: "long" })}`);
         break;
 
-      case 'matrix':
+      case "matrix":
         await typeWriter(`🔴 Entering the Matrix...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 01001000 01100101 01101100 01101100 01101111
@@ -371,7 +397,7 @@ drwxr-xr-x  education/
 🔵 Welcome to the real world, Neo.`);
         break;
 
-      case 'ascii':
+      case "ascii":
         const asciiArts = [
           `    ___    ____  __  __ ___  _   __ __ __ ____ ____
    /   |  / __ \\/ / / //   |( ) / // //__/  __/ __/
@@ -384,17 +410,19 @@ drwxr-xr-x  education/
 ║  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ ║
 ║  Building the future, one line at a   ║
 ║  time! 🚀                             ║
-╚═══════════════════════════════════════╝`
+╚═══════════════════════════════════════╝`,
         ];
-        await typeWriter(asciiArts[Math.floor(Math.random() * asciiArts.length)]);
+        await typeWriter(
+          asciiArts[Math.floor(Math.random() * asciiArts.length)],
+        );
         break;
 
       default:
-        if (command.startsWith('cd ')) {
+        if (command.startsWith("cd ")) {
           const dir = command.substring(3);
-          setCurrentPath(dir === '..' ? '~' : dir);
-          await typeWriter(`Changed directory to: ${dir === '..' ? '~' : dir}`);
-        } else if (command === '') {
+          setCurrentPath(dir === ".." ? "~" : dir);
+          await typeWriter(`Changed directory to: ${dir === ".." ? "~" : dir}`);
+        } else if (command === "") {
           // Empty command, do nothing
         } else {
           await typeWriter(`Command not found: ${command}
@@ -408,26 +436,29 @@ Type 'help' to see available commands.`);
     e.preventDefault();
     if (input.trim() && !isTyping) {
       processCommand(input);
-      setInput('');
+      setInput("");
     }
   };
 
   // Handle key navigation
   const handleKeyDown = (e) => {
-    if (e.key === 'ArrowUp') {
+    if (e.key === "ArrowUp") {
       e.preventDefault();
       if (commandHistory.length > 0) {
-        const newIndex = historyIndex === -1 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
+        const newIndex =
+          historyIndex === -1
+            ? commandHistory.length - 1
+            : Math.max(0, historyIndex - 1);
         setHistoryIndex(newIndex);
         setInput(commandHistory[newIndex]);
       }
-    } else if (e.key === 'ArrowDown') {
+    } else if (e.key === "ArrowDown") {
       e.preventDefault();
       if (historyIndex !== -1) {
         const newIndex = historyIndex + 1;
         if (newIndex >= commandHistory.length) {
           setHistoryIndex(-1);
-          setInput('');
+          setInput("");
         } else {
           setHistoryIndex(newIndex);
           setInput(commandHistory[newIndex]);
@@ -448,11 +479,13 @@ Type 'help' to see available commands.`);
                   <span className="btn-minimize"></span>
                   <span className="btn-maximize"></span>
                 </div>
-                <div className="terminal-title">Aryavhir@portfolio: ~/interactive-terminal</div>
+                <div className="terminal-title">
+                  Aryavhir@portfolio: ~/interactive-terminal
+                </div>
               </div>
-              
-              <div 
-                className="terminal-body" 
+
+              <div
+                className="terminal-body"
                 ref={terminalRef}
                 onClick={handleTerminalClick}
               >
@@ -461,11 +494,11 @@ Type 'help' to see available commands.`);
                     {line.content}
                   </div>
                 ))}
-                
+
                 {!isTyping && (
                   <form onSubmit={handleSubmit} className="terminal-input-form">
                     <span className="terminal-prompt">
-                      aryavhir@portfolio:{currentPath}$ 
+                      aryavhir@portfolio:{currentPath}$
                     </span>
                     <input
                       ref={inputRef}

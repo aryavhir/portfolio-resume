@@ -142,10 +142,9 @@ export const GitHubDashboard = () => {
                 and development activity
               </p>
 
-              {/* Side by Side Layout */}
+              {/* Repositories Grid */}
               <Row>
-                {/* Repositories Section */}
-                <Col lg={7}>
+                <Col lg={12}>
                   <Card className="github-section-card">
                     <Card.Header>
                       <h4>Top Repositories</h4>
@@ -153,17 +152,17 @@ export const GitHubDashboard = () => {
                     <Card.Body>
                       <Row>
                         {githubData.repos.map((repo, index) => (
-                          <Col md={12} key={index} className="mb-3">
-                            <div 
+                          <Col md={6} key={index} className="mb-4">
+                            <div
                               className="repo-item"
-                              onClick={() => window.open(repo.html_url, '_blank')}
-                              style={{ cursor: 'pointer' }}
+                              onClick={() =>
+                                window.open(repo.html_url, "_blank")
+                              }
+                              style={{ cursor: "pointer" }}
                             >
                               <div className="repo-header">
                                 <h5>
-                                  <span className="repo-name">
-                                    {repo.name}
-                                  </span>
+                                  <span className="repo-name">{repo.name}</span>
                                 </h5>
                                 <div className="repo-stats">
                                   <Badge variant="outline-primary">
@@ -202,24 +201,26 @@ export const GitHubDashboard = () => {
                     </Card.Body>
                   </Card>
                 </Col>
+              </Row>
 
-                {/* GitHub Contribution Graph */}
-                <Col lg={5}>
+              {/* GitHub Contribution Graph */}
+              <Row className="mt-4">
+                <Col>
                   <Card className="github-section-card">
                     <Card.Header>
                       <h4>Contribution Graph</h4>
                     </Card.Header>
                     <Card.Body>
-                      <div className="contribution-graph-vertical">
+                      <div className="contribution-graph">
                         <img
                           src={`https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&title_color=F85D7F&icon_color=F85D7F&text_color=FFFFFF`}
                           alt="GitHub Stats"
-                          className="github-stats-img-vertical"
+                          className="github-stats-img"
                         />
                         <img
                           src={`https://github-readme-streak-stats.herokuapp.com/?user=${USERNAME}&theme=dark&hide_border=true&background=0D1117&stroke=F85D7F&ring=F85D7F&fire=F85D7F&currStreakLabel=FFFFFF`}
                           alt="GitHub Streak"
-                          className="github-streak-img-vertical"
+                          className="github-streak-img"
                         />
                       </div>
                     </Card.Body>
