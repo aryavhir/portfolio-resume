@@ -8,6 +8,8 @@ export const Terminal = () => {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [isTyping, setIsTyping] = useState(false);
   const [currentPath, setCurrentPath] = useState("~");
+  const [isAIMode, setIsAIMode] = useState(false);
+  const [aiConversation, setAiConversation] = useState([]);
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -74,6 +76,35 @@ export const Terminal = () => {
     });
   };
 
+  // Gemini AI API call
+  const callGeminiAPI = async (message) => {
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyC5MZQ4yNPMTPHm7_7Lgo3KhMDfT7sTZiI`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: message
+            }]
+          }]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.candidates[0].content.parts[0].text;
+    } catch (error) {
+      console.error('Gemini API Error:', error);
+      return "Sorry, I'm having trouble connecting to the AI service right now. Please try again later.";
+    }
+  };
+
   // Fake loading animation
   const showLoading = (duration = 2000) => {
     return new Promise((resolve) => {
@@ -111,13 +142,33 @@ export const Terminal = () => {
 
     setOutput((prev) => [
       ...prev,
-      { type: "command", content: `aryavhir@portfolio:${currentPath}$ ${cmd}` },
+      { type: "command", content: `${isAIMode ? 'ai@gemini' : 'aryavhir@portfolio'}:${currentPath}$ ${cmd}` },
     ]);
 
     // Add to command history
     if (cmd.trim()) {
       setCommandHistory((prev) => [...prev, cmd]);
       setHistoryIndex(-1);
+    }
+
+    // Handle AI mode
+    if (isAIMode) {
+      if (command === "end") {
+        setIsAIMode(false);
+        setAiConversation([]);
+        await typeWriter(`🤖 AI Session Ended
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Goodbye! You're back to the regular terminal.
+Type 'help' to see available commands.`);
+        return;
+      }
+
+      await showLoading(1500);
+      const aiResponse = await callGeminiAPI(cmd);
+      await typeWriter(`🤖 Gemini AI: ${aiResponse}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Type your next question or 'end' to exit AI mode.`);
+      return;
     }
 
     switch (command) {
@@ -130,6 +181,7 @@ export const Terminal = () => {
   whoami            - About Aryavhir
   ls                - List directory contents
   pwd               - Print working directory
+  history           - Command history
   
 🛠️  Developer Commands:
   skills --list     - Show technical skills
@@ -152,11 +204,10 @@ export const Terminal = () => {
   music             - Current Spotify playlist
   weather           - Check weather
   time              - Current time
-  
-🔧 System Commands:
   neofetch          - System information
-  ps                - Running processes
-  history           - Command history
+  
+🤖 NEW! AI Assistant:
+  ai                - Chat with Gemini AI (type 'end' to exit)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
         break;
 
@@ -293,6 +344,9 @@ Visit my GitHub for source code! 🔗`);
           "Why do Java developers wear glasses? Because they can't C#! 👓",
           "A SQL query goes into a bar, walks up to two tables and asks: 'Can I join you?' 🍺",
           "Why did the programmer quit his job? He didn't get arrays! 📊",
+          "There are only 10 types of people in the world: those who understand binary and those who don't! 👨‍💻",
+          "Why did the programmer break up with the internet? Because there was no connection! 💔",
+          "What's a programmer's favorite hangout place? The Foo Bar! 🍻",
         ];
         await typeWriter(
           `😄 ${jokes[Math.floor(Math.random() * jokes.length)]}`,
@@ -306,6 +360,9 @@ Visit my GitHub for source code! 🔗`);
           '"Experience is the name everyone gives to their mistakes." - Oscar Wilde',
           '"In order to be irreplaceable, one must always be different." - Coco Chanel',
           '"The best way to predict the future is to invent it." - Alan Kay',
+          '"Any fool can write code that a computer can understand. Good programmers write code that humans can understand." - Martin Fowler',
+          '"Programming isn\'t about what you know; it\'s about what you can figure out." - Chris Pine',
+          '"The computer was born to solve problems that did not exist before." - Bill Gates',
         ];
         await typeWriter(
           `💭 ${quotes[Math.floor(Math.random() * quotes.length)]}`,
@@ -414,10 +471,93 @@ drwxr-xr-x  education/
 ║  Building the future, one line at a   ║
 ║  time! 🚀                             ║
 ╚═══════════════════════════════════════╝`,
+          `
+ █████╗ ██████╗ ██╗   ██╗ █████╗ ██╗   ██╗██╗  ██╗██╗██████╗ 
+██╔══██╗██╔══██╗╚██╗ ██╔╝██╔══██╗██║   ██║██║  ██║██║██╔══██╗
+███████║██████╔╝ ╚████╔╝ ███████║██║   ██║███████║██║██████╔╝
+██╔══██║██╔══██╗  ╚██╔╝  ██╔══██║╚██╗ ██╔╝██╔══██║██║██╔══██╗
+██║  ██║██║  ██║   ██║   ██║  ██║ ╚████╔╝ ██║  ██║██║██║  ██║
+╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝`,
+          `
+      ___           ___           ___           ___     
+     /\\  \\         /\\  \\         /\\  \\         /\\  \\    
+    /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\   
+   /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\  
+  /:/  \\:\\  \\   /::\\~\\:\\  \\   /::\\~\\:\\  \\   /::\\~\\:\\  \\ 
+ /:/__/ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/\\:\\ \\:\\__\\
+ \\:\\  \\  \\/__/ \\/__\\:\\/:/  / \\/_|::\\/:/  / \\:\\~\\:\\ \\/__/
+  \\:\\  \\            \\::/  /     |:|::/  /   \\:\\ \\:\\__\\  
+   \\:\\  \\           /:/  /      |:|\\/__/     \\:\\ \\/__/  
+    \\:\\__\\         /:/  /       |:|  |        \\:\\__\\    
+     \\/__/         \\/__/         \\|__|         \\/__/    `,
+          `
+    ╔══════════════════════════════════════╗
+    ║             DEVELOPER                ║
+    ║  ████████████████████████████████    ║
+    ║  ██ Full Stack ██ React ██ Node ██   ║
+    ║  ████████████████████████████████    ║
+    ║         Code • Create • Innovate     ║
+    ╚══════════════════════════════════════╝`,
+          `
+    ▄▄▄       ██▀███  ▓██   ██▓ ▄▄▄    
+   ▒████▄    ▓██ ▒ ██▒ ▒██  ██▒▒████▄  
+   ▒██  ▀█▄  ▓██ ░▄█ ▒  ▒██ ██░▒██  ▀█▄
+   ░██▄▄▄▄██ ▒██▀▀█▄    ░ ▐██▓░░██▄▄▄▄██
+    ▓█   ▓██▒░██▓ ▒██▒  ░ ██▒▓░ ▓█   ▓██▒
+    ▒▒   ▓▒█░░ ▒▓ ░▒▓░   ██▒▒▒  ▒▒   ▓▒█░
+     ▒   ▒▒ ░  ░▒ ░ ▒░ ▓██ ░▒░   ▒   ▒▒ ░
+     ░   ▒     ░░   ░  ▒ ▒ ░░    ░   ▒   
+         ░  ░   ░      ░ ░           ░  ░`,
+          `
+         .-..-. .-.  .-. .-. .-.  .-. .-.
+        : ::  :: :  : :: :: :: : : :' :
+        : :: .: :  : :: ': :` .: : : .  :
+        '._.' '._.'  '.__.' '._.'.'._.'._.'
+              F U L L   S T A C K
+                D E V E L O P E R`,
+          `
+    ╭─────────────────────────────────────╮
+    │  🚀 Welcome to the Digital Universe │
+    │  ┌─────────────────────────────────┐ │
+    │  │  > Building Dreams with Code_   │ │
+    │  │  > Innovation through Logic_    │ │
+    │  │  > Creating Digital Solutions_  │ │
+    │  └─────────────────────────────────┘ │
+    │         ~ Aryavhir Koul ~            │
+    ╰─────────────────────────────────────╯`,
+          `
+    ██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗ 
+    ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗
+    ██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║
+    ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║
+    ██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝
+    ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝`,
+          `
+        ╔══════════════════════════════════╗
+        ║   ╭─────────────────────────╮   ║
+        ║   │     CODE  CRAFT  FLY    │   ║
+        ║   │  ┌─────┐ ┌─────┐ ┌────┐ │   ║
+        ║   │  │ <> │ │ {} │ │ () │ │   ║
+        ║   │  └─────┘ └─────┘ └────┘ │   ║
+        ║   ╰─────────────────────────╯   ║
+        ║        Digital Architect         ║
+        ╚══════════════════════════════════╝`
         ];
         await typeWriter(
           asciiArts[Math.floor(Math.random() * asciiArts.length)],
         );
+        break;
+
+      case "ai":
+        setIsAIMode(true);
+        await typeWriter(`🤖 Gemini AI Assistant Activated
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Welcome to the AI chat! I'm powered by Google's Gemini.
+Ask me anything about programming, technology, or general questions.
+
+Type 'end' to exit AI mode and return to the terminal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+What would you like to know?`);
         break;
 
       default:
@@ -501,7 +641,7 @@ Type 'help' to see available commands.`);
                 {!isTyping && (
                   <form onSubmit={handleSubmit} className="terminal-input-form">
                     <span className="terminal-prompt">
-                      aryavhir@portfolio:{currentPath}$
+                      {isAIMode ? 'ai@gemini' : 'aryavhir@portfolio'}:{currentPath}$
                     </span>
                     <input
                       ref={inputRef}
