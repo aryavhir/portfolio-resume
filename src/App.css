@@ -829,7 +829,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 .github-section-card .card-header {
   background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
-  padding: 40px;
+  padding: 20px;
   border-radius: 60px 60px 0 0;
 }
 
@@ -908,9 +908,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 .repo-item:hover {
   transform: translateY(-8px);
-  background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
+  background: #121212;
 
-  box-shadow: 0 20px 45px rgba(170, 54, 124, 0.4);
 }
 
 .repo-header {

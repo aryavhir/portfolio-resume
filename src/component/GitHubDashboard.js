@@ -132,7 +132,6 @@ export const GitHubDashboard = () => {
 
   return (
     <section className="github-dashboard" id="github">
-      
       <Container>
         <Row>
           <Col lg={12}>
@@ -147,7 +146,7 @@ export const GitHubDashboard = () => {
               <Row>
                 {/* Top Repositories - Left Half */}
                 <Col lg={6}>
-                  <Card className="github-section-card h-100">
+                  <Card className="github-section-card">
                     <Card.Header>
                       <h4>Top Repositories</h4>
                     </Card.Header>
@@ -206,7 +205,7 @@ export const GitHubDashboard = () => {
 
                 {/* Contribution Graph - Right Half */}
                 <Col lg={6}>
-                  <Card className="github-section-card h-100">
+                  <Card className="github-section-card">
                     <Card.Header>
                       <h4>Contribution Graph</h4>
                     </Card.Header>
