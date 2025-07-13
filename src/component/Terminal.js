@@ -208,15 +208,12 @@ Type your next question or 'end' to exit AI mode.`);
   help              - Show this help menu
   clear             - Clear the terminal
   whoami            - About Aryavhir
-  ls                - List directory contents
-  pwd               - Print working directory
   history           - Command history
 
 🛠️  Developer Commands:
   skills --list     - Show technical skills
   skills --details  - Detailed skill breakdown
   projects          - Show recent projects
-  projects --all    - Show all projects
   experience        - Work experience
   education         - Educational background
 
@@ -231,9 +228,7 @@ Type your next question or 'end' to exit AI mode.`);
   joke              - Random programming joke
   quote             - Inspirational quote
   music             - Current Spotify playlist
-  weather           - Check weather
   time              - Current time
-  neofetch          - System information
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
         break;
 
@@ -300,24 +295,10 @@ RESTful APIs      ██████████████████   75%`)
    Tech: Python, OpenAI API, Flask
    Status: Completed
 
-Type 'projects --all' for complete list!`);
+Visit my GitHub for more projects! 🔗`);
         break;
 
-      case "projects --all":
-        await showLoading(2000);
-        await typeWriter(`📂 All Projects:
-━━pe━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Portfolio Website (React) - Live
-2. E-Commerce Platform (MERN) - In Development
-3. AI Chatbot (Python/Flask) - Completed
-4. Task Management App (React Native) - Completed
-5. Weather Dashboard (JavaScript) - Completed
-6. Social Media Clone (MERN) - In Progress
-7. Machine Learning Model (Python) - Experimental
-8. Chrome Extension (JavaScript) - Completed
-
-Visit my GitHub for source code! 🔗`);
-        break;
+      
 
       case "experience":
         await showLoading(1500);
@@ -415,39 +396,11 @@ Visit my GitHub for source code! 🔗`);
         setOutput([]);
         break;
 
-      case "ls":
-        await typeWriter(`📁 Directory Contents:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-drwxr-xr-x  projects/
-drwxr-xr-x  skills/
-drwxr-xr-x  experience/
-drwxr-xr-x  education/
--rw-r--r--  resume.pdf
--rw-r--r--  README.md
--rw-r--r--  contact.txt`);
-        break;
+      
 
-      case "pwd":
-        await typeWriter(`/home/aryavhir/portfolio`);
-        break;
+      
 
-      case "neofetch":
-        await showLoading(1500);
-        await typeWriter(`                   aryavhir@portfolio
-                   ──────────────────────
-       ██████      OS: Portfolio Linux
-     ██████████    Host: Replit Container
-   ████████████    Kernel: Node.js v18
-   ████████████    Uptime: Always Online
-   ████████████    Packages: npm, yarn
-   ████████████    Shell: Interactive Terminal
-     ██████████    Resolution: Responsive
-       ██████      Terminal: Custom React Terminal
-                   CPU: Full Stack Developer
-                   Memory: Creative Ideas
-
-                   🚀 Powered by passion & coffee!`);
-        break;
+      
 
       case "history":
         if (commandHistory.length === 0) {
