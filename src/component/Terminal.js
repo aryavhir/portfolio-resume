@@ -182,7 +182,7 @@ Type your next question or 'end' to exit AI mode.`);
   ls                - List directory contents
   pwd               - Print working directory
   history           - Command history
-  
+
 🛠️  Developer Commands:
   skills --list     - Show technical skills
   skills --details  - Detailed skill breakdown
@@ -190,14 +190,14 @@ Type your next question or 'end' to exit AI mode.`);
   projects --all    - Show all projects
   experience        - Work experience
   education         - Educational background
-  
+
 🎯 Interactive Commands:
   github            - GitHub statistics
   contact           - Contact information
   resume            - Download resume
   ascii             - Random ASCII art
   matrix            - Matrix rain effect
-  
+
 🎮 Fun Commands:
   joke              - Random programming joke
   quote             - Inspirational quote
@@ -205,7 +205,7 @@ Type your next question or 'end' to exit AI mode.`);
   weather           - Check weather
   time              - Current time
   neofetch          - System information
-  
+
 🤖 NEW! AI Assistant:
   ai                - Chat with Gemini AI (type 'end' to exit)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
@@ -265,11 +265,11 @@ RESTful APIs      ██████████████████   75%`)
 1. 📱 Portfolio Website
    Tech: React, Bootstrap, GitHub API
    Live: https://aryavhir.vercel.app
-   
+
 2. 🛒 E-Commerce Platform
    Tech: MERN Stack, Stripe API
    Status: In Development
-   
+
 3. 🤖 AI Chatbot
    Tech: Python, OpenAI API, Flask
    Status: Completed
@@ -280,7 +280,7 @@ Type 'projects --all' for complete list!`);
       case "projects --all":
         await showLoading(2000);
         await typeWriter(`📂 All Projects:
-━━pe�━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━pe━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. Portfolio Website (React) - Live
 2. E-Commerce Platform (MERN) - In Development
 3. AI Chatbot (Python/Flask) - Completed
@@ -301,7 +301,7 @@ Visit my GitHub for source code! 🔗`);
    • Full-stack web development
    • Client consultation and project management
    • React, Node.js, MongoDB projects
-   
+
 🎓 Bachelor's in Information Technology (2022 - Present)
    • Relevant coursework in algorithms, data structures
    • Group projects and hackathon participation
@@ -313,7 +313,7 @@ Visit my GitHub for source code! 🔗`);
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Scroll up to view detailed GitHub statistics, 
    contribution graphs, and repository information!
-   
+
 ✨ Or visit: https://github.com/aryavhir`);
         // Scroll to GitHub section
         setTimeout(() => {
@@ -355,7 +355,7 @@ Visit my GitHub for source code! 🔗`);
 
       case "quote":
         const quotes = [
-          '"Code is like humor. When you have to explain it, it\'s bad." - Cory House',
+          '"Code is like humor. When you have to explain it, it\\\'s bad." - Cory House',
           '"First, solve the problem. Then, write the code." - John Johnson',
           '"Experience is the name everyone gives to their mistakes." - Oscar Wilde',
           '"In order to be irreplaceable, one must always be different." - Coco Chanel',
@@ -381,7 +381,7 @@ Visit my GitHub for source code! 🔗`);
   • Ambient Electronic
   • Synthwave Classics
   • Focus & Deep Work Music
-  
+
 🔗 Listen along while I code! 🚀`);
         break;
 
@@ -419,7 +419,7 @@ drwxr-xr-x  education/
        ██████      Terminal: Custom React Terminal
                    CPU: Full Stack Developer
                    Memory: Creative Ideas
-                   
+
                    🚀 Powered by passion & coffee!`);
         break;
 
@@ -511,7 +511,7 @@ drwxr-xr-x  education/
           `
          .-..-. .-.  .-. .-. .-.  .-. .-.
         : ::  :: :  : :: :: :: : : :' :
-        : :: .: :  : :: ': :` .: : : .  :
+        : :: .: :  : :: ': :\\. .: : : .  :
         '._.' '._.'  '.__.' '._.'.'._.'._.'
               F U L L   S T A C K
                 D E V E L O P E R`,
