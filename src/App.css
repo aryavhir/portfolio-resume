@@ -711,6 +711,61 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   }
 }
 
+/************ Floating Astronaut Css ************/
+.floating-astronaut {
+  position: fixed;
+  top: 20%;
+  right: 10%;
+  z-index: 1;
+  animation: floatAstronaut 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.astronaut-logo {
+  width: 120px;
+  height: 120px;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 20px rgba(170, 54, 124, 0.4));
+  animation: rotateAstronaut 20s linear infinite;
+}
+
+@keyframes floatAstronaut {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  50% {
+    transform: translateY(0px) translateX(20px);
+  }
+  75% {
+    transform: translateY(15px) translateX(-5px);
+  }
+}
+
+@keyframes rotateAstronaut {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive astronaut */
+@media (max-width: 768px) {
+  .floating-astronaut {
+    top: 15%;
+    right: 5%;
+  }
+  
+  .astronaut-logo {
+    width: 80px;
+    height: 80px;
+  }
+}
+
 
 .background-image-right {
   top: 20%;

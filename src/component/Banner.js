@@ -4,6 +4,19 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./a.css";
 
+// Floating Astronaut Component
+const FloatingAstronaut = () => {
+  return (
+    <div className="floating-astronaut">
+      <img 
+        src="/logo.svg" 
+        alt="Floating Astronaut" 
+        className="astronaut-logo"
+      />
+    </div>
+  );
+};
+
 // Animated Network Background Component
 const NetworkBackground = () => {
   return (
@@ -96,6 +109,7 @@ export const Banner = () => {
   return (
     <section className="banner" id="home">
       <NetworkBackground />
+      <FloatingAstronaut />
       <h1 style={{ textAlign: "center" }}> Hello</h1>
       <div
         style={{
