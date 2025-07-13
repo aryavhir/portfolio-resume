@@ -908,11 +908,11 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at 25% 75%, rgba(170, 54, 124, 0.08) 0%, transparent 60%),
-    radial-gradient(circle at 75% 25%, rgba(74, 47, 189, 0.08) 0%, transparent 60%),
-    radial-gradient(circle at 50% 50%, rgba(170, 54, 124, 0.05) 0%, transparent 70%);
-  animation: gradientShift 12s ease-in-out infinite reverse;
-  z-index: -3;
+    radial-gradient(circle at 20% 80%, rgba(170, 54, 124, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(74, 47, 189, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(170, 54, 124, 0.1) 0%, transparent 50%);
+  animation: gradientShift 8s ease-in-out infinite;
+  z-index: -2;
 }
 
 .github-dashboard::after {
@@ -921,17 +921,17 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   top: 0;
   left: 0;
   width: 100%;
-  height: 150%;
+  height: 100%;
   background-image: 
-    radial-gradient(1px 1px at 30px 40px, rgba(170, 54, 124, 0.15), transparent),
-    radial-gradient(1px 1px at 50px 80px, rgba(74, 47, 189, 0.15), transparent),
-    radial-gradient(0.8px 0.8px at 100px 50px, rgba(170, 54, 124, 0.1), transparent),
-    radial-gradient(0.8px 0.8px at 140px 90px, rgba(74, 47, 189, 0.1), transparent);
+    radial-gradient(2px 2px at 20px 30px, rgba(170, 54, 124, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(74, 47, 189, 0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(170, 54, 124, 0.2), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(74, 47, 189, 0.2), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(170, 54, 124, 0.3), transparent);
   background-repeat: repeat;
-  background-size: 180px 140px;
-  animation: floatParticles 30s linear infinite;
-  opacity: 0.8;
-  z-index: -2;
+  background-size: 200px 100px;
+  animation: floatParticles 20s linear infinite;
+  z-index: -1;
 }
 
 .github-bx {
@@ -1272,11 +1272,11 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(170, 54, 124, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(74, 47, 189, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(170, 54, 124, 0.08) 0%, transparent 50%);
-  animation: gradientShift 10s ease-in-out infinite;
-  z-index: -3;
+    radial-gradient(circle at 20% 80%, rgba(170, 54, 124, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(74, 47, 189, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(170, 54, 124, 0.1) 0%, transparent 50%);
+  animation: gradientShift 8s ease-in-out infinite;
+  z-index: -2;
 }
 
 .terminal-section::after {
@@ -1287,15 +1287,15 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(1.5px 1.5px at 25px 35px, rgba(170, 54, 124, 0.25), transparent),
-    radial-gradient(1.5px 1.5px at 45px 75px, rgba(74, 47, 189, 0.25), transparent),
-    radial-gradient(1px 1px at 95px 45px, rgba(170, 54, 124, 0.15), transparent),
-    radial-gradient(1px 1px at 135px 85px, rgba(74, 47, 189, 0.15), transparent),
-    radial-gradient(1.5px 1.5px at 165px 35px, rgba(170, 54, 124, 0.25), transparent);
+    radial-gradient(2px 2px at 20px 30px, rgba(170, 54, 124, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(74, 47, 189, 0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(170, 54, 124, 0.2), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(74, 47, 189, 0.2), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(170, 54, 124, 0.3), transparent);
   background-repeat: repeat;
-  background-size: 200px 120px;
-  animation: floatParticles 25s linear infinite;
-  z-index: -2;
+  background-size: 200px 100px;
+  animation: floatParticles 20s linear infinite;
+  z-index: -1;
 }
 
 .terminal-container {
