@@ -10,7 +10,6 @@ export const Terminal = () => {
   const [currentPath, setCurrentPath] = useState("~");
   const [isAIMode, setIsAIMode] = useState(false);
   const [commandCount, setCommandCount] = useState(0);
-  const [showCheatSheet, setShowCheatSheet] = useState(false);
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -22,12 +21,8 @@ export const Terminal = () => {
         content: "Welcome to Aryavhir's Interactive Terminal! 🚀",
       },
       {
-        type: "success",
-        content: "🤖 NEW: AI Assistant powered by Gemini - type 'ai' to chat!",
-      },
-      {
         type: "system",
-        content: 'Type "help" to see available commands or start exploring!',
+        content: 'Type "help" to see available commands or start exploring! (AI integrated)',
       },
       {
         type: "system",
@@ -198,13 +193,6 @@ export const Terminal = () => {
       setCommandHistory((prev) => [...prev, cmd]);
       setHistoryIndex(-1);
       setCommandCount((prev) => prev + 1);
-      
-      // Show cheat sheet after 5 commands (excluding help and clear)
-      if (!isAIMode && commandCount === 4 && command !== "help" && command !== "clear" && command !== "cheat") {
-        setTimeout(() => {
-          setShowCheatSheet(true);
-        }, 2000);
-      }
     }
 
     // Handle AI mode
@@ -241,7 +229,6 @@ Type your next question or 'end' to exit AI mode.`);
         
         await typeWriter(`📋 General Commands:
   help              - Show this help menu
-  cheat             - Quick command cheat sheet
   clear             - Clear the terminal
   whoami            - About Aryavhir
   history           - Command history
@@ -265,11 +252,6 @@ Type your next question or 'end' to exit AI mode.`);
   music             - Current Spotify playlist
   time              - Current time
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-        break;
-
-      case "cheat":
-        setShowCheatSheet(true);
-        await typeWriter("💡 Cheat sheet opened! Check the floating panel.");
         break;
 
       case "whoami":
@@ -707,106 +689,6 @@ Type 'help' to see available commands.`);
           </Col>
         </Row>
       </Container>
-
-      {/* Floating Cheat Sheet Overlay */}
-      {showCheatSheet && (
-        <div className="cheat-sheet-overlay" onClick={() => setShowCheatSheet(false)}>
-          <div className="cheat-sheet-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="cheat-sheet-header">
-              <h3>⚡ Terminal Command Cheat Sheet</h3>
-              <button 
-                className="cheat-sheet-close" 
-                onClick={() => setShowCheatSheet(false)}
-              >
-                ✕
-              </button>
-            </div>
-            
-            <div className="cheat-sheet-content">
-              <div className="cheat-sheet-section">
-                <h4>🤖 AI Assistant</h4>
-                <div className="cheat-sheet-commands">
-                  <div className="cheat-command">
-                    <span className="command-name">ai</span>
-                    <span className="command-desc">Chat with Gemini AI</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="cheat-sheet-section">
-                <h4>🔥 Popular Commands</h4>
-                <div className="cheat-sheet-commands">
-                  <div className="cheat-command">
-                    <span className="command-name">skills --list</span>
-                    <span className="command-desc">View technical skills</span>
-                  </div>
-                  <div className="cheat-command">
-                    <span className="command-name">projects</span>
-                    <span className="command-desc">See my projects</span>
-                  </div>
-                  <div className="cheat-command">
-                    <span className="command-name">experience</span>
-                    <span className="command-desc">Work experience</span>
-                  </div>
-                  <div className="cheat-command">
-                    <span className="command-name">whoami</span>
-                    <span className="command-desc">About Aryavhir</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="cheat-sheet-section">
-                <h4>⚡ Quick Actions</h4>
-                <div className="cheat-sheet-commands">
-                  <div className="cheat-command">
-                    <span className="command-name">github</span>
-                    <span className="command-desc">GitHub dashboard</span>
-                  </div>
-                  <div className="cheat-command">
-                    <span className="command-name">contact</span>
-                    <span className="command-desc">Get in touch</span>
-                  </div>
-                  <div className="cheat-command">
-                    <span className="command-name">resume</span>
-                    <span className="command-desc">Download resume</span>
-                  </div>
-                  <div className="cheat-command">
-                    <span className="command-name">clear</span>
-                    <span className="command-desc">Clear terminal</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="cheat-sheet-section">
-                <h4>🎮 Fun Stuff</h4>
-                <div className="cheat-sheet-commands">
-                  <div className="cheat-command">
-                    <span className="command-name">joke</span>
-                    <span className="command-desc">Programming jokes</span>
-                  </div>
-                  <div className="cheat-command">
-                    <span className="command-name">quote</span>
-                    <span className="command-desc">Inspirational quotes</span>
-                  </div>
-                  <div className="cheat-command">
-                    <span className="command-name">ascii</span>
-                    <span className="command-desc">Random ASCII art</span>
-                  </div>
-                  <div className="cheat-command">
-                    <span className="command-name">matrix</span>
-                    <span className="command-desc">Enter the Matrix</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="cheat-sheet-footer">
-              <p>💭 Pro tip: Use arrow keys to navigate command history!</p>
-              <p>Click outside or press ESC to close</p>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
