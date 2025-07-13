@@ -47,7 +47,7 @@ export const Terminal = () => {
   };
 
   // Typing animation effect
-  const typeWriter = (text, delay = 20) => {
+  const typeWriter = (text, delay = 10) => {
     return new Promise((resolve) => {
       setIsTyping(true);
       let index = 0;
@@ -79,51 +79,63 @@ export const Terminal = () => {
   // Gemini AI API call
   const callGeminiAPI = async (message) => {
     try {
-      const API_KEY = 'AIzaSyC5MZQ4yNPMTPHm7_7Lgo3KhMDfT7sTZiI';
+      const API_KEY = "AIzaSyC5MZQ4yNPMTPHm7_7Lgo3KhMDfT7sTZiI";
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
       const requestBody = {
-        contents: [{
-          parts: [{
-            text: message
-          }]
-        }],
+        contents: [
+          {
+            parts: [
+              {
+                text: message,
+              },
+            ],
+          },
+        ],
         generationConfig: {
           temperature: 0.7,
           topK: 40,
           topP: 0.95,
           maxOutputTokens: 1024,
-        }
+        },
       };
 
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody)
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
         const errorData = await response.text();
-        console.error('API Error:', response.status, errorData);
+        console.error("API Error:", response.status, errorData);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
 
-      if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+      if (
+        data.candidates &&
+        data.candidates[0] &&
+        data.candidates[0].content &&
+        data.candidates[0].content.parts[0]
+      ) {
         return data.candidates[0].content.parts[0].text;
       } else {
-        throw new Error('Invalid response format from Gemini API');
+        throw new Error("Invalid response format from Gemini API");
       }
     } catch (error) {
-      console.error('Gemini API Error:', error);
-      if (error.message.includes('HTTP error! status: 403')) {
+      console.error("Gemini API Error:", error);
+      if (error.message.includes("HTTP error! status: 403")) {
         return "❌ API key authentication failed. Please check the API key configuration.";
-      } else if (error.message.includes('HTTP error! status: 429')) {
+      } else if (error.message.includes("HTTP error! status: 429")) {
         return "⚠️ Rate limit exceeded. Please try again in a moment.";
-      } else if (error.message.includes('models/gemini-pro is not found') || error.message.includes('models/gemini-1.5-flash is not found')) {
+      } else if (
+        error.message.includes("models/gemini-pro is not found") ||
+        error.message.includes("models/gemini-1.5-flash is not found")
+      ) {
         return "❌ The model is no longer available. Updated to use gemini-2.0-flash.";
       } else {
         return `❌ Error connecting to AI service: ${error.message}. Please try again later.`;
@@ -168,7 +180,10 @@ export const Terminal = () => {
 
     setOutput((prev) => [
       ...prev,
-      { type: "command", content: `${isAIMode ? 'ai@gemini' : 'aryavhir@portfolio'}:${currentPath}$ ${cmd}` },
+      {
+        type: "command",
+        content: `${isAIMode ? "ai@gemini" : "aryavhir@portfolio"}:${currentPath}$ ${cmd}`,
+      },
     ]);
 
     // Add to command history
@@ -299,8 +314,6 @@ RESTful APIs      ██████████████████   75%`)
 Visit my GitHub for source code! 🔗`);
         break;
 
-      
-
       case "experience":
         await showLoading(1500);
         await typeWriter(`💼 Work Experience:
@@ -337,9 +350,9 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
 ✨ Or visit: https://github.com/aryavhir`);
         // Scroll to GitHub section
         setTimeout(() => {
-          const githubSection = document.getElementById('github');
+          const githubSection = document.getElementById("github");
           if (githubSection) {
-            githubSection.scrollIntoView({ behavior: 'smooth' });
+            githubSection.scrollIntoView({ behavior: "smooth" });
           }
         }, 1000);
         break;
@@ -381,7 +394,7 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
           '"In order to be irreplaceable, one must always be different." - Coco Chanel',
           '"The best way to predict the future is to invent it." - Alan Kay',
           '"Any fool can write code that a computer can understand. Good programmers write code that humans can understand." - Martin Fowler',
-          '"Programming isn\'t about what you know; it\'s about what you can figure out." - Chris Pine',
+          "\"Programming isn't about what you know; it's about what you can figure out.\" - Chris Pine",
           '"The computer was born to solve problems that did not exist before." - Bill Gates',
         ];
         await typeWriter(
@@ -408,12 +421,6 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
       case "clear":
         setOutput([]);
         break;
-
-      
-
-      
-
-      
 
       case "history":
         if (commandHistory.length === 0) {
@@ -533,7 +540,7 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
         ║   │  └─────┘ └─────┘ └────┘ │   ║
         ║   ╰─────────────────────────╯   ║
         ║        Digital Architect         ║
-        ╚══════════════════════════════════╝`
+        ╚══════════════════════════════════╝`,
         ];
         await typeWriter(
           asciiArts[Math.floor(Math.random() * asciiArts.length)],
@@ -633,7 +640,8 @@ Type 'help' to see available commands.`);
                 {!isTyping && (
                   <form onSubmit={handleSubmit} className="terminal-input-form">
                     <span className="terminal-prompt">
-                      {isAIMode ? 'ai@gemini' : 'aryavhir@portfolio'}:{currentPath}$
+                      {isAIMode ? "ai@gemini" : "aryavhir@portfolio"}:
+                      {currentPath}$
                     </span>
                     <input
                       ref={inputRef}
