@@ -2300,25 +2300,25 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   .playground-bx {
     padding: 40px 30px;
   }
-  
+
   .playground-bx h2 {
     font-size: 32px;
   }
-  
+
   .editor-header {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .language-tabs {
     justify-content: center;
   }
-  
+
   .code-editor {
     min-height: 300px;
     font-size: 12px;
   }
-  
+
   .code-output {
     min-height: 150px;
     max-height: 250px;

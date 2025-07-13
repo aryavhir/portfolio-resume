@@ -1,4 +1,3 @@
-
 import React from "react";
 
 import { useState, useEffect } from "react";
@@ -15,26 +14,26 @@ const NetworkBackground = () => {
             <stop offset="100%" stopColor="rgba(74, 47, 189, 0.4)" />
           </linearGradient>
         </defs>
-        
+
         {/* Animated Lines */}
         <path d="M 100 200 L 300 150 L 500 180 L 700 120 L 900 160" 
               stroke="url(#lineGradient)" 
               strokeWidth="2" 
               fill="none"
               className="network-line line-1" />
-        
+
         <path d="M 150 400 L 350 350 L 550 380 L 750 320 L 950 360" 
               stroke="url(#lineGradient)" 
               strokeWidth="2" 
               fill="none"
               className="network-line line-2" />
-        
+
         <path d="M 200 600 L 400 550 L 600 580 L 800 520 L 1000 560" 
               stroke="url(#lineGradient)" 
               strokeWidth="2" 
               fill="none"
               className="network-line line-3" />
-        
+
         {/* Connection Nodes */}
         <circle cx="300" cy="150" r="4" fill="rgba(170, 54, 124, 0.6)" className="network-node node-1" />
         <circle cx="500" cy="180" r="4" fill="rgba(74, 47, 189, 0.6)" className="network-node node-2" />
