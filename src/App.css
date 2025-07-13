@@ -356,14 +356,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   position: relative;
 }
 
-.skill-percentage {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #B8B8B8;
-  margin-top: 8px;
-  letter-spacing: 0.8px;
-}
+/* Skill percentage is now displayed inside the circular meter */
 
 .skill-bx {
   background: #151515;
