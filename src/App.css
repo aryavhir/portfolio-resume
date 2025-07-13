@@ -294,7 +294,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 300vh;
   background: 
     radial-gradient(circle at 20% 80%, rgba(170, 54, 124, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(74, 47, 189, 0.15) 0%, transparent 50%),
@@ -312,7 +312,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 300vh;
   background-image: 
     radial-gradient(2px 2px at 20px 30px, rgba(170, 54, 124, 0.3), transparent),
     radial-gradient(2px 2px at 40px 70px, rgba(74, 47, 189, 0.3), transparent),
@@ -324,40 +324,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   animation: floatParticles 20s linear infinite;
   z-index: -1;
   pointer-events: none;
-}
-
-.banner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(170, 54, 124, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(74, 47, 189, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(170, 54, 124, 0.1) 0%, transparent 50%);
-  animation: gradientShift 8s ease-in-out infinite;
-  z-index: -2;
-}
-
-.banner::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(2px 2px at 20px 30px, rgba(170, 54, 124, 0.3), transparent),
-    radial-gradient(2px 2px at 40px 70px, rgba(74, 47, 189, 0.3), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(170, 54, 124, 0.2), transparent),
-    radial-gradient(1px 1px at 130px 80px, rgba(74, 47, 189, 0.2), transparent),
-    radial-gradient(2px 2px at 160px 30px, rgba(170, 54, 124, 0.3), transparent);
-  background-repeat: repeat;
-  background-size: 200px 100px;
-  animation: floatParticles 20s linear infinite;
-  z-index: -1;
 }
 
 @keyframes gradientShift {
@@ -461,23 +427,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   position: relative;
 }
 
-.skill::before {
-  content: '';
-  position: absolute;
-  top: -100px;
-  left: 0;
-  width: 100%;
-  height: 150px;
-  background: linear-gradient(
-    to bottom,
-    rgba(170, 54, 124, 0.08) 0%,
-    rgba(74, 47, 189, 0.05) 30%,
-    rgba(18, 18, 18, 0.8) 70%,
-    #121212 100%
-  );
-  z-index: 1;
-  pointer-events: none;
-}
+
 
 /* Skill percentage is now displayed inside the circular meter */
 
