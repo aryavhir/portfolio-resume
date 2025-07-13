@@ -5,10 +5,11 @@ import { NavBar } from "./component/NavBar";
 import { Banner } from "./component/Banner";
 import { Skills } from "./component/Skills";
 import { Projects } from "./component/Projects";
-import { GitHubDashboard } from "./component/GitHubDashboard";
-import { Terminal } from "./component/Terminal";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
+import { Terminal } from "./component/Terminal";
+import { GitHubDashboard } from "./component/GitHubDashboard";
+import { CodePlayground } from './component/CodePlayground';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
       <GitHubDashboard />
       <Skills />
       <Projects />
+      <CodePlayground />
+      <Terminal />
+      <GitHubDashboard />
       <Contact />
       <Footer />
     </div>

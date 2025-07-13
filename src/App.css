@@ -1908,6 +1908,167 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   color: #79c0ff;
 }
 
+/************ Code Playground Css ************/
+.code-playground {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+}
+
+.playground-bx {
+  background: linear-gradient(90.21deg, rgba(170, 54, 124, 0.1) -5.91%, rgba(74, 47, 189, 0.1) 111.58%);
+  border-radius: 32px;
+  text-align: center;
+  padding: 60px 50px;
+  margin-top: -60px;
+}
+
+.playground-bx h2 {
+  font-size: 45px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.code-editor-card,
+.output-card,
+.features-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  margin-bottom: 20px;
+}
+
+.code-editor-card .card-header,
+.output-card .card-header,
+.features-card .card-header {
+  background: rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px 16px 0 0;
+  padding: 15px 20px;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.language-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.code-editor {
+  width: 100%;
+  background: #0d1117;
+  color: #c9d1d9;
+  border: none;
+  border-radius: 8px;
+  padding: 20px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 400px;
+}
+
+.code-editor:focus {
+  outline: 2px solid #58a6ff;
+  outline-offset: 2px;
+}
+
+.code-output {
+  background: #0d1117;
+  border-radius: 8px;
+  padding: 15px;
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.output-text {
+  color: #7ee787;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.html-preview {
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: white;
+  color: black;
+  min-height: 100px;
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feature-item {
+  color: #c9d1d9;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.run-btn {
+  padding: 8px 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.run-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .playground-bx {
+    padding: 40px 30px;
+  }
+  
+  .playground-bx h2 {
+    font-size: 32px;
+  }
+  
+  .editor-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .language-tabs {
+    justify-content: center;
+  }
+  
+  .code-editor {
+    min-height: 300px;
+    font-size: 12px;
+  }
+  
+  .code-output {
+    min-height: 150px;
+    max-height: 250px;
+  }
+}
+
 /************ 3D Workspace Css ************/
 .workspace-3d {
   padding: 80px 0;
