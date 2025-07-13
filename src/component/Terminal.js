@@ -9,6 +9,8 @@ export const Terminal = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [currentPath, setCurrentPath] = useState("~");
   const [isAIMode, setIsAIMode] = useState(false);
+  const [commandCount, setCommandCount] = useState(0);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -18,6 +20,10 @@ export const Terminal = () => {
       {
         type: "system",
         content: "Welcome to Aryavhir's Interactive Terminal! 🚀",
+      },
+      {
+        type: "success",
+        content: "🤖 NEW: AI Assistant powered by Gemini - type 'ai' to chat!",
       },
       {
         type: "system",
@@ -173,6 +179,37 @@ export const Terminal = () => {
     });
   };
 
+  // Smart command suggestions
+  const showSmartSuggestions = async () => {
+    await typeWriter(`💡 Quick Command Cheat Sheet:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+    
+    setOutput((prev) => [
+      ...prev,
+      { type: "success", content: "🔥 Popular Commands:" },
+      { type: "system", content: "  skills --list    - View technical skills" },
+      { type: "system", content: "  projects         - See my projects" },
+      { type: "system", content: "  experience       - Work experience" },
+      { type: "system", content: "  ai               - Chat with Gemini AI" },
+      { type: "system", content: "" },
+      { type: "success", content: "⚡ Quick Actions:" },
+      { type: "system", content: "  github           - GitHub dashboard" },
+      { type: "system", content: "  contact          - Get in touch" },
+      { type: "system", content: "  resume           - Download resume" },
+      { type: "system", content: "  ascii            - Random ASCII art" },
+      { type: "system", content: "" },
+      { type: "success", content: "🎮 Fun Stuff:" },
+      { type: "system", content: "  joke             - Programming jokes" },
+      { type: "system", content: "  quote            - Inspirational quotes" },
+      { type: "system", content: "  matrix           - Enter the Matrix" },
+      { type: "system", content: "  music            - Current playlist" },
+      { type: "system", content: "" }
+    ]);
+    
+    await typeWriter(`💭 Pro tip: Use arrow keys to navigate command history!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  };
+
   // Command processing
   const processCommand = async (cmd) => {
     const command = cmd.trim().toLowerCase();
@@ -185,10 +222,18 @@ export const Terminal = () => {
       },
     ]);
 
-    // Add to command history
+    // Add to command history and increment count
     if (cmd.trim()) {
       setCommandHistory((prev) => [...prev, cmd]);
       setHistoryIndex(-1);
+      setCommandCount((prev) => prev + 1);
+      
+      // Show suggestions after 5 commands (excluding help and clear)
+      if (!isAIMode && commandCount === 4 && command !== "help" && command !== "clear" && command !== "cheat") {
+        setTimeout(async () => {
+          await showSmartSuggestions();
+        }, 2000);
+      }
     }
 
     // Handle AI mode
@@ -225,6 +270,7 @@ Type your next question or 'end' to exit AI mode.`);
         
         await typeWriter(`📋 General Commands:
   help              - Show this help menu
+  cheat             - Quick command cheat sheet
   clear             - Clear the terminal
   whoami            - About Aryavhir
   history           - Command history
@@ -248,6 +294,10 @@ Type your next question or 'end' to exit AI mode.`);
   music             - Current Spotify playlist
   time              - Current time
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+        break;
+
+      case "cheat":
+        await showSmartSuggestions();
         break;
 
       case "whoami":
