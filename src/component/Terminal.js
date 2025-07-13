@@ -284,23 +284,16 @@ RESTful APIs      ██████████████████   75%`)
         await typeWriter(`🚀 Personal Projects:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. 📱 Portfolio Website
+   Tech: React, Bootstrap, GitHub API
    Live: https://aryavhir.in
    Status: Published to GitHub
 
 2. 🗳️ Blockchain Based Voting App
-   Implemented Secure Voting Mechanism with smart contracts using Solidity for recording votes using Remix studio
-   Deployed contract on SepoliaETH test network to record vote counts instead of actual votes to enforce privacy
-   Testing the deployment of the contract was done through Ganache
-   Designed intuitive React-based user interface with radio buttons for streamlined party selection
-   Integrated robust error handling for invalid login attempts, enhancing system integrity
+   Tech: Solidity, React, Remix Studio, Ganache, SepoliaETH
    Status: Published to GitHub
 
 3. 🌱 IOT Based Automatic Plant Watering System
-   Engineered Arduino-based smart irrigation system with soil moisture sensing for automated plant watering
-   Implemented user-configurable moisture thresholds, optimizing water usage and plant health
-   Integrated water pump control system for precise, automated irrigation based on real-time soil conditions
-   Incorporated LCD interface for live monitoring of soil moisture levels and system status
-   Developed modular, scalable code for system control, enhancing maintainability and future expansion
+   Tech: Arduino UNO, C++, LCD Interface, Soil Sensors
    Status: Published to GitHub
 
 Visit my GitHub for source code! 🔗`);
