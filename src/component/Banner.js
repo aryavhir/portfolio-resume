@@ -4,41 +4,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./a.css";
 
-// Shooting Stars Component
-const ShootingStars = () => {
-  const mouseSymbols = ['🖱️', '🖲️', '⌨️', '💻'];
-  const keyboardSymbols = ['⌨️', '⏎', '⇧', '⌃', '⌥', '⌘', '⇥', '⌫'];
-  
-  const createShootingStar = (type, index) => {
-    const symbols = type === 'mouse' ? mouseSymbols : keyboardSymbols;
-    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-    const delay = Math.random() * 8;
-    const top = Math.random() * 100;
-    
-    return (
-      <div
-        key={`${type}-${index}`}
-        className={`shooting-star ${type}`}
-        style={{
-          '--delay': delay,
-          top: `${top}%`,
-          color: type === 'mouse' ? 'rgba(170, 54, 124, 0.8)' : 'rgba(74, 47, 189, 0.8)',
-          textShadow: '0 0 10px currentColor',
-        }}
-      >
-        {symbol}
-      </div>
-    );
-  };
-
-  return (
-    <div className="shooting-stars">
-      {Array.from({ length: 6 }, (_, i) => createShootingStar('mouse', i))}
-      {Array.from({ length: 6 }, (_, i) => createShootingStar('keyboard', i))}
-    </div>
-  );
-};
-
 // Animated Network Background Component
 const NetworkBackground = () => {
   return (
@@ -77,7 +42,6 @@ const NetworkBackground = () => {
         <circle cx="550" cy="380" r="4" fill="rgba(74, 47, 189, 0.6)" className="network-node node-4" />
         <circle cx="750" cy="320" r="4" fill="rgba(170, 54, 124, 0.6)" className="network-node node-5" />
       </svg>
-      <ShootingStars />
     </div>
   );
 };
