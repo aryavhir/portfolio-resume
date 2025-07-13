@@ -1,3 +1,4 @@
+
 import React from "react";
 
 import { useState, useEffect } from "react";
@@ -14,26 +15,26 @@ const NetworkBackground = () => {
             <stop offset="100%" stopColor="rgba(74, 47, 189, 0.4)" />
           </linearGradient>
         </defs>
-
+        
         {/* Animated Lines */}
         <path d="M 100 200 L 300 150 L 500 180 L 700 120 L 900 160" 
               stroke="url(#lineGradient)" 
               strokeWidth="2" 
               fill="none"
               className="network-line line-1" />
-
+        
         <path d="M 150 400 L 350 350 L 550 380 L 750 320 L 950 360" 
               stroke="url(#lineGradient)" 
               strokeWidth="2" 
               fill="none"
               className="network-line line-2" />
-
+        
         <path d="M 200 600 L 400 550 L 600 580 L 800 520 L 1000 560" 
               stroke="url(#lineGradient)" 
               strokeWidth="2" 
               fill="none"
               className="network-line line-3" />
-
+        
         {/* Connection Nodes */}
         <circle cx="300" cy="150" r="4" fill="rgba(170, 54, 124, 0.6)" className="network-node node-1" />
         <circle cx="500" cy="180" r="4" fill="rgba(74, 47, 189, 0.6)" className="network-node node-2" />
@@ -52,7 +53,7 @@ export const Banner = () => {
   const [text, setText] = useState("");
   const [delta, setDelta] = useState(300 - Math.random() * 100);
   const [index, setIndex] = useState(1);
-  const toRotate = ["Full Stack Developer", "React Specialist", "UI/UX Designer", "Problem Solver"];
+  const toRotate = ["Front-end Developer", "Web Developer", "Web Designer"];
   const period = 2000;
 
   useEffect(() => {
@@ -95,46 +96,17 @@ export const Banner = () => {
   return (
     <section className="banner" id="home">
       <NetworkBackground />
-      <div className="container">
-        <div className="row align-items-center">
-          <div className="col-lg-12">
-            <div className="banner-content text-center">
-              <div className="banner-title">
-                Hello, I'm Aryavhir
-              </div>
-              <div className="banner-subtitle">
-                Crafting digital experiences with passion and precision
-              </div>
-              <div className="txt-rotate" style={{ 
-                fontSize: "clamp(1.5rem, 4vw, 2.5rem)", 
-                fontWeight: "600",
-                color: "#AA367C",
-                marginBottom: "3rem",
-                fontFamily: "'JetBrains Mono', monospace"
-              }}>
-                <span style={{ color: "rgba(255,255,255,0.8)" }}>I am a </span>
-                <span style={{ 
-                  background: "linear-gradient(135deg, #AA367C 0%, #4A2FBD 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text"
-                }}>{text}</span>
-              </div>
-              <div style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "2rem",
-                marginTop: "2rem"
-              }}>
-                <button className="premium-btn primary">
-                  View My Work
-                </button>
-                <button className="premium-btn secondary">
-                  Get In Touch
-                </button>
-              </div>
-            </div>
-          </div>
+      <h1 style={{ textAlign: "center" }}> Hello</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "10px",
+        }}
+      >
+        <div className="txt-rotate">
+          <span>I am a </span>
+          <span>{text}</span>
         </div>
       </div>
     </section>
