@@ -46,7 +46,7 @@ export const Skills = () => {
   ];
 
   // Component to create dynamic circular progress meter
-  const CircularMeter = ({ percentage, size = 120 }) => {
+  const CircularMeter = ({ percentage, size = 150 }) => {
     const radius = 45;
     const strokeWidth = 8;
     const normalizedRadius = radius - strokeWidth * 2;

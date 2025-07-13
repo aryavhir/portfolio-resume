@@ -9,6 +9,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 export const NavBar = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
     const onScroll = () => {
@@ -23,6 +24,21 @@ export const NavBar = () => {
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    // Apply theme to document body
+    if (isDarkMode) {
+      document.body.classList.remove('light-mode');
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+      document.body.classList.add('light-mode');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   const onUpdateActiveLink = (value) => {
     setActiveLink(value);
@@ -90,6 +106,9 @@ export const NavBar = () => {
                   <img src={navIcon3} alt="" />
                 </a>
               </div>
+              <button className="theme-toggle" onClick={toggleTheme}>
+                <span>{isDarkMode ? '☀️' : '🌙'}</span>
+              </button>
               <HashLink to="#connect">
                 <button className="vvd">
                   <span>Let’s Connect</span>

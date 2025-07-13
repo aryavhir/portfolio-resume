@@ -37,6 +37,93 @@ body {
   background-color: #121212 !important;
   color: #fff !important;
   font-family: 'Centra', sans-serif !important;
+  transition: all 0.3s ease;
+}
+
+/* Light mode styles */
+body.light-mode {
+  background-color: #ffffff !important;
+  color: #121212 !important;
+}
+
+body.light-mode .banner {
+  background-color: #f8f9fa;
+}
+
+body.light-mode .skill {
+  background-color: #ffffff;
+}
+
+body.light-mode .skill-bx {
+  background: #f8f9fa;
+  color: #121212;
+}
+
+body.light-mode .skill h2 {
+  color: #121212;
+}
+
+body.light-mode .terminal-section {
+  background-color: #ffffff;
+}
+
+body.light-mode .terminal-container {
+  background: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+body.light-mode .terminal-body {
+  background: #ffffff;
+  color: #121212;
+}
+
+body.light-mode .github-dashboard {
+  background-color: #ffffff;
+}
+
+body.light-mode .github-bx {
+  background: #f8f9fa;
+  color: #121212;
+}
+
+body.light-mode .github-section-card {
+  background: rgba(248, 249, 250, 0.9);
+}
+
+body.light-mode .github-section-card .card-body {
+  background: #ffffff;
+  color: #121212;
+}
+
+body.light-mode .project {
+  background-color: #f8f9fa;
+}
+
+body.light-mode nav.navbar {
+  background-color: #ffffff;
+}
+
+body.light-mode nav.navbar.scrolled {
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .navbar-nav .nav-link.navbar-link {
+  color: #121212 !important;
+}
+
+body.light-mode .social-icon a {
+  border-color: rgba(18, 18, 18, 0.5);
+}
+
+body.light-mode .theme-toggle {
+  background: rgba(18, 18, 18, 0.1);
+  border-color: rgba(18, 18, 18, 0.3);
+  color: #121212;
+}
+
+body.light-mode .theme-toggle:hover {
+  background: rgba(18, 18, 18, 0.2);
 }
 
 h1,
@@ -214,6 +301,27 @@ span.navbar-text {
   width: 100%;
   height: 100%;
   position: absolute;
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
 }
 
 nav.navbar .navbar-toggler:active,
