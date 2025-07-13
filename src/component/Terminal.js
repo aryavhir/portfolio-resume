@@ -10,7 +10,7 @@ export const Terminal = () => {
   const [currentPath, setCurrentPath] = useState("~");
   const [isAIMode, setIsAIMode] = useState(false);
   const [commandCount, setCommandCount] = useState(0);
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showCheatSheet, setShowCheatSheet] = useState(false);
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -179,36 +179,7 @@ export const Terminal = () => {
     });
   };
 
-  // Smart command suggestions
-  const showSmartSuggestions = async () => {
-    await typeWriter(`💡 Quick Command Cheat Sheet:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-    
-    setOutput((prev) => [
-      ...prev,
-      { type: "success", content: "🔥 Popular Commands:" },
-      { type: "system", content: "  skills --list    - View technical skills" },
-      { type: "system", content: "  projects         - See my projects" },
-      { type: "system", content: "  experience       - Work experience" },
-      { type: "system", content: "  ai               - Chat with Gemini AI" },
-      { type: "system", content: "" },
-      { type: "success", content: "⚡ Quick Actions:" },
-      { type: "system", content: "  github           - GitHub dashboard" },
-      { type: "system", content: "  contact          - Get in touch" },
-      { type: "system", content: "  resume           - Download resume" },
-      { type: "system", content: "  ascii            - Random ASCII art" },
-      { type: "system", content: "" },
-      { type: "success", content: "🎮 Fun Stuff:" },
-      { type: "system", content: "  joke             - Programming jokes" },
-      { type: "system", content: "  quote            - Inspirational quotes" },
-      { type: "system", content: "  matrix           - Enter the Matrix" },
-      { type: "system", content: "  music            - Current playlist" },
-      { type: "system", content: "" }
-    ]);
-    
-    await typeWriter(`💭 Pro tip: Use arrow keys to navigate command history!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-  };
+  
 
   // Command processing
   const processCommand = async (cmd) => {
@@ -228,10 +199,10 @@ export const Terminal = () => {
       setHistoryIndex(-1);
       setCommandCount((prev) => prev + 1);
       
-      // Show suggestions after 5 commands (excluding help and clear)
+      // Show cheat sheet after 5 commands (excluding help and clear)
       if (!isAIMode && commandCount === 4 && command !== "help" && command !== "clear" && command !== "cheat") {
-        setTimeout(async () => {
-          await showSmartSuggestions();
+        setTimeout(() => {
+          setShowCheatSheet(true);
         }, 2000);
       }
     }
@@ -297,7 +268,8 @@ Type your next question or 'end' to exit AI mode.`);
         break;
 
       case "cheat":
-        await showSmartSuggestions();
+        setShowCheatSheet(true);
+        await typeWriter("💡 Cheat sheet opened! Check the floating panel.");
         break;
 
       case "whoami":
@@ -735,6 +707,106 @@ Type 'help' to see available commands.`);
           </Col>
         </Row>
       </Container>
+
+      {/* Floating Cheat Sheet Overlay */}
+      {showCheatSheet && (
+        <div className="cheat-sheet-overlay" onClick={() => setShowCheatSheet(false)}>
+          <div className="cheat-sheet-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="cheat-sheet-header">
+              <h3>⚡ Terminal Command Cheat Sheet</h3>
+              <button 
+                className="cheat-sheet-close" 
+                onClick={() => setShowCheatSheet(false)}
+              >
+                ✕
+              </button>
+            </div>
+            
+            <div className="cheat-sheet-content">
+              <div className="cheat-sheet-section">
+                <h4>🤖 AI Assistant</h4>
+                <div className="cheat-sheet-commands">
+                  <div className="cheat-command">
+                    <span className="command-name">ai</span>
+                    <span className="command-desc">Chat with Gemini AI</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="cheat-sheet-section">
+                <h4>🔥 Popular Commands</h4>
+                <div className="cheat-sheet-commands">
+                  <div className="cheat-command">
+                    <span className="command-name">skills --list</span>
+                    <span className="command-desc">View technical skills</span>
+                  </div>
+                  <div className="cheat-command">
+                    <span className="command-name">projects</span>
+                    <span className="command-desc">See my projects</span>
+                  </div>
+                  <div className="cheat-command">
+                    <span className="command-name">experience</span>
+                    <span className="command-desc">Work experience</span>
+                  </div>
+                  <div className="cheat-command">
+                    <span className="command-name">whoami</span>
+                    <span className="command-desc">About Aryavhir</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="cheat-sheet-section">
+                <h4>⚡ Quick Actions</h4>
+                <div className="cheat-sheet-commands">
+                  <div className="cheat-command">
+                    <span className="command-name">github</span>
+                    <span className="command-desc">GitHub dashboard</span>
+                  </div>
+                  <div className="cheat-command">
+                    <span className="command-name">contact</span>
+                    <span className="command-desc">Get in touch</span>
+                  </div>
+                  <div className="cheat-command">
+                    <span className="command-name">resume</span>
+                    <span className="command-desc">Download resume</span>
+                  </div>
+                  <div className="cheat-command">
+                    <span className="command-name">clear</span>
+                    <span className="command-desc">Clear terminal</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="cheat-sheet-section">
+                <h4>🎮 Fun Stuff</h4>
+                <div className="cheat-sheet-commands">
+                  <div className="cheat-command">
+                    <span className="command-name">joke</span>
+                    <span className="command-desc">Programming jokes</span>
+                  </div>
+                  <div className="cheat-command">
+                    <span className="command-name">quote</span>
+                    <span className="command-desc">Inspirational quotes</span>
+                  </div>
+                  <div className="cheat-command">
+                    <span className="command-name">ascii</span>
+                    <span className="command-desc">Random ASCII art</span>
+                  </div>
+                  <div className="cheat-command">
+                    <span className="command-name">matrix</span>
+                    <span className="command-desc">Enter the Matrix</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="cheat-sheet-footer">
+              <p>💭 Pro tip: Use arrow keys to navigate command history!</p>
+              <p>Click outside or press ESC to close</p>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
