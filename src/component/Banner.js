@@ -53,7 +53,7 @@ export const Banner = () => {
   const [text, setText] = useState("");
   const [delta, setDelta] = useState(300 - Math.random() * 100);
   const [index, setIndex] = useState(1);
-  const toRotate = ["Front-end Developer", "Web Developer", "Web Designer"];
+  const toRotate = ["Full Stack Developer", "React Specialist", "UI/UX Designer", "Problem Solver"];
   const period = 2000;
 
   useEffect(() => {
@@ -96,17 +96,46 @@ export const Banner = () => {
   return (
     <section className="banner" id="home">
       <NetworkBackground />
-      <h1 style={{ textAlign: "center" }}> Hello</h1>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "10px",
-        }}
-      >
-        <div className="txt-rotate">
-          <span>I am a </span>
-          <span>{text}</span>
+      <div className="container">
+        <div className="row align-items-center">
+          <div className="col-lg-12">
+            <div className="banner-content text-center">
+              <div className="banner-title">
+                Hello, I'm Aryavhir
+              </div>
+              <div className="banner-subtitle">
+                Crafting digital experiences with passion and precision
+              </div>
+              <div className="txt-rotate" style={{ 
+                fontSize: "clamp(1.5rem, 4vw, 2.5rem)", 
+                fontWeight: "600",
+                color: "#AA367C",
+                marginBottom: "3rem",
+                fontFamily: "'JetBrains Mono', monospace"
+              }}>
+                <span style={{ color: "rgba(255,255,255,0.8)" }}>I am a </span>
+                <span style={{ 
+                  background: "linear-gradient(135deg, #AA367C 0%, #4A2FBD 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text"
+                }}>{text}</span>
+              </div>
+              <div style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "2rem",
+                marginTop: "2rem"
+              }}>
+                <button className="premium-btn primary">
+                  View My Work
+                </button>
+                <button className="premium-btn secondary">
+                  Get In Touch
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
