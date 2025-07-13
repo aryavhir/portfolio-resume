@@ -1216,6 +1216,11 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-weight: 500;
 }
 
+.terminal-line.success {
+  color: #7ee787;
+  font-weight: 600;
+}
+
 @keyframes blink {
 
   0%,

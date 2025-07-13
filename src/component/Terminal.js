@@ -213,11 +213,17 @@ Type your next question or 'end' to exit AI mode.`);
     switch (command) {
       case "help":
         await typeWriter(`Available Commands:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-\x1b[32m🤖 NEW! AI Assistant:
-  ai                - Chat with Gemini AI (type 'end' to exit)\x1b[0m
-
-📋 General Commands:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+        
+        // Add green AI assistant section
+        setOutput((prev) => [
+          ...prev,
+          { type: "success", content: "🤖 NEW! AI Assistant:" },
+          { type: "success", content: "  ai                - Chat with Gemini AI (type 'end' to exit)" },
+          { type: "system", content: "" }
+        ]);
+        
+        await typeWriter(`📋 General Commands:
   help              - Show this help menu
   clear             - Clear the terminal
   whoami            - About Aryavhir
