@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import contactImg from "../asset/img/contact-img.svg";
+import emailjs from 'emailjs-com';
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
 
@@ -28,27 +29,41 @@ export const Contact = () => {
     setButtonText("Sending...");
     
     try {
-      let response = await fetch("http://localhost:5000/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(formDetails),
-      });
+      // EmailJS configuration
+      const serviceId = 'Aryavhir123';
+      const templateId = 'template_zlgcdbf';
+      const publicKey = 'wKOTaMefm5dYIMivs';
       
-      let result = await response.json();
+      // Template parameters for contact form
+      const templateParams = {
+        to_email: 'aryavhirkoul2@gmail.com',
+        from_name: `${formDetails.firstName} ${formDetails.lastName}`,
+        from_email: formDetails.email,
+        phone: formDetails.phone,
+        message: formDetails.message,
+        subject: 'New Contact Form Submission from Portfolio'
+      };
+
+      const result = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
       setButtonText("Send");
       setFormDetails(formInitialDetails);
+      setStatus({ success: true, message: 'Message sent successfully! I\'ll get back to you soon.' });
       
-      if (result.code === 200) {
-        setStatus({ success: true, message: 'Message sent successfully' });
-      } else {
-        setStatus({ success: false, message: 'Something went wrong, please try again later.' });
-      }
+      // Clear status after 5 seconds
+      setTimeout(() => {
+        setStatus({});
+      }, 5000);
+      
     } catch (error) {
-      console.error('Error during fetch:', error);
+      console.error('EmailJS error:', error);
       setButtonText("Send");
       setStatus({ success: false, message: 'Something went wrong, please try again later.' });
+      
+      // Clear status after 5 seconds
+      setTimeout(() => {
+        setStatus({});
+      }, 5000);
     }
   };
 
@@ -89,7 +104,10 @@ export const Contact = () => {
                       {
                         status.message &&
                         <Col>
-                          <p className={status.success === false ? "danger" : "success"}>{status.message}</p>
+                          <div className={`contact-status ${status.success === false ? "error" : "success"}`}>
+                            <span className="status-icon">{status.success === false ? "❌" : "✅"}</span>
+                            <span>{status.message}</span>
+                          </div>
                         </Col>
                       }
                     </Row>

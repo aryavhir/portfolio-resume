@@ -1076,6 +1076,35 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   width: 100%;
 }
 
+.contact-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  animation: fadeInUp 0.5s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-status.success {
+  background: rgba(46, 204, 113, 0.1);
+  border-color: rgba(46, 204, 113, 0.3);
+  color: #2ecc71;
+}
+
+.contact-status.error {
+  background: rgba(231, 76, 60, 0.1);
+  border-color: rgba(231, 76, 60, 0.3);
+  color: #e74c3c;
+}
+
+.contact-status .status-icon {
+  font-size: 18px;
+}
+
 /************ Footer Css ************/
 .footer {
   padding: 0 0 50px 0;
@@ -1150,6 +1179,61 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-weight: 500;
   letter-spacing: 0.5px;
   border-radius: 18px;
+}
+
+.newsletter-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  animation: fadeInUp 0.5s ease;
+}
+
+.newsletter-status.success {
+  background: linear-gradient(90deg, rgba(46, 204, 113, 0.1) 0%, rgba(46, 204, 113, 0.05) 100%);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: #27ae60;
+}
+
+.newsletter-status.error {
+  background: linear-gradient(90deg, rgba(231, 76, 60, 0.1) 0%, rgba(231, 76, 60, 0.05) 100%);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #e74c3c;
+}
+
+.newsletter-status.sending {
+  background: linear-gradient(90deg, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0.05) 100%);
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  color: #3498db;
+}
+
+.newsletter-status .status-icon {
+  font-size: 18px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .footer img {
