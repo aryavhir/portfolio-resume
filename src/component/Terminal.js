@@ -10,16 +10,8 @@ export const Terminal = () => {
   const [currentPath, setCurrentPath] = useState("~");
   const [isAIMode, setIsAIMode] = useState(false);
   const [commandCount, setCommandCount] = useState(0);
-  const [inlineCompletion, setInlineCompletion] = useState("");
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
-
-  // Available commands for suggestions
-  const availableCommands = [
-    'help', 'clear', 'whoami', 'history', 'ai', 'skills --list', 'skills --details',
-    'projects', 'experience', 'github', 'contact', 'joke', 'quote', 'music',
-    'time', 'matrix', 'ascii', 'resume'
-  ];
 
   // Welcome message on component mount
   useEffect(() => {
@@ -622,30 +614,8 @@ Type 'help' to see available commands.`);
     }
   };
 
-  // Handle input changes and show inline completion
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInput(value);
-    
-    if (value.trim() && !isAIMode) {
-      const matchingCommand = availableCommands.find(cmd => 
-        cmd.toLowerCase().startsWith(value.toLowerCase()) && cmd.toLowerCase() !== value.toLowerCase()
-      );
-      setInlineCompletion(matchingCommand ? matchingCommand.substring(value.length) : "");
-    } else {
-      setInlineCompletion("");
-    }
-  };
-
   // Handle key navigation
   const handleKeyDown = (e) => {
-    if (e.key === "Tab" && inlineCompletion) {
-      e.preventDefault();
-      setInput(input + inlineCompletion);
-      setInlineCompletion("");
-      return;
-    }
-    
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (commandHistory.length > 0) {
@@ -655,7 +625,6 @@ Type 'help' to see available commands.`);
             : Math.max(0, historyIndex - 1);
         setHistoryIndex(newIndex);
         setInput(commandHistory[newIndex]);
-        setInlineCompletion("");
       }
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -668,7 +637,6 @@ Type 'help' to see available commands.`);
           setHistoryIndex(newIndex);
           setInput(commandHistory[newIndex]);
         }
-        setInlineCompletion("");
       }
     }
   };
@@ -702,34 +670,22 @@ Type 'help' to see available commands.`);
                 ))}
 
                 {!isTyping && (
-                  <div className="terminal-input-wrapper">
-                    <form onSubmit={handleSubmit} className="terminal-input-form">
-                      <span className="terminal-prompt">
-                        {isAIMode ? "ai@gemini" : "aryavhir@portfolio"}:
-                        {currentPath}$
-                      </span>
-                      <div className="terminal-input-container">
-                        <input
-                          ref={inputRef}
-                          type="text"
-                          value={input}
-                          onChange={handleInputChange}
-                          onKeyDown={handleKeyDown}
-                          className="terminal-input"
-                          autoComplete="off"
-                          autoFocus
-                          placeholder={isAIMode ? "Ask AI anything..." : "Type 'help' for commands or start typing..."}
-                        />
-                        {inlineCompletion && (
-                          <span className="terminal-input-completion">
-                            {inlineCompletion}
-                          </span>
-                        )}
-                      </div>
-                    </form>
-                    
-                    
-                  </div>
+                  <form onSubmit={handleSubmit} className="terminal-input-form">
+                    <span className="terminal-prompt">
+                      {isAIMode ? "ai@gemini" : "aryavhir@portfolio"}:
+                      {currentPath}$
+                    </span>
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      className="terminal-input"
+                      autoComplete="off"
+                      autoFocus
+                    />
+                  </form>
                 )}
               </div>
             </div>

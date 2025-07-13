@@ -2030,35 +2030,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   background: rgba(126, 231, 135, 0.3);
 }
 
-.terminal-input::placeholder {
-  color: #6b7280;
-  opacity: 0.7;
-}
-
-.terminal-input-wrapper {
-  position: relative;
-}
-
-.terminal-input-container {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-.terminal-input-completion {
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: #6b7280;
-  font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
-  font-size: 14px;
-  pointer-events: none;
-  user-select: none;
-  z-index: 1;
-}
-
-
-
 /* Terminal responsive */
 @media (max-width: 768px) {
   .terminal-section {
@@ -2090,10 +2061,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   }
 
   .terminal-input {
-    font-size: 12px;
-  }
-
-  .terminal-input-completion {
     font-size: 12px;
   }
 }
