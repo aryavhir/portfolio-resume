@@ -277,7 +277,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 /************ Banner Css ************/
 .banner {
   margin-top: 0;
-  padding: 230px 0 0;
+  padding: 210px 0 0;
   background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -295,7 +295,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   left: 0;
   width: 100%;
   height: 300vh;
-  background: 
+  background:
     radial-gradient(circle at 20% 80%, rgba(170, 54, 124, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(74, 47, 189, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 40% 40%, rgba(170, 54, 124, 0.1) 0%, transparent 50%);
@@ -313,7 +313,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   left: 0;
   width: 100%;
   height: 300vh;
-  background-image: 
+  background-image:
     radial-gradient(2px 2px at 20px 30px, rgba(170, 54, 124, 0.3), transparent),
     radial-gradient(2px 2px at 40px 70px, rgba(74, 47, 189, 0.3), transparent),
     radial-gradient(1px 1px at 90px 40px, rgba(170, 54, 124, 0.2), transparent),
@@ -327,15 +327,20 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateX(0) translateY(0);
   }
+
   25% {
     transform: translateX(-10px) translateY(-10px);
   }
+
   50% {
     transform: translateX(10px) translateY(10px);
   }
+
   75% {
     transform: translateX(-5px) translateY(5px);
   }
@@ -345,6 +350,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   0% {
     transform: translateY(0) translateX(0);
   }
+
   100% {
     transform: translateY(-100px) translateX(50px);
   }
@@ -649,25 +655,42 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   animation: pulse 2s ease-in-out infinite;
 }
 
-.node-1 { animation-delay: 0.5s; }
-.node-2 { animation-delay: 1s; }
-.node-3 { animation-delay: 1.5s; }
-.node-4 { animation-delay: 2s; }
-.node-5 { animation-delay: 2.5s; }
+.node-1 {
+  animation-delay: 0.5s;
+}
+
+.node-2 {
+  animation-delay: 1s;
+}
+
+.node-3 {
+  animation-delay: 1.5s;
+}
+
+.node-4 {
+  animation-delay: 2s;
+}
+
+.node-5 {
+  animation-delay: 2.5s;
+}
 
 @keyframes drawLine {
   0% {
     stroke-dashoffset: 1000;
     opacity: 0;
   }
+
   10% {
     stroke-dashoffset: 0;
     opacity: 1;
   }
+
   90% {
     stroke-dashoffset: 0;
     opacity: 1;
   }
+
   100% {
     stroke-dashoffset: -1000;
     opacity: 0;
@@ -675,10 +698,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     r: 4;
     opacity: 0.6;
   }
+
   50% {
     r: 6;
     opacity: 1;
@@ -1216,7 +1242,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 /************ Terminal Css ************/
 .terminal-section {
-  padding: 80px 0;
+  padding: 50px 0;
   position: relative;
   overflow: hidden;
 }
