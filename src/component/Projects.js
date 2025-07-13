@@ -108,7 +108,7 @@ export const Projects = () => {
                       </Row>
                     </Tab.Pane>
                     <Tab.Pane eventKey="third">
-                      <p>Interactive 3D Workspace - Built with Three.js and React Three Fiber. This immersive 3D experience showcases my skills in creating interactive web applications with realistic lighting, animations, and responsive controls. Scroll down to see the Code Playground!</p>
+                      <p>Interactive 3D Workspace - Built with Three.js and React Three Fiber. This immersive 3D experience showcases my skills in creating interactive web applications with realistic lighting, animations, and responsive controls.</p>
                       <Workspace3D />
                     </Tab.Pane>
                   </Tab.Content>
