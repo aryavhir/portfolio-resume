@@ -643,24 +643,6 @@ Type 'help' to see available commands.`);
 
   return (
     <section className="terminal-section" id="terminal">
-      <div className="shooting-stars-container">
-        {Array.from({ length: 15 }, (_, i) => (
-          <div
-            key={i}
-            className="shooting-star"
-            style={{
-              '--delay': `${Math.random() * 8}s`,
-              '--duration': `${3 + Math.random() * 4}s`,
-              '--start-x': `${Math.random() * 100}%`,
-              '--start-y': `${Math.random() * 100}%`,
-              color: Math.random() > 0.5 ? 'rgba(170, 54, 124, 0.8)' : 'rgba(74, 47, 189, 0.8)',
-              fontSize: `${12 + Math.random() * 8}px`,
-            }}
-          >
-            {['✦', '✧', '⭐', '✨', '⋆', '★', '☆', '✩'][Math.floor(Math.random() * 8)]}
-          </div>
-        ))}
-      </div>
       <Container>
         <Row>
           <Col lg={12}>
