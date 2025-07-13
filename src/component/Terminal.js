@@ -79,29 +79,53 @@ export const Terminal = () => {
   // Gemini AI API call
   const callGeminiAPI = async (message) => {
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyC5MZQ4yNPMTPHm7_7Lgo3KhMDfT7sTZiI`, {
+      const API_KEY = 'AIzaSyC5MZQ4yNPMTPHm7_7Lgo3KhMDfT7sTZiI';
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
+      
+      const requestBody = {
+        contents: [{
+          parts: [{
+            text: message
+          }]
+        }],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 1024,
+        }
+      };
+
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: message
-            }]
-          }]
-        })
+        body: JSON.stringify(requestBody)
       });
 
       if (!response.ok) {
+        const errorData = await response.text();
+        console.error('API Error:', response.status, errorData);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      return data.candidates[0].content.parts[0].text;
+      
+      if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+        return data.candidates[0].content.parts[0].text;
+      } else {
+        throw new Error('Invalid response format from Gemini API');
+      }
     } catch (error) {
       console.error('Gemini API Error:', error);
-      return "Sorry, I'm having trouble connecting to the AI service right now. Please try again later.";
+      if (error.message.includes('HTTP error! status: 403')) {
+        return "❌ API key authentication failed. Please check the API key configuration.";
+      } else if (error.message.includes('HTTP error! status: 429')) {
+        return "⚠️ Rate limit exceeded. Please try again in a moment.";
+      } else {
+        return `❌ Error connecting to AI service: ${error.message}. Please try again later.`;
+      }
     }
   };
 
@@ -175,6 +199,9 @@ Type your next question or 'end' to exit AI mode.`);
       case "help":
         await typeWriter(`Available Commands:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🤖 NEW! AI Assistant:
+  ai                - Chat with Gemini AI (type 'end' to exit)
+
 📋 General Commands:
   help              - Show this help menu
   clear             - Clear the terminal
@@ -205,9 +232,6 @@ Type your next question or 'end' to exit AI mode.`);
   weather           - Check weather
   time              - Current time
   neofetch          - System information
-
-🤖 NEW! AI Assistant:
-  ai                - Chat with Gemini AI (type 'end' to exit)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
         break;
 
