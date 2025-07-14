@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import contactImg from "../asset/img/contact-img.svg";
+import emailjs from 'emailjs-com';
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
 
@@ -26,29 +27,43 @@ export const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonText("Sending...");
-    
+
     try {
-      let response = await fetch("http://localhost:5000/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(formDetails),
-      });
-      
-      let result = await response.json();
+      // EmailJS configuration
+      const serviceId = 'Aryavhir123';
+      const templateId = 'template_zlgcdbf';
+      const publicKey = 'wKOTaMefm5dYIMivs';
+
+      // Template parameters for contact form
+      const templateParams = {
+        to_email: 'aryavhirkoul2@gmail.com',
+        from_name: `${formDetails.firstName} ${formDetails.lastName}`,
+        from_email: formDetails.email,
+        phone: formDetails.phone,
+        message: formDetails.message,
+        subject: 'New Contact Form Submission from Portfolio'
+      };
+
+      const result = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
       setButtonText("Send");
       setFormDetails(formInitialDetails);
-      
-      if (result.code === 200) {
-        setStatus({ success: true, message: 'Message sent successfully' });
-      } else {
-        setStatus({ success: false, message: 'Something went wrong, please try again later.' });
-      }
+      setStatus({ success: true, message: 'Message sent successfully! I\'ll get back to you soon.' });
+
+      // Clear status after 5 seconds
+      setTimeout(() => {
+        setStatus({});
+      }, 5000);
+
     } catch (error) {
-      console.error('Error during fetch:', error);
+      console.error('EmailJS error:', error);
       setButtonText("Send");
       setStatus({ success: false, message: 'Something went wrong, please try again later.' });
+
+      // Clear status after 5 seconds
+      setTimeout(() => {
+        setStatus({});
+      }, 5000);
     }
   };
 
@@ -68,8 +83,19 @@ export const Contact = () => {
               {({ isVisible }) =>
                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                   <h2>Get In Touch</h2>
-                  <form onSubmit={handleSubmit}>
-                    <Row>
+                  
+          <div className="contact-status">
+            {status.message && (
+              <div className={`contact-status ${status.success ? 'success' : 'error'}`}>
+                <span className="status-icon">
+                  {status.success ? '✅' : '❌'}
+                </span>
+                {status.message}
+              </div>
+            )}
+          </div>
+          <form onSubmit={handleSubmit}>
+            <Row>
                       <Col size={12} sm={6} className="px-1">
                         <input type="text" value={formDetails.firstName} placeholder="First Name" onChange={(e) => onFormUpdate('firstName', e.target.value)} />
                       </Col>
@@ -89,7 +115,10 @@ export const Contact = () => {
                       {
                         status.message &&
                         <Col>
-                          <p className={status.success === false ? "danger" : "success"}>{status.message}</p>
+                          <div className={`contact-status ${status.success === false ? "error" : "success"}`}>
+                            <span className="status-icon">{status.success === false ? "❌" : "✅"}</span>
+                            <span>{status.message}</span>
+                          </div>
                         </Col>
                       }
                     </Row>
