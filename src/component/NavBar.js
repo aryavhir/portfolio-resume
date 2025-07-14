@@ -10,6 +10,7 @@ export const NavBar = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -36,22 +37,40 @@ export const NavBar = () => {
     }
   }, [isDarkMode]);
 
+  useEffect(() => {
+    // Add class to body when mobile menu is open
+    if (isMenuOpen) {
+      document.body.classList.add("mobile-menu-open");
+    } else {
+      document.body.classList.remove("mobile-menu-open");
+    }
+  }, [isMenuOpen]);
+
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
 
   const onUpdateActiveLink = (value) => {
     setActiveLink(value);
+    setIsMenuOpen(false); // Close menu when link is clicked
+  };
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <Router>
       <Navbar expand="md" className={scrolled ? "scrolled" : ""}>
         <Container>
-          <Navbar.Toggle aria-controls="basic-navbar-nav">
+          <Navbar.Toggle 
+            aria-controls="basic-navbar-nav"
+            onClick={handleMenuToggle}
+            aria-expanded={isMenuOpen}
+          >
             <span className="navbar-toggler-icon"></span>
           </Navbar.Toggle>
-          <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Collapse id="basic-navbar-nav" in={isMenuOpen}>
             <Nav className="ms-auto">
               <Nav.Link
                 href="#home"

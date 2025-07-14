@@ -490,27 +490,27 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 /* Mobile navbar content push-down effect */
 @media (max-width: 991px) {
-  .navbar-collapse.show,
-  .navbar-collapse.collapsing {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+  .navbar-collapse {
     background: rgba(18, 18, 18, 0.98);
     backdrop-filter: blur(20px);
     border-top: 1px solid rgba(170, 54, 124, 0.3);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    z-index: 1000;
+    margin-top: 0;
+    transition: all 0.35s ease;
   }
 
-  .navbar-collapse.show + .main-content,
-  .navbar-collapse.collapsing + .main-content {
-    transform: translateY(200px);
-    transition: transform 0.35s ease;
+  .navbar-collapse.show {
+    margin-top: 0;
   }
 
   .main-content {
-    transition: transform 0.35s ease;
+    transition: margin-top 0.35s ease;
+    margin-top: 0;
+  }
+
+  /* When navbar is expanded, push main content down */
+  body.mobile-menu-open .main-content {
+    margin-top: 250px;
   }
 
   .navbar-nav {
