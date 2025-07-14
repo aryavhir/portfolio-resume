@@ -84,10 +84,6 @@ export const Contact = () => {
                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                   <h2>Get In Touch</h2>
                   
-          <div className="email-service-indicator">
-            <i className="fas fa-paper-plane"></i>
-            <span>Powered by EmailJS - Direct delivery to inbox</span>
-          </div>
           <div className="contact-status">
             {status.message && (
               <div className={`contact-status ${status.success ? 'success' : 'error'}`}>

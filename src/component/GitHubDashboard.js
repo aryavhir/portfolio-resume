@@ -139,9 +139,12 @@ export const GitHubDashboard = () => {
               <h2>
                 GitHub Portfolio
                 <span className="live-data-badge">
-                  <i className="fas fa-satellite-dish"></i> Live Data
+                  <i className="fas fa-satellite-dish"></i> Live Updates
                 </span>
               </h2>
+              <div className="email-service-indicator">
+                <i className="fas fa-envelope"></i> EmailJS Integration Active
+              </div>
               <p>
                 Explore my coding journey through repositories, contributions,
                 and development activity. Data fetched in real-time via GitHub API.
