@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import emailjs from 'emailjs-com';
@@ -15,12 +14,12 @@ export const Newsletter = () => {
       setSending(true);
       setStatus('');
       setMessage('');
-      
+
       // Your actual EmailJS credentials
       const serviceId = 'Aryavhir123';
       const templateId = 'template_zlgcdbf';
       const publicKey = 'wKOTaMefm5dYIMivs';
-      
+
       // Template parameters - make sure these match your EmailJS template variables
       const templateParams = {
         to_email: 'aryavhirkoul2@gmail.com',

@@ -136,10 +136,15 @@ export const GitHubDashboard = () => {
         <Row>
           <Col lg={12}>
             <div className="github-bx">
-              <h2>GitHub Portfolio</h2>
+              <h2>
+                GitHub Portfolio
+                <span className="live-data-badge">
+                  <i className="fas fa-satellite-dish"></i> Live Data
+                </span>
+              </h2>
               <p>
                 Explore my coding journey through repositories, contributions,
-                and development activity
+                and development activity. Data fetched in real-time via GitHub API.
               </p>
 
               {/* Repositories and Contribution Graph Side by Side */}

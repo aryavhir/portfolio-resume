@@ -639,6 +639,53 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   margin-left: 25px;
 }
 
+.integration-badges {
+  display: flex;
+  gap: 15px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.tech-badge {
+  background: linear-gradient(90deg, rgba(170, 54, 124, 0.2) 0%, rgba(74, 47, 189, 0.2) 100%);
+  border: 1px solid rgba(170, 54, 124, 0.4);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.tech-badge:hover {
+  background: linear-gradient(90deg, rgba(170, 54, 124, 0.3) 0%, rgba(74, 47, 189, 0.3) 100%);
+  border-color: rgba(170, 54, 124, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(170, 54, 124, 0.3);
+}
+
+.tech-badge i {
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .integration-badges {
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .tech-badge {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
 .banner img {
   animation: updown 3s linear infinite;
 }
@@ -1076,6 +1123,38 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   width: 100%;
 }
 
+.email-service-indicator {
+  background: linear-gradient(90deg, rgba(52, 152, 219, 0.1) 0%, rgba(41, 128, 185, 0.1) 100%);
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  color: #3498db;
+  padding: 10px 15px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.email-service-indicator:hover {
+  border-color: rgba(52, 152, 219, 0.5);
+  background: linear-gradient(90deg, rgba(52, 152, 219, 0.15) 0%, rgba(41, 128, 185, 0.15) 100%);
+}
+
+.email-service-indicator i {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .email-service-indicator {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+
 .contact-status {
   display: flex;
   align-items: center;
@@ -1216,6 +1295,38 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   animation: pulse 2s infinite;
 }
 
+.mailchimp-indicator {
+  background: linear-gradient(90deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  color: #ffc107;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 15px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.mailchimp-indicator:hover {
+  border-color: rgba(255, 193, 7, 0.5);
+  background: linear-gradient(90deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 152, 0, 0.15) 100%);
+}
+
+.mailchimp-indicator i {
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .mailchimp-indicator {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -1288,6 +1399,48 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.live-data-badge {
+  background: linear-gradient(90deg, rgba(46, 204, 113, 0.2) 0%, rgba(39, 174, 96, 0.2) 100%);
+  border: 1px solid rgba(46, 204, 113, 0.4);
+  color: #2ecc71;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: pulse 2s infinite;
+  backdrop-filter: blur(10px);
+}
+
+.live-data-badge i {
+  font-size: 12px;
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .github-bx h2 {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .live-data-badge {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
 }
 
 .github-bx p {
@@ -1996,6 +2149,40 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-size: 13px;
   font-weight: 500;
   font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.ai-indicator {
+  color: #7ee787;
+  font-size: 11px;
+  background: rgba(126, 231, 135, 0.1);
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(126, 231, 135, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  animation: pulse 2s infinite;
+}
+
+.ai-indicator i {
+  font-size: 10px;
+}
+
+@media (max-width: 768px) {
+  .terminal-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .ai-indicator {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
 }
 
 .terminal-body {

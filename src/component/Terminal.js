@@ -655,6 +655,9 @@ Type 'help' to see available commands.`);
                 </div>
                 <div className="terminal-title">
                   Aryavhir@portfolio: ~/interactive-terminal
+                  <span className="ai-indicator">
+                    <i className="fas fa-robot"></i> AI Assistant Ready
+                  </span>
                 </div>
               </div>
 

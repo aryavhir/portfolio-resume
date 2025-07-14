@@ -27,13 +27,13 @@ export const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonText("Sending...");
-    
+
     try {
       // EmailJS configuration
       const serviceId = 'Aryavhir123';
       const templateId = 'template_zlgcdbf';
       const publicKey = 'wKOTaMefm5dYIMivs';
-      
+
       // Template parameters for contact form
       const templateParams = {
         to_email: 'aryavhirkoul2@gmail.com',
@@ -45,21 +45,21 @@ export const Contact = () => {
       };
 
       const result = await emailjs.send(serviceId, templateId, templateParams, publicKey);
-      
+
       setButtonText("Send");
       setFormDetails(formInitialDetails);
       setStatus({ success: true, message: 'Message sent successfully! I\'ll get back to you soon.' });
-      
+
       // Clear status after 5 seconds
       setTimeout(() => {
         setStatus({});
       }, 5000);
-      
+
     } catch (error) {
       console.error('EmailJS error:', error);
       setButtonText("Send");
       setStatus({ success: false, message: 'Something went wrong, please try again later.' });
-      
+
       // Clear status after 5 seconds
       setTimeout(() => {
         setStatus({});
@@ -83,8 +83,23 @@ export const Contact = () => {
               {({ isVisible }) =>
                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                   <h2>Get In Touch</h2>
-                  <form onSubmit={handleSubmit}>
-                    <Row>
+                  
+          <div className="email-service-indicator">
+            <i className="fas fa-paper-plane"></i>
+            <span>Powered by EmailJS - Direct delivery to inbox</span>
+          </div>
+          <div className="contact-status">
+            {status.message && (
+              <div className={`contact-status ${status.success ? 'success' : 'error'}`}>
+                <span className="status-icon">
+                  {status.success ? '✅' : '❌'}
+                </span>
+                {status.message}
+              </div>
+            )}
+          </div>
+          <form onSubmit={handleSubmit}>
+            <Row>
                       <Col size={12} sm={6} className="px-1">
                         <input type="text" value={formDetails.firstName} placeholder="First Name" onChange={(e) => onFormUpdate('firstName', e.target.value)} />
                       </Col>
