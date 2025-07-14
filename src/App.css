@@ -488,6 +488,64 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   border-color: transparent;
 }
 
+/* Mobile navbar content push-down effect */
+@media (max-width: 991px) {
+  .navbar-collapse.show,
+  .navbar-collapse.collapsing {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(18, 18, 18, 0.98);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(170, 54, 124, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+  }
+
+  .navbar-collapse.show + .main-content,
+  .navbar-collapse.collapsing + .main-content {
+    transform: translateY(200px);
+    transition: transform 0.35s ease;
+  }
+
+  .main-content {
+    transition: transform 0.35s ease;
+  }
+
+  .navbar-nav {
+    padding: 20px 0;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 15px 25px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background: rgba(170, 54, 124, 0.1);
+    padding-left: 35px !important;
+  }
+
+  .navbar-text {
+    padding: 20px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
+  }
+
+  .navbar-text .social-icon {
+    justify-content: center;
+    margin: 15px 0;
+  }
+
+  .navbar-text button {
+    width: 100%;
+    margin: 15px 0 0 0;
+    padding: 15px;
+  }
+}
+
 /************ Banner Css ************/
 .banner {
   margin-top: 0;

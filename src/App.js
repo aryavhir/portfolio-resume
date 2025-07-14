@@ -26,14 +26,15 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-
-      <Banner />
-      <Terminal />
-      <GitHubDashboard />
-      <Skills />
-      <Projects />
-      <Contact />
-      <Footer />
+      <div className="main-content">
+        <Banner />
+        <Terminal />
+        <Skills />
+        <GitHubDashboard />
+        <Projects />
+        <Contact />
+        <Footer />
+      </div>
     </div>
   );
 }
