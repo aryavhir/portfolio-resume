@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavBar } from "./component/NavBar";
@@ -29,8 +29,9 @@ function App() {
       <div className="main-content">
         <Banner />
         <Terminal />
-        <Skills />
         <GitHubDashboard />
+        <Skills />
+
         <Projects />
         <Contact />
         <Footer />
