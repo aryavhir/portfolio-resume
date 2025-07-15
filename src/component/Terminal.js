@@ -578,11 +578,7 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
           await typeWriter(`✅ Resume downloaded successfully!
 📧 For any inquiries: aryavhirkoul1@gmail.com
 
-💼 Professional Summary:
-   • Software Developer with expertise in React & Node.js
-   • Mobile App Development (iOS/Android)
-   • Full-stack development experience
-   • Strong problem-solving skills`);
+Type help to see available commands.`);
         }, 1000);
         break;
 
