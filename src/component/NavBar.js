@@ -46,10 +46,6 @@ export const NavBar = () => {
     }
   }, [isMenuOpen]);
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
   const onUpdateActiveLink = (value) => {
     setActiveLink(value);
     setIsMenuOpen(false); // Close menu when link is clicked

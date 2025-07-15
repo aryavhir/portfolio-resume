@@ -9,8 +9,7 @@ import {
   Text,
   Html,
 } from "@react-three/drei";
-import { Container, Row, Col } from "react-bootstrap";
-import * as THREE from "three";
+
 
 // Animated Coffee Steam Component
 const CoffeeSteam = ({ position }) => {

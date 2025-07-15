@@ -44,7 +44,7 @@ export const Contact = () => {
         subject: 'New Contact Form Submission from Portfolio'
       };
 
-      const result = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
       setButtonText("Send");
       setFormDetails(formInitialDetails);

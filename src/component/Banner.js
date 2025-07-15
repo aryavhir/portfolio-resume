@@ -1,6 +1,5 @@
-import React from "react";
-
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { ArrowRightCircle } from 'react-bootstrap-icons';
 import "./a.css";
 
 // Animated Network Background Component
@@ -51,21 +50,10 @@ export const Banner = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState("");
   const [delta, setDelta] = useState(300 - Math.random() * 100);
-  const [index, setIndex] = useState(1);
   const toRotate = ["Front-end Developer", "Web Developer", "Web Designer"];
   const period = 2000;
 
-  useEffect(() => {
-    let ticker = setInterval(() => {
-      tick();
-    }, delta);
-
-    return () => {
-      clearInterval(ticker);
-    };
-  }, [text]);
-
-  const tick = () => {
+  const tick = React.useCallback(() => {
     let i = loopNum % toRotate.length;
     let fullText = toRotate[i];
     let updatedText = isDeleting
@@ -80,17 +68,23 @@ export const Banner = () => {
 
     if (!isDeleting && updatedText === fullText) {
       setIsDeleting(true);
-      setIndex((prevIndex) => prevIndex - 1);
       setDelta(period);
     } else if (isDeleting && updatedText === "") {
       setIsDeleting(false);
       setLoopNum(loopNum + 1);
-      setIndex(1);
       setDelta(500);
-    } else {
-      setIndex((prevIndex) => prevIndex + 1);
     }
-  };
+  }, [loopNum, isDeleting, text, toRotate, period]);
+
+  useEffect(() => {
+    let ticker = setInterval(() => {
+      tick();
+    }, delta);
+
+    return () => {
+      clearInterval(ticker);
+    };
+  }, [delta, tick]);
 
   return (
     <section className="banner" id="home">
@@ -111,26 +105,16 @@ export const Banner = () => {
     </section>
   );
 };
-import { ArrowRightCircle } from 'react-bootstrap-icons';
+
 export const Ab = () => {
   const [loopNum, setLoopNum] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState('');
   const [delta, setDelta] = useState(300 - Math.random() * 100);
-  const [index, setIndex] = useState(1);
   const toRotate = [ "Full Stack Developer", "Mobile App Developer", "UI/UX Designer" ];
   const period = 2000;
 
-  useEffect(() => {
-    let ticker = setInterval(() => {
-      tick();
-    }, delta);
-
-    return () => { clearInterval(ticker) };
-  }, [text])
-
-  const tick = () => {
-
+  const tick = React.useCallback(() => {
     let i = loopNum % toRotate.length;
     let fullText = toRotate[i];
     let updatedText = isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1);
@@ -143,34 +127,36 @@ export const Ab = () => {
 
     if (!isDeleting && updatedText === fullText) {
       setIsDeleting(true);
-      setIndex(prevIndex => prevIndex - 1);
       setDelta(period);
     } else if (isDeleting && updatedText === '') {
       setIsDeleting(false);
       setLoopNum(loopNum + 1);
-      setIndex(1);
       setDelta(500);
-    } else {
-      setIndex(prevIndex => prevIndex + 1);
     }
-  }
+  }, [loopNum, isDeleting, text, toRotate, period]);
+
+  useEffect(() => {
+    let ticker = setInterval(() => {
+      tick();
+    }, delta);
+
+    return () => { clearInterval(ticker) };
+  }, [delta, tick]);
 
   return (
     <section className="banner" id="home">
-
-          <div className="integration-badges">
-              <span className="tech-badge">
-                <i className="fab fa-github"></i> Live GitHub API
-              </span>
-              <span className="tech-badge">
-                <i className="fas fa-robot"></i> AI-Powered Terminal
-              </span>
-              <span className="tech-badge">
-                <i className="fas fa-envelope"></i> Real-time Contact
-              </span>
-            </div>
-
-            <button onClick={() => console.log('connect')}>Let's Connect <ArrowRightCircle size={25} /></button>
+      <div className="integration-badges">
+        <span className="tech-badge">
+          <i className="fab fa-github"></i> Live GitHub API
+        </span>
+        <span className="tech-badge">
+          <i className="fas fa-robot"></i> AI-Powered Terminal
+        </span>
+        <span className="tech-badge">
+          <i className="fas fa-envelope"></i> Real-time Contact
+        </span>
+      </div>
+      <button onClick={() => console.log('connect')}>Let's Connect <ArrowRightCircle size={25} /></button>
     </section>
-  )
-}
+  );
+};
