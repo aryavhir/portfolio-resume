@@ -9,7 +9,7 @@ export const Terminal = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [currentPath, setCurrentPath] = useState("~");
   const [isAIMode, setIsAIMode] = useState(false);
-  const [commandCount, setCommandCount] = useState(0);
+  
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -187,11 +187,10 @@ export const Terminal = () => {
       },
     ]);
 
-    // Add to command history and increment count
+    // Add to command history
     if (cmd.trim()) {
       setCommandHistory((prev) => [...prev, cmd]);
       setHistoryIndex(-1);
-      setCommandCount((prev) => prev + 1);
     }
 
     // Handle AI mode
