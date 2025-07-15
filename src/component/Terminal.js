@@ -9,7 +9,6 @@ export const Terminal = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [currentPath, setCurrentPath] = useState("~");
   const [isAIMode, setIsAIMode] = useState(false);
-  
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
