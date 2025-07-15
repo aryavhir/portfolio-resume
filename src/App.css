@@ -2192,16 +2192,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   box-shadow: 0 0 5px rgba(255, 95, 87, 0.3);
 }
 
-.btn-minimize {
-  background: #ffbd2e;
-  box-shadow: 0 0 5px rgba(255, 189, 46, 0.3);
-}
-
-.btn-maximize {
-  background: #28ca42;
-  box-shadow: 0 0 5px rgba(40, 202, 66, 0.3);
-}
-
 .terminal-title {
   color: #888;
   font-size: 13px;

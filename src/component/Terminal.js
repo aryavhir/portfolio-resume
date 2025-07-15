@@ -653,8 +653,6 @@ Type 'help' to see available commands.`);
               <div className="terminal-header">
                 <div className="terminal-buttons">
                   <span className="btn-close"></span>
-                  <span className="btn-minimize"></span>
-                  <span className="btn-maximize"></span>
                 </div>
                 <div className="terminal-title">
                   Aryavhir@portfolio: ~/interactive-terminal
