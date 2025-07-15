@@ -567,7 +567,7 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
 
         // Trigger download
         const link = document.createElement("a");
-        link.href = "/attached_assets/Aryavhir_Resume (7)_1752556144536.pdf";
+        link.href = "/Aryavhir_Koul_Resume.pdf";
         link.download = "Aryavhir_Koul_Resume.pdf";
         link.target = "_blank";
         document.body.appendChild(link);
