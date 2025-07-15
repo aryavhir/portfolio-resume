@@ -558,40 +558,31 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
         break;
 
       case "resume":
-        await showLoading(1000);
-        await typeWriter(`📄 Resume:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Download my latest resume to learn more about my
-professional background and experience.
-
-💼 Professional Summary:
-   • Software Developer with expertise in React & Node.js
-   • Mobile App Development (iOS/Android)
-   • Full-stack development experience
-   • Strong problem-solving skills
-
-📊 Education:
-   • Bachelor's in Computer Science
-   • Various online certifications
-
-🔗 Resume file available for download!
-Type 'download-resume' to get the PDF file.`);
-        break;
-
-      case "download-resume":
         await showLoading(800);
-        await typeWriter(`📥 Downloading resume...`);
-        // Create download link for the resume PDF
-        const link = document.createElement('a');
-        link.href = '/attached_assets/Aryavhir_Resume (7)_1752556144536.pdf';
-        link.download = 'Aryavhir_Koul_Resume.pdf';
-        link.target = '_blank';
+        await typeWriter(`📄 Resume Download:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 Downloading Aryavhir's Resume...
+📋 File: Aryavhir_Resume.pdf
+💾 Starting download now...`);
+
+        // Trigger download
+        const link = document.createElement("a");
+        link.href = "/attached_assets/Aryavhir_Resume (7)_1752556144536.pdf";
+        link.download = "Aryavhir_Koul_Resume.pdf";
+        link.target = "_blank";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
 
         setTimeout(async () => {
-          await typeWriter(`\n✅ Resume download initiated! Check your downloads folder.`);
+          await typeWriter(`✅ Resume downloaded successfully!
+📧 For any inquiries: aryavhirkoul1@gmail.com
+
+💼 Professional Summary:
+   • Software Developer with expertise in React & Node.js
+   • Mobile App Development (iOS/Android)
+   • Full-stack development experience
+   • Strong problem-solving skills`);
         }, 1000);
         break;
 
