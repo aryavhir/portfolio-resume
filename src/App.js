@@ -9,6 +9,7 @@ import { Projects } from "./component/Projects";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
 import { Terminal } from "./component/Terminal";
+import { CurrentLearnings } from "./component/CurrentLearnings";
 import { GitHubDashboard } from "./component/GitHubDashboard";
 import { PageLoader } from "./component/PageLoader";
 import { AdminPanel } from "./component/AdminPanel";
@@ -37,7 +38,7 @@ function App() {
         <Terminal />
         <GitHubDashboard />
         <Skills />
-
+        <CurrentLearnings />
         <Projects />
         <Contact />
         <Footer />

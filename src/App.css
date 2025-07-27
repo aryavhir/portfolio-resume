@@ -1094,6 +1094,210 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   z-index: -4;
 }
 
+/************ Current Learnings Css ************/
+.current-learnings {
+  padding: 80px 0;
+  background: linear-gradient(90.21deg, rgba(170, 54, 124, 0.05) -5.91%, rgba(74, 47, 189, 0.05) 111.58%);
+  position: relative;
+}
+
+.current-learnings h2 {
+  font-size: 45px;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 30px;
+  background: linear-gradient(45deg, #AA367C, #4A2FBD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.current-learnings > .container > .row > .col-lg-12 > div > p {
+  color: #B8B8B8;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  margin: 0 auto 60px auto;
+  text-align: center;
+  max-width: 600px;
+}
+
+.current-learnings-content {
+  margin-top: 40px;
+}
+
+.workspace-description {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.workspace-description h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.workspace-description p {
+  color: #B8B8B8;
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.learning-technologies {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.learning-technologies h3 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 40px;
+  background: linear-gradient(45deg, #AA367C, #4A2FBD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.tech-item {
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.1) 0%, rgba(74, 47, 189, 0.1) 100%);
+  border: 1px solid rgba(170, 54, 124, 0.3);
+  border-radius: 20px;
+  padding: 30px 20px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(15px);
+}
+
+.tech-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(170, 54, 124, 0.3);
+  border-color: rgba(170, 54, 124, 0.6);
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.2) 0%, rgba(74, 47, 189, 0.2) 100%);
+}
+
+.tech-item h4 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.tech-item p {
+  color: #B8B8B8;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .current-learnings {
+    padding: 60px 0;
+  }
+  
+  .current-learnings h2 {
+    font-size: 32px;
+  }
+  
+  .learning-technologies h3 {
+    font-size: 24px;
+  }
+  
+  .tech-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .tech-item {
+    padding: 20px 15px;
+  }
+}
+
+/************ New Certificates Placeholder Css ************/
+.new-certificates-section {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coming-soon {
+  text-align: center;
+  padding: 60px 40px;
+}
+
+.coming-soon h3 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #AA367C, #4A2FBD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.coming-soon > p {
+  color: #B8B8B8;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.placeholder-content {
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.1) 0%, rgba(74, 47, 189, 0.1) 100%);
+  border: 2px dashed rgba(170, 54, 124, 0.4);
+  border-radius: 20px;
+  padding: 40px 30px;
+  margin-top: 30px;
+  transition: all 0.3s ease;
+}
+
+.placeholder-content:hover {
+  border-color: rgba(170, 54, 124, 0.6);
+  background: linear-gradient(135deg, rgba(170, 54, 124, 0.15) 0%, rgba(74, 47, 189, 0.15) 100%);
+}
+
+.placeholder-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.placeholder-content p {
+  color: #B8B8B8;
+  font-size: 16px;
+  margin: 0;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .coming-soon {
+    padding: 40px 20px;
+  }
+  
+  .coming-soon h3 {
+    font-size: 24px;
+  }
+  
+  .placeholder-icon {
+    font-size: 36px;
+  }
+}
+
 /************ Projects Css ************/
 .contact {
   background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
