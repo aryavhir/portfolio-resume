@@ -83,18 +83,7 @@ export const Contact = () => {
               {({ isVisible }) =>
                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                   <h2>Get In Touch</h2>
-                  
-          <div className="contact-status">
-            {status.message && (
-              <div className={`contact-status ${status.success ? 'success' : 'error'}`}>
-                <span className="status-icon">
-                  {status.success ? '✅' : '❌'}
-                </span>
-                {status.message}
-              </div>
-            )}
-          </div>
-          <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit}>
             <Row>
                       <Col size={12} sm={6} className="px-1">
                         <input type="text" value={formDetails.firstName} placeholder="First Name" onChange={(e) => onFormUpdate('firstName', e.target.value)} />
