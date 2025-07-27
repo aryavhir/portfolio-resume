@@ -29,26 +29,40 @@ export const Contact = () => {
     setButtonText("Sending...");
 
     try {
-      // EmailJS configuration
-      const serviceId = 'Aryavhir123';
-      const templateId = 'template_zlgcdbf';
-      const publicKey = 'wKOTaMefm5dYIMivs';
-
-      // Template parameters for contact form
-      const templateParams = {
-        to_email: 'aryavhirkoul2@gmail.com',
-        from_name: `${formDetails.firstName} ${formDetails.lastName}`,
-        from_email: formDetails.email,
+      // Store submission locally
+      const submission = {
+        id: Date.now(),
+        firstName: formDetails.firstName,
+        lastName: formDetails.lastName,
+        email: formDetails.email,
         phone: formDetails.phone,
         message: formDetails.message,
-        subject: 'New Contact Form Submission from Portfolio'
+        timestamp: new Date().toISOString(),
+        read: false
       };
 
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      // Get existing submissions
+      const existingSubmissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+      existingSubmissions.push(submission);
+      localStorage.setItem('contactSubmissions', JSON.stringify(existingSubmissions));
+
+      // Request notification permission if not granted
+      if (Notification.permission === 'default') {
+        await Notification.requestPermission();
+      }
+
+      // Show browser notification
+      if (Notification.permission === 'granted') {
+        new Notification('New Contact Form Submission!', {
+          body: `${formDetails.firstName} ${formDetails.lastName} sent you a message`,
+          icon: '/logo.svg',
+          tag: 'contact-form'
+        });
+      }
 
       setButtonText("Send");
       setFormDetails(formInitialDetails);
-      setStatus({ success: true, message: 'Message sent successfully! I\'ll get back to you soon.' });
+      setStatus({ success: true, message: 'Message submitted successfully! Check your admin panel to view it.' });
 
       // Clear status after 5 seconds
       setTimeout(() => {
@@ -56,7 +70,7 @@ export const Contact = () => {
       }, 5000);
 
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Submission error:', error);
       setButtonText("Send");
       setStatus({ success: false, message: 'Something went wrong, please try again later.' });
 

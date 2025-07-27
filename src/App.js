@@ -11,6 +11,7 @@ import { Footer } from "./component/Footer";
 import { Terminal } from "./component/Terminal";
 import { GitHubDashboard } from "./component/GitHubDashboard";
 import { PageLoader } from "./component/PageLoader";
+import { AdminPanel } from "./component/AdminPanel";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +22,11 @@ function App() {
 
   if (isLoading) {
     return <PageLoader onLoadComplete={handleLoadComplete} />;
+  }
+
+  // Check if user is trying to access admin panel
+  if (window.location.pathname === '/admin') {
+    return <AdminPanel />;
   }
 
   return (
