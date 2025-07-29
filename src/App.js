@@ -26,7 +26,7 @@ function App() {
   }
 
   // Check if user is trying to access admin panel
-  if (window.location.pathname === '/admin') {
+  if (window.location.pathname === "/admin") {
     return <AdminPanel />;
   }
 
@@ -38,8 +38,8 @@ function App() {
         <Terminal />
         <GitHubDashboard />
         <Skills />
-        <CurrentLearnings />
         <Projects />
+        <CurrentLearnings />
         <Contact />
         <Footer />
       </div>
