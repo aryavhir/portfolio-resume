@@ -9,7 +9,6 @@ export const Terminal = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [currentPath, setCurrentPath] = useState("~");
   const [isAIMode, setIsAIMode] = useState(false);
-  const [commandCount, setCommandCount] = useState(0);
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -187,11 +186,10 @@ export const Terminal = () => {
       },
     ]);
 
-    // Add to command history and increment count
+    // Add to command history
     if (cmd.trim()) {
       setCommandHistory((prev) => [...prev, cmd]);
       setHistoryIndex(-1);
-      setCommandCount((prev) => prev + 1);
     }
 
     // Handle AI mode
@@ -558,7 +556,7 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
         break;
 
       case "resume":
-        await showLoading(1000);
+        await showLoading(800);
         await typeWriter(`📄 Resume Download:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎯 Downloading Aryavhir's Resume...
@@ -567,15 +565,18 @@ Tools & Methodologies: Atlassian, Slack, Bitbucket, Jira`);
 
         // Trigger download
         const link = document.createElement("a");
-        link.href = "/attached_assets/Aryavhir_Resume (8)_1752396294063.pdf";
+        link.href = "/Aryavhir_Koul_Resume.pdf";
         link.download = "Aryavhir_Koul_Resume.pdf";
+        link.target = "_blank";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
 
         setTimeout(async () => {
           await typeWriter(`✅ Resume downloaded successfully!
-📧 For any inquiries: aryavhirkoul1@gmail.com`);
+📧 For any inquiries: aryavhirkoul1@gmail.com
+
+Type help to see available commands.`);
         }, 1000);
         break;
 
@@ -650,8 +651,6 @@ Type 'help' to see available commands.`);
               <div className="terminal-header">
                 <div className="terminal-buttons">
                   <span className="btn-close"></span>
-                  <span className="btn-minimize"></span>
-                  <span className="btn-maximize"></span>
                 </div>
                 <div className="terminal-title">
                   Aryavhir@portfolio: ~/interactive-terminal
