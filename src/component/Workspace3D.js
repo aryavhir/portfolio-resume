@@ -10,240 +10,368 @@ import {
   Html,
 } from "@react-three/drei";
 
-// Animated Floating Particles
-const FloatingParticle = ({ position, color, size = 0.02 }) => {
-  const meshRef = useRef();
+
+// Animated Coffee Steam Component
+const CoffeeSteam = ({ position }) => {
+  const steamRef = useRef();
 
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.position.y =
-        position[1] + Math.sin(state.clock.elapsedTime * 1.5 + position[0] * 2) * 0.3;
-      meshRef.current.position.x =
-        position[0] + Math.sin(state.clock.elapsedTime * 0.8 + position[2]) * 0.1;
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.5;
+    if (steamRef.current) {
+      steamRef.current.position.y =
+        position[1] + Math.sin(state.clock.elapsedTime * 3) * 0.1;
+      steamRef.current.material.opacity =
+        0.3 + Math.sin(state.clock.elapsedTime * 2) * 0.2;
     }
   });
 
   return (
     <Sphere
-      ref={meshRef}
-      position={position}
-      args={[size]}
+      ref={steamRef}
+      position={[position[0], position[1] + 0.3, position[2]]}
+      args={[0.05]}
     >
-      <meshStandardMaterial 
-        color={color} 
-        emissive={color}
-        emissiveIntensity={0.3}
-        transparent
-        opacity={0.8}
-      />
+      <meshBasicMaterial color="#ffffff" transparent opacity={0.3} />
     </Sphere>
   );
 };
 
-// Building Component
-const Building = ({ position, height, color, width = 0.8, depth = 0.8 }) => {
+// Animated Screen Glow Component
+const ScreenGlow = ({ position }) => {
+  const glowRef = useRef();
+
+  useFrame((state) => {
+    if (glowRef.current) {
+      const intensity = 0.3 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
+      glowRef.current.material.emissiveIntensity = intensity;
+    }
+  });
+
+  return (
+    <Plane
+      ref={glowRef}
+      position={position}
+      args={[1.18, 0.78]}
+      rotation={[0, 0, 0]}
+    >
+      <meshStandardMaterial
+        color="#0066cc"
+        emissive="#0066cc"
+        emissiveIntensity={0.3}
+        transparent
+        opacity={0.8}
+      />
+    </Plane>
+  );
+};
+
+// Spinning Fan Component
+const SpinningFan = ({ position }) => {
+  const fanRef = useRef();
+
+  useFrame((state) => {
+    if (fanRef.current) {
+      fanRef.current.rotation.z = state.clock.elapsedTime * 8;
+    }
+  });
+
   return (
     <group position={position}>
-      {/* Main building */}
-      <Box position={[0, height/2, 0]} args={[width, height, depth]} castShadow>
-        <meshStandardMaterial color={color} />
-      </Box>
-
-      {/* Roof */}
-      <Box position={[0, height + 0.05, 0]} args={[width + 0.1, 0.1, depth + 0.1]} castShadow>
-        <meshStandardMaterial color="#444" />
-      </Box>
-
-      {/* Windows */}
-      {Array.from({ length: Math.floor(height * 2) }, (_, i) => (
+      {/* Fan blades */}
+      <group ref={fanRef}>
+        <Box position={[0, 0, 0]} args={[0.3, 0.02, 0.02]}>
+          <meshStandardMaterial color="#666" />
+        </Box>
         <Box
-          key={i}
-          position={[width/2 + 0.01, 0.3 + i * 0.4, 0]}
-          args={[0.02, 0.15, 0.1]}
-          castShadow
+          position={[0, 0, 0]}
+          args={[0.02, 0.3, 0.02]}
+          rotation={[0, 0, Math.PI / 2]}
         >
-          <meshStandardMaterial
-            color="#87CEEB"
-            emissive="#87CEEB"
-            emissiveIntensity={0.2}
-          />
+          <meshStandardMaterial color="#666" />
+        </Box>
+        <Box
+          position={[0, 0, 0]}
+          args={[0.2, 0.02, 0.02]}
+          rotation={[0, 0, Math.PI / 4]}
+        >
+          <meshStandardMaterial color="#666" />
+        </Box>
+        <Box
+          position={[0, 0, 0]}
+          args={[0.2, 0.02, 0.02]}
+          rotation={[0, 0, -Math.PI / 4]}
+        >
+          <meshStandardMaterial color="#666" />
+        </Box>
+      </group>
+
+      {/* Fan center */}
+      <Cylinder position={[0, 0, 0]} args={[0.05, 0.05, 0.03]}>
+        <meshStandardMaterial color="#333" />
+      </Cylinder>
+    </group>
+  );
+};
+
+// Desk Component
+const Desk = () => {
+  return (
+    <group>
+      {/* Desk surface */}
+      <Box
+        position={[0, -0.5, 0]}
+        args={[4, 0.1, 2.5]}
+        castShadow
+        receiveShadow
+      >
+        <meshStandardMaterial color="#8B4513" />
+      </Box>
+
+      {/* Desk legs */}
+      {[
+        [-1.8, -1.2, 1],
+        [1.8, -1.2, 1],
+        [-1.8, -1.2, -1],
+        [1.8, -1.2, -1],
+      ].map((pos, index) => (
+        <Box key={index} position={pos} args={[0.1, 1.4, 0.1]} castShadow>
+          <meshStandardMaterial color="#654321" />
         </Box>
       ))}
     </group>
   );
 };
 
-// Cherry Blossom Tree
-const CherryBlossomTree = ({ position }) => {
-  const blossomRef = useRef();
+// Monitor Component with Screen Glow
+const Monitor = () => {
+  return (
+    <group position={[0, 0, -0.8]}>
+      {/* Monitor base */}
+      <Cylinder position={[0, -0.35, 0]} args={[0.15, 0.15, 0.1]} castShadow>
+        <meshStandardMaterial color="#333" />
+      </Cylinder>
+
+      {/* Monitor stand */}
+      <Box position={[0, -0.15, 0]} args={[0.05, 0.3, 0.05]} castShadow>
+        <meshStandardMaterial color="#333" />
+      </Box>
+
+      {/* Monitor screen */}
+      <Box position={[0, 0.2, 0]} args={[1.2, 0.8, 0.1]} castShadow>
+        <meshStandardMaterial color="#000" />
+      </Box>
+
+      {/* Screen glow effect */}
+      <ScreenGlow position={[0, 0.2, 0.06]} />
+    </group>
+  );
+};
+
+// Laptop Component
+const Laptop = () => {
+  return (
+    <group position={[1.5, -0.35, 0.5]}>
+      {/* Laptop base */}
+      <Box position={[0, 0, 0]} args={[1.2, 0.1, 0.8]} castShadow>
+        <meshStandardMaterial color="#c0c0c0" />
+      </Box>
+
+      {/* Laptop screen */}
+      <Box position={[0, 0.4, -0.35]} args={[1.2, 0.8, 0.05]} castShadow>
+        <meshStandardMaterial color="#333" />
+      </Box>
+
+      {/* Laptop screen glow */}
+      <Plane position={[0, 0.4, -0.32]} args={[1.1, 0.7]}>
+        <meshStandardMaterial
+          color="#0066cc"
+          emissive="#0066cc"
+          emissiveIntensity={0.2}
+          transparent
+          opacity={0.6}
+        />
+      </Plane>
+
+      {/* Laptop keyboard */}
+      <Plane
+        position={[0, 0.06, 0.1]}
+        args={[1, 0.6]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      >
+        <meshStandardMaterial color="#222" />
+      </Plane>
+    </group>
+  );
+};
+
+// Coffee Cup Component with Steam
+const CoffeeCup = () => {
+  return (
+    <group position={[-1.5, -0.35, 0.5]}>
+      {/* Cup */}
+      <Cylinder position={[0, 0.15, 0]} args={[0.15, 0.12, 0.25]} castShadow>
+        <meshStandardMaterial color="#8B4513" />
+      </Cylinder>
+
+      {/* Coffee */}
+      <Cylinder position={[0, 0.22, 0]} args={[0.14, 0.14, 0.05]} castShadow>
+        <meshStandardMaterial color="#4A2C2A" />
+      </Cylinder>
+
+      {/* Handle */}
+      <Cylinder position={[0.2, 0.15, 0]} args={[0.02, 0.02, 0.15]} castShadow>
+        <meshStandardMaterial color="#8B4513" />
+      </Cylinder>
+
+      {/* Steam particles */}
+      <CoffeeSteam position={[0, 0.25, 0]} />
+      <CoffeeSteam position={[0.05, 0.25, 0.05]} />
+      <CoffeeSteam position={[-0.05, 0.25, -0.05]} />
+    </group>
+  );
+};
+
+// Keyboard Component
+const Keyboard = () => {
+  return (
+    <group position={[0.5, -0.4, 0.8]}>
+      {/* Keyboard base */}
+      <Box position={[0, 0.03, 0]} args={[1.5, 0.06, 0.5]} castShadow>
+        <meshStandardMaterial color="#333" />
+      </Box>
+
+      {/* Keys */}
+      {Array.from({ length: 10 }, (_, i) => (
+        <Box
+          key={i}
+          position={[-0.6 + i * 0.15, 0.065, 0]}
+          args={[0.12, 0.02, 0.12]}
+          castShadow
+        >
+          <meshStandardMaterial color="#666" />
+        </Box>
+      ))}
+    </group>
+  );
+};
+
+// Mouse Component
+const Mouse = () => {
+  return (
+    <group position={[0.5, -0.4, 0.3]}>
+      <Box position={[0, 0.03, 0]} args={[0.12, 0.06, 0.18]} castShadow>
+        <meshStandardMaterial color="#333" />
+      </Box>
+    </group>
+  );
+};
+
+// Books Component
+const Books = () => {
+  return (
+    <group position={[1.8, -0.35, -0.8]}>
+      {/* Book 1 */}
+      <Box position={[0, 0.1, 0]} args={[0.3, 0.2, 0.05]} castShadow>
+        <meshStandardMaterial color="#8B0000" />
+      </Box>
+
+      {/* Book 2 */}
+      <Box position={[0, 0.1, 0.06]} args={[0.3, 0.2, 0.05]} castShadow>
+        <meshStandardMaterial color="#0066cc" />
+      </Box>
+
+      {/* Book 3 */}
+      <Box position={[0, 0.1, 0.12]} args={[0.3, 0.2, 0.05]} castShadow>
+        <meshStandardMaterial color="#228B22" />
+      </Box>
+    </group>
+  );
+};
+
+// Plant Component
+const Plant = () => {
+  return (
+    <group position={[-1.8, -0.35, -0.8]}>
+      {/* Pot */}
+      <Cylinder position={[0, 0.1, 0]} args={[0.15, 0.12, 0.2]} castShadow>
+        <meshStandardMaterial color="#8B4513" />
+      </Cylinder>
+
+      {/* Soil */}
+      <Cylinder position={[0, 0.18, 0]} args={[0.14, 0.14, 0.05]} castShadow>
+        <meshStandardMaterial color="#654321" />
+      </Cylinder>
+
+      {/* Plant stem */}
+      <Cylinder position={[0, 0.35, 0]} args={[0.02, 0.02, 0.3]} castShadow>
+        <meshStandardMaterial color="#228B22" />
+      </Cylinder>
+
+      {/* Leaves */}
+      <Sphere position={[-0.1, 0.5, 0]} args={[0.08]} castShadow>
+        <meshStandardMaterial color="#32CD32" />
+      </Sphere>
+      <Sphere position={[0.1, 0.45, 0]} args={[0.06]} castShadow>
+        <meshStandardMaterial color="#32CD32" />
+      </Sphere>
+      <Sphere position={[0, 0.55, 0.1]} args={[0.07]} castShadow>
+        <meshStandardMaterial color="#32CD32" />
+      </Sphere>
+    </group>
+  );
+};
+
+// Floating Code Particles
+const FloatingParticle = ({ position, color, symbol }) => {
+  const meshRef = useRef();
 
   useFrame((state) => {
-    if (blossomRef.current) {
-      blossomRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+    if (meshRef.current) {
+      meshRef.current.position.y =
+        position[1] + Math.sin(state.clock.elapsedTime * 2 + position[0]) * 0.2;
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.5;
     }
   });
 
   return (
-    <group position={position} ref={blossomRef}>
-      {/* Trunk */}
-      <Cylinder position={[0, 0.4, 0]} args={[0.05, 0.05, 0.8]} castShadow>
-        <meshStandardMaterial color="#8B4513" />
-      </Cylinder>
-
-      {/* Branches */}
-      <Cylinder position={[0.2, 0.6, 0]} args={[0.02, 0.02, 0.3]} rotation={[0, 0, Math.PI/4]} castShadow>
-        <meshStandardMaterial color="#654321" />
-      </Cylinder>
-      <Cylinder position={[-0.2, 0.6, 0]} args={[0.02, 0.02, 0.3]} rotation={[0, 0, -Math.PI/4]} castShadow>
-        <meshStandardMaterial color="#654321" />
-      </Cylinder>
-
-      {/* Cherry blossoms */}
-      {Array.from({ length: 12 }, (_, i) => {
-        const angle = (i / 12) * Math.PI * 2;
-        const radius = 0.3 + Math.random() * 0.2;
-        const x = Math.cos(angle) * radius;
-        const z = Math.sin(angle) * radius;
-        return (
-          <Sphere
-            key={i}
-            position={[x, 0.7 + Math.random() * 0.3, z]}
-            args={[0.04]}
-            castShadow
-          >
-            <meshStandardMaterial color="#FFB6C1" />
-          </Sphere>
-        );
-      })}
+    <group ref={meshRef} position={position}>
+      <Text
+        fontSize={0.1}
+        color={color}
+        anchorX="center"
+        anchorY="middle"
+        font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
+      >
+        {symbol}
+      </Text>
     </group>
   );
 };
 
-// Street Lamp
-const StreetLamp = ({ position }) => {
+// CPU Tower with Spinning Fan
+const CPUTower = () => {
   return (
-    <group position={position}>
-      {/* Pole */}
-      <Cylinder position={[0, 0.6, 0]} args={[0.02, 0.02, 1.2]} castShadow>
-        <meshStandardMaterial color="#333" />
-      </Cylinder>
+    <group position={[-1.8, -0.8, 0.5]}>
+      {/* Main tower */}
+      <Box position={[0, 0.4, 0]} args={[0.3, 0.8, 0.4]} castShadow>
+        <meshStandardMaterial color="#2a2a2a" />
+      </Box>
 
-      {/* Lamp head */}
-      <Sphere position={[0, 1.2, 0]} args={[0.08]} castShadow>
+      {/* Front panel */}
+      <Box position={[0.16, 0.4, 0]} args={[0.02, 0.75, 0.35]} castShadow>
+        <meshStandardMaterial color="#1a1a1a" />
+      </Box>
+
+      {/* Power button */}
+      <Cylinder position={[0.17, 0.6, 0]} args={[0.03, 0.03, 0.01]} castShadow>
         <meshStandardMaterial
-          color="#FFF8DC"
-          emissive="#FFF8DC"
-          emissiveIntensity={0.4}
+          color="#00ff00"
+          emissive="#00ff00"
+          emissiveIntensity={0.5}
         />
-      </Sphere>
-
-      {/* Base */}
-      <Cylinder position={[0, 0, 0]} args={[0.08, 0.06, 0.1]} castShadow>
-        <meshStandardMaterial color="#444" />
-      </Cylinder>
-    </group>
-  );
-};
-
-// Torii Gate
-const ToriiGate = ({ position }) => {
-  return (
-    <group position={position}>
-      {/* Left pillar */}
-      <Cylinder position={[-0.8, 0.8, 0]} args={[0.06, 0.06, 1.6]} castShadow>
-        <meshStandardMaterial color="#8B0000" />
       </Cylinder>
 
-      {/* Right pillar */}
-      <Cylinder position={[0.8, 0.8, 0]} args={[0.06, 0.06, 1.6]} castShadow>
-        <meshStandardMaterial color="#8B0000" />
-      </Cylinder>
-
-      {/* Top beam */}
-      <Box position={[0, 1.5, 0]} args={[1.8, 0.08, 0.08]} castShadow>
-        <meshStandardMaterial color="#8B0000" />
-      </Box>
-
-      {/* Middle beam */}
-      <Box position={[0, 1.2, 0]} args={[1.4, 0.06, 0.06]} castShadow>
-        <meshStandardMaterial color="#8B0000" />
-      </Box>
-    </group>
-  );
-};
-
-// Pagoda Tower
-const Pagoda = ({ position }) => {
-  return (
-    <group position={position}>
-      {/* Base level */}
-      <Box position={[0, 0.2, 0]} args={[1.2, 0.4, 1.2]} castShadow>
-        <meshStandardMaterial color="#8B4513" />
-      </Box>
-      <Box position={[0, 0.45, 0]} args={[1.4, 0.1, 1.4]} castShadow>
-        <meshStandardMaterial color="#8B0000" />
-      </Box>
-
-      {/* Second level */}
-      <Box position={[0, 0.7, 0]} args={[1.0, 0.3, 1.0]} castShadow>
-        <meshStandardMaterial color="#8B4513" />
-      </Box>
-      <Box position={[0, 0.9, 0]} args={[1.2, 0.08, 1.2]} castShadow>
-        <meshStandardMaterial color="#8B0000" />
-      </Box>
-
-      {/* Third level */}
-      <Box position={[0, 1.1, 0]} args={[0.8, 0.25, 0.8]} castShadow>
-        <meshStandardMaterial color="#8B4513" />
-      </Box>
-      <Box position={[0, 1.28, 0]} args={[1.0, 0.06, 1.0]} castShadow>
-        <meshStandardMaterial color="#8B0000" />
-      </Box>
-
-      {/* Top spire */}
-      <Cylinder position={[0, 1.5, 0]} args={[0.02, 0.02, 0.4]} castShadow>
-        <meshStandardMaterial color="#FFD700" />
-      </Cylinder>
-      <Sphere position={[0, 1.72, 0]} args={[0.04]} castShadow>
-        <meshStandardMaterial color="#FFD700" />
-      </Sphere>
-    </group>
-  );
-};
-
-// Stone Lantern
-const StoneLantern = ({ position }) => {
-  return (
-    <group position={position}>
-      {/* Base */}
-      <Box position={[0, 0.1, 0]} args={[0.3, 0.2, 0.3]} castShadow>
-        <meshStandardMaterial color="#696969" />
-      </Box>
-
-      {/* Middle section */}
-      <Cylinder position={[0, 0.35, 0]} args={[0.08, 0.08, 0.3]} castShadow>
-        <meshStandardMaterial color="#696969" />
-      </Cylinder>
-
-      {/* Lantern body */}
-      <Box position={[0, 0.6, 0]} args={[0.25, 0.2, 0.25]} castShadow>
-        <meshStandardMaterial color="#696969" />
-      </Box>
-
-      {/* Light */}
-      <Box position={[0, 0.6, 0.13]} args={[0.15, 0.1, 0.02]} castShadow>
-        <meshStandardMaterial
-          color="#FFF8DC"
-          emissive="#FFF8DC"
-          emissiveIntensity={0.3}
-        />
-      </Box>
-
-      {/* Top */}
-      <Box position={[0, 0.75, 0]} args={[0.3, 0.08, 0.3]} castShadow>
-        <meshStandardMaterial color="#696969" />
-      </Box>
+      {/* Spinning fan */}
+      <SpinningFan position={[0.17, 0.2, 0]} />
     </group>
   );
 };
@@ -252,125 +380,67 @@ const StoneLantern = ({ position }) => {
 const Scene = () => {
   return (
     <>
-      {/* Lighting setup for atmospheric feel */}
-      <ambientLight intensity={0.3} />
+      {/* Lighting */}
+      <ambientLight intensity={0.4} />
       <directionalLight
-        position={[10, 15, 10]}
-        intensity={0.8}
+        position={[5, 10, 5]}
+        intensity={1}
         castShadow
-        shadow-mapSize-width={4096}
-        shadow-mapSize-height={4096}
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
         shadow-camera-far={50}
-        shadow-camera-left={-15}
-        shadow-camera-right={15}
-        shadow-camera-top={15}
-        shadow-camera-bottom={-15}
+        shadow-camera-left={-10}
+        shadow-camera-right={10}
+        shadow-camera-top={10}
+        shadow-camera-bottom={-10}
       />
+      <pointLight position={[0, 2, 0]} intensity={0.5} />
+      <pointLight position={[-2, 1, 2]} intensity={0.3} color="#ff6b6b" />
+      <pointLight position={[2, 1, 2]} intensity={0.3} color="#4ecdc4" />
 
-      {/* Warm atmospheric lights */}
-      <pointLight position={[0, 3, 0]} intensity={0.4} color="#FFA500" />
-      <pointLight position={[-3, 2, 3]} intensity={0.3} color="#FF69B4" />
-      <pointLight position={[3, 2, -3]} intensity={0.3} color="#87CEEB" />
-
-      {/* Ground plane with texture-like appearance */}
+      {/* Floor */}
       <Plane
-        position={[0, -0.1, 0]}
-        args={[25, 25]}
+        position={[0, -2, 0]}
+        args={[20, 20]}
         rotation={[-Math.PI / 2, 0, 0]}
         receiveShadow
       >
-        <meshStandardMaterial color="#2F4F2F" />
+        <meshStandardMaterial color="#f0f0f0" />
       </Plane>
 
-      {/* Streets */}
-      <Plane
-        position={[0, -0.05, 0]}
-        args={[20, 1.5]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        receiveShadow
-      >
-        <meshStandardMaterial color="#696969" />
-      </Plane>
-      <Plane
-        position={[0, -0.05, 0]}
-        args={[1.5, 20]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        receiveShadow
-      >
-        <meshStandardMaterial color="#696969" />
-      </Plane>
+      {/* Workspace components */}
+      <Desk />
+      <Monitor />
+      <Laptop />
+      <CoffeeCup />
+      <Keyboard />
+      <Mouse />
+      <Books />
+      <Plant />
+      <CPUTower />
 
-      {/* Buildings arranged in a city-like pattern */}
-      <Building position={[-2, 0, -3]} height={1.5} color="#4A4A4A" />
-      <Building position={[2, 0, -3]} height={2.2} color="#5A5A5A" />
-      <Building position={[-4, 0, -2]} height={1.8} color="#3A3A3A" />
-      <Building position={[4, 0, -2]} height={1.3} color="#6A6A6A" />
-      <Building position={[-3, 0, 2]} height={2.0} color="#4A4A4A" />
-      <Building position={[3, 0, 2]} height={1.6} color="#5A5A5A" />
-      <Building position={[-1.5, 0, 4]} height={1.4} color="#3A3A3A" />
-      <Building position={[1.5, 0, 4]} height={1.9} color="#6A6A6A" />
-
-      {/* Cherry blossom trees */}
-      <CherryBlossomTree position={[-1.2, 0, -1.2]} />
-      <CherryBlossomTree position={[1.2, 0, 1.2]} />
-      <CherryBlossomTree position={[-3.5, 0, 1]} />
-
-      {/* Street lamps */}
-      <StreetLamp position={[-0.8, 0, -0.8]} />
-      <StreetLamp position={[0.8, 0, 0.8]} />
-      <StreetLamp position={[-0.8, 0, 2.5]} />
-      <StreetLamp position={[0.8, 0, -2.5]} />
-
-      {/* Traditional elements */}
-      <ToriiGate position={[0, 0, -5]} />
-      <Pagoda position={[-6, 0, 0]} />
-      <StoneLantern position={[2.5, 0, -1]} />
-      <StoneLantern position={[-2.5, 0, 1]} />
-      <StoneLantern position={[1, 0, -4]} />
-
-      {/* Floating magical particles */}
-      <FloatingParticle position={[2, 1.5, 1]} color="#FFB6C1" size={0.03} />
-      <FloatingParticle position={[-2, 2, -1]} color="#87CEEB" size={0.025} />
-      <FloatingParticle position={[1, 2.5, -2]} color="#FFA500" size={0.02} />
-      <FloatingParticle position={[-1, 1.8, 2]} color="#98FB98" size={0.03} />
-      <FloatingParticle position={[3, 1.2, -3]} color="#DDA0DD" size={0.025} />
-      <FloatingParticle position={[-3, 2.2, 1.5]} color="#F0E68C" size={0.02} />
-      <FloatingParticle position={[0.5, 3, 0.5]} color="#FFB6C1" size={0.03} />
-      <FloatingParticle position={[-0.5, 2.8, -0.5]} color="#87CEEB" size={0.025} />
-
-      {/* Code symbols floating in the scene */}
-      <Text
-        position={[4, 3, 2]}
-        fontSize={0.2}
-        color="#AA367C"
-        anchorX="center"
-        anchorY="middle"
-        font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
-      >
-        {"{}"}
-      </Text>
-      <Text
-        position={[-4, 2.5, -2]}
-        fontSize={0.15}
-        color="#7ee787"
-        anchorX="center"
-        anchorY="middle"
-        font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
-      >
-        {"</>"} 
-      </Text>
+      {/* Floating code particles */}
+      <FloatingParticle position={[2, 1, 1]} color="#AA367C" symbol="{}" />
+      <FloatingParticle position={[-2, 1.5, 1]} color="#4A2FBD" symbol="</>" />
+      <FloatingParticle position={[1, 2, -1]} color="#7ee787" symbol="()" />
+      <FloatingParticle position={[-1, 1.8, -1]} color="#ffa657" symbol="[]" />
+      <FloatingParticle position={[0, 2.5, 0]} color="#79c0ff" symbol=";" />
+      <FloatingParticle
+        position={[2.5, 1.2, -0.5]}
+        color="#f85149"
+        symbol="<>"
+      />
 
       {/* Controls */}
       <OrbitControls
         enablePan={true}
         enableZoom={true}
         enableRotate={true}
-        minDistance={4}
-        maxDistance={18}
-        maxPolarAngle={Math.PI / 2.2}
-        minPolarAngle={Math.PI / 8}
-        autoRotate={true}
-        autoRotateSpeed={0.5}
+        minDistance={3}
+        maxDistance={12}
+        maxPolarAngle={Math.PI / 2}
+        minPolarAngle={Math.PI / 6}
+        autoRotate={false}
         enableDamping={true}
         dampingFactor={0.05}
       />
@@ -392,7 +462,7 @@ const LoadingFallback = () => (
         borderRadius: "10px",
       }}
     >
-      <div>Loading Little Tokyo Scene...</div>
+      <div>Loading 3D Workspace...</div>
       <div style={{ marginTop: "10px", fontSize: "14px", opacity: 0.7 }}>
         Drag to rotate • Scroll to zoom • Right-click to pan
       </div>
@@ -406,8 +476,8 @@ export const Workspace3D = () => {
     <div className="canvas-container" style={{ marginTop: '20px' }}>
       <Canvas
         shadows
-        camera={{ position: [8, 6, 8], fov: 60 }}
-        style={{ height: "700px", borderRadius: "20px" }}
+        camera={{ position: [6, 4, 6], fov: 50 }}
+        style={{ height: "600px", borderRadius: "20px" }}
         gl={{ antialias: true, alpha: true }}
       >
         <Suspense fallback={<LoadingFallback />}>
@@ -417,10 +487,11 @@ export const Workspace3D = () => {
       <div className="workspace-controls-info">
         <p>
           <strong>Interactive Controls:</strong> Drag to rotate • Scroll
-          to zoom • Right-click to pan • Auto-rotate enabled
+          to zoom • Right-click to pan
         </p>
         <p>
-          <strong>Features:</strong> Mini Tokyo cityscape • Cherry blossoms • Traditional architecture • Floating particles • Dynamic lighting
+          <strong>Features:</strong> Animated screen glows • Spinning
+          CPU fan • Coffee steam • Floating code symbols
         </p>
       </div>
     </div>
