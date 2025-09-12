@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Alert } from "react-bootstrap";
 import emailjs from 'emailjs-com';
 
 export const Newsletter = () => {
@@ -14,15 +15,15 @@ export const Newsletter = () => {
       setSending(true);
       setStatus('');
       setMessage('');
-
+      
       // Your actual EmailJS credentials
       const serviceId = 'Aryavhir123';
       const templateId = 'template_zlgcdbf';
       const publicKey = 'wKOTaMefm5dYIMivs';
-
+      
       // Template parameters - make sure these match your EmailJS template variables
       const templateParams = {
-        to_email: 'aryavhirkoul2@gmail.com',
+        to_email: email,
         user_email: email,
         message: `User ${email} wants to receive details about your portfolio.`,
         from_name: 'Portfolio Website'
@@ -53,24 +54,9 @@ export const Newsletter = () => {
         <Row>
           <Col lg={12} md={6} xl={5}>
             <h3>Want My Details Through An Email?</h3>
-            {sending && (
-              <div className="newsletter-status sending">
-                <span className="status-icon">⏳</span>
-                <span>Sending your request...</span>
-              </div>
-            )}
-            {status === 'error' && (
-              <div className="newsletter-status error">
-                <span className="status-icon">❌</span>
-                <span>{message}</span>
-              </div>
-            )}
-            {status === 'success' && (
-              <div className="newsletter-status success">
-                <span className="status-icon">✅</span>
-                <span>{message}</span>
-              </div>
-            )}
+            {sending && <Alert>Sending...</Alert>}
+            {status === 'error' && <Alert variant="danger">{message}</Alert>}
+            {status === 'success' && <Alert variant="success">{message}</Alert>}
           </Col>
           <Col md={6} xl={7}>
             <form onSubmit={handleSubmit}>

@@ -2,7 +2,7 @@ modules = ["nodejs-20", "web"]
 run = "npm run start"
 
 [nix]
-channel = "stable-25_05"
+channel = "stable-24_05"
 
 [deployment]
 run = ["sh", "-c", "npm run start"]
@@ -26,6 +26,3 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run start"
-
-[agent]
-expertMode = true

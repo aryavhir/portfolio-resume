@@ -1,5 +1,6 @@
 import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
 import { ProjectCard } from "./ProjectCard";
+import { Workspace3D } from "./Workspace3D";
 import projImg1 from "../asset/img/7.png";
 import projImg2 from "../asset/img/5.png";
 import projImg3 from "../asset/img/cert.png";
@@ -57,21 +58,8 @@ export const Projects = () => {
       url:"https://coursera.org/share/94003db48fd65d9975e3cfe0595970dc"
     }
   ];
-
-  // Placeholder for new certificates - you can add more certificates here later
-  const newCertificates = [
-    // Add new certificates here when ready
-    // Example:
-    // {
-    //   title: "New Certificate Name",
-    //   description: "Description of the certificate",
-    //   imgUrl: projImgNew,
-    //   url: "certificate-url"
-    // }
-  ];
-
   const firstTabProjects = projects.slice(0, 4);
-  const secondTabProjects = projects.slice(4, 7);
+  const secondTabProjects = projects.slice(4);
   return (
     <section className="project" id="projects">
       <Container>
@@ -120,27 +108,8 @@ export const Projects = () => {
                       </Row>
                     </Tab.Pane>
                     <Tab.Pane eventKey="third">
-                      <div className="new-certificates-section">
-                        {newCertificates.length > 0 ? (
-                          <Row>
-                            {newCertificates.map((certificate, index) => (
-                              <ProjectCard
-                                key={index}
-                                {...certificate}
-                              />
-                            ))}
-                          </Row>
-                        ) : (
-                          <div className="coming-soon">
-                            <h3>New Certificates Coming Soon!</h3>
-                            <p>This section will be updated with the latest certificates and achievements. Stay tuned for more exciting learning milestones!</p>
-                            <div className="placeholder-content">
-                              <div className="placeholder-icon">🎓</div>
-                              <p>Ready to add new certificates when available</p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
+                      <p>Still Learning Three.js - Currently exploring 3D web development with Three.js. This interactive workspace showcases my progress in creating immersive 3D experiences for the web, featuring realistic lighting, animations, and interactive controls.</p>
+                      <Workspace3D />
                     </Tab.Pane>
                   </Tab.Content>
                 </Tab.Container>
