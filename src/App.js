@@ -21,7 +21,7 @@ function App() {
         {/* Single Liquid Ether Background */}
         <div className="unified-liquid-background">
           <LiquidEther
-            colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+            colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
             mouseForce={20}
             cursorSize={100}
             isViscous={false}
@@ -38,13 +38,13 @@ function App() {
             autoRampDuration={0.6}
           />
         </div>
-        
+
         <Banner />
         <Terminal />
         <GitHubDashboard />
         <Skills />
       </div>
-      
+
       <Projects />
       <Contact />
       <Footer />
