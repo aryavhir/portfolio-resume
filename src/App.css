@@ -502,26 +502,19 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 /* Black background for banner to skills sections */
-.banner,
-.terminal-section,
-.github-dashboard,
-.skills {
+.liquid-ether-sections .banner,
+.liquid-ether-sections .terminal-section,
+.liquid-ether-sections .github-dashboard,
+.liquid-ether-sections .skills {
+  position: relative;
   background-color: #000000;
+  z-index: 2;
 }
 
-.banner::before,
-.terminal-section::before,
-.github-dashboard::before,
-.skills::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: #000000;
-  z-index: -3;
-  pointer-events: none;
+/* Ensure content appears above liquid ether background */
+.liquid-ether-sections > * {
+  position: relative;
+  z-index: 2;
 }
 
 /* Mobile black background */
@@ -682,13 +675,18 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   border-right: 0.08em solid #666;
 }
 
-/* Liquid Ether Background Styles */
-.liquid-background {
-  position: absolute;
+/* Global Liquid Ether Background Styles - Covers Banner to Skills sections */
+.liquid-ether-sections {
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-background-global {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 1;
   pointer-events: auto;
 }
