@@ -22,17 +22,17 @@ function App() {
         <div className="unified-liquid-background">
           <LiquidEther
             colors={['#5227FF', '#FF9FFC', '#B19EEF']}
-            mouseForce={15}
-            cursorSize={80}
+            mouseForce={20}
+            cursorSize={100}
             isViscous={false}
-            viscous={20}
-            iterationsViscous={16}
-            iterationsPoisson={16}
-            resolution={0.8}
+            viscous={30}
+            iterationsViscous={32}
+            iterationsPoisson={32}
+            resolution={0.5}
             isBounce={false}
             autoDemo={true}
-            autoSpeed={0.3}
-            autoIntensity={1.0}
+            autoSpeed={0.5}
+            autoIntensity={2.2}
             takeoverDuration={0.25}
             autoResumeDelay={3000}
             autoRampDuration={0.6}
