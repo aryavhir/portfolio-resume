@@ -15,8 +15,16 @@ externalPort = 80
 localPort = 3001
 externalPort = 3001
 
+[[ports]]
+localPort = 5000
+externalPort = 5000
+
+[[ports]]
+localPort = 41029
+externalPort = 3000
+
 [workflows]
-runButton = "Start Portfolio"
+runButton = "Project"
 
 [[workflows.workflow]]
 name = "Start Portfolio"
@@ -26,3 +34,43 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run start"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Portfolio Dev Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Backend Server"
+
+[[workflows.workflow]]
+name = "Portfolio Dev Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "GENERATE_SOURCEMAP=false HOST=0.0.0.0 PORT=5000 npm start"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow]]
+name = "Backend Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node server.js"
+waitForPort = 3001
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[agent]
+expertMode = true

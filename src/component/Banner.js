@@ -4,47 +4,7 @@ import LiquidEther from "../asset/background/liquidEther";
 import { useState, useEffect } from "react";
 import "./a.css";
 
-// Animated Network Background Component
-const NetworkBackground = () => {
-  return (
-    <div className="network-background">
-      <svg className="network-svg" viewBox="0 0 1200 800">
-        <defs>
-          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(170, 54, 124, 0.4)" />
-            <stop offset="100%" stopColor="rgba(74, 47, 189, 0.4)" />
-          </linearGradient>
-        </defs>
-        
-        {/* Animated Lines */}
-        <path d="M 100 200 L 300 150 L 500 180 L 700 120 L 900 160" 
-              stroke="url(#lineGradient)" 
-              strokeWidth="2" 
-              fill="none"
-              className="network-line line-1" />
-        
-        <path d="M 150 400 L 350 350 L 550 380 L 750 320 L 950 360" 
-              stroke="url(#lineGradient)" 
-              strokeWidth="2" 
-              fill="none"
-              className="network-line line-2" />
-        
-        <path d="M 200 600 L 400 550 L 600 580 L 800 520 L 1000 560" 
-              stroke="url(#lineGradient)" 
-              strokeWidth="2" 
-              fill="none"
-              className="network-line line-3" />
-        
-        {/* Connection Nodes */}
-        <circle cx="300" cy="150" r="4" fill="rgba(170, 54, 124, 0.6)" className="network-node node-1" />
-        <circle cx="500" cy="180" r="4" fill="rgba(74, 47, 189, 0.6)" className="network-node node-2" />
-        <circle cx="700" cy="120" r="4" fill="rgba(170, 54, 124, 0.6)" className="network-node node-3" />
-        <circle cx="550" cy="380" r="4" fill="rgba(74, 47, 189, 0.6)" className="network-node node-4" />
-        <circle cx="750" cy="320" r="4" fill="rgba(170, 54, 124, 0.6)" className="network-node node-5" />
-      </svg>
-    </div>
-  );
-};
+// Note: NetworkBackground component removed as we're now using LiquidEther
 
 // Main Banner Component
 export const Banner = () => {
@@ -95,37 +55,36 @@ export const Banner = () => {
 
   return (
     <section className="banner" id="home">
- <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
-      <LiquidEther
-        colors={['#5227FF', '#FF9FFC', '#B19EEF']}
-        mouseForce={20}
-        cursorSize={100}
-        isViscous={false}
-        viscous={30}
-        iterationsViscous={32}
-        iterationsPoisson={32}
-        resolution={0.5}
-        isBounce={false}
-        autoDemo={true}
-        autoSpeed={0.5}
-        autoIntensity={2.2}
-        takeoverDuration={0.25}
-        autoResumeDelay={3000}
-        autoRampDuration={0.6}
-      />
-      <h1 style={{ textAlign: "center" }}> Hello</h1>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "10px",
-        }}
-      >
-        <div className="txt-rotate">
-          <span>I am a </span>
-          <span>{text}</span>
-        </div>
+      {/* Liquid Ether Background */}
+      <div className="liquid-background">
+        <LiquidEther
+          colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+          mouseForce={20}
+          cursorSize={100}
+          isViscous={false}
+          viscous={30}
+          iterationsViscous={32}
+          iterationsPoisson={32}
+          resolution={0.5}
+          isBounce={false}
+          autoDemo={true}
+          autoSpeed={0.5}
+          autoIntensity={2.2}
+          takeoverDuration={0.25}
+          autoResumeDelay={3000}
+          autoRampDuration={0.6}
+        />
       </div>
+      
+      {/* Banner Content */}
+      <div className="banner-content">
+        <h1 className="banner-hello">Hello</h1>
+        <div className="banner-text-container">
+          <div className="txt-rotate">
+            <span>I am a </span>
+            <span>{text}</span>
+          </div>
+        </div>
       </div>
     </section>
   );
