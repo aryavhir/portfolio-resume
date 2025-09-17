@@ -9,8 +9,7 @@ import { GitHubDashboard } from "./component/GitHubDashboard";
 import { Terminal } from "./component/Terminal";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
-import LiquidEther from "./asset/background/liquidEther";
-
+import GradientBlinds from "./asset/background/GradientBlinds";
 function App() {
   return (
     <div className="App">
@@ -20,23 +19,20 @@ function App() {
       <div className="unified-liquid-sections">
         {/* Single Liquid Ether Background */}
         <div className="unified-liquid-background">
-          <LiquidEther
-            colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-            mouseForce={20}
-            cursorSize={100}
-            isViscous={false}
-            viscous={30}
-            iterationsViscous={32}
-            iterationsPoisson={32}
-            resolution={0.5}
-            isBounce={false}
-            autoDemo={true}
-            autoSpeed={0.5}
-            autoIntensity={2.2}
-            takeoverDuration={0.25}
-            autoResumeDelay={3000}
-            autoRampDuration={0.6}
-          />
+         <GradientBlinds
+    gradientColors={['#FF9FFC', '#5227FF']}
+    angle={0}
+    noise={0.3}
+    blindCount={12}
+    blindMinWidth={50}
+    spotlightRadius={0.5}
+    spotlightSoftness={1}
+    spotlightOpacity={1}
+    mouseDampening={0.15}
+    distortAmount={0}
+    shineDirection="left"
+    mixBlendMode="lighten"
+  />
         </div>
 
         <Banner />
