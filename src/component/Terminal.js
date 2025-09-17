@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import LiquidEther from "../asset/background/liquidEther";
 
 export const Terminal = () => {
   const [input, setInput] = useState("");
@@ -643,28 +642,7 @@ Type 'help' to see available commands.`);
   };
 
   return (
-    <section className="terminal-section liquid-ether-section" id="terminal">
-      {/* Liquid Ether Background */}
-      <div className="liquid-background">
-        <LiquidEther
-          colors={['#5227FF', '#FF9FFC', '#B19EEF']}
-          mouseForce={20}
-          cursorSize={100}
-          isViscous={false}
-          viscous={30}
-          iterationsViscous={32}
-          iterationsPoisson={32}
-          resolution={0.5}
-          isBounce={false}
-          autoDemo={true}
-          autoSpeed={0.5}
-          autoIntensity={2.2}
-          takeoverDuration={0.25}
-          autoResumeDelay={3000}
-          autoRampDuration={0.6}
-        />
-      </div>
-      
+    <section className="terminal-section" id="terminal">
       <Container>
         <Row>
           <Col lg={12}>

@@ -501,15 +501,23 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   justify-content: center;
 }
 
-/* Black background and content positioning for liquid ether sections */
-.liquid-ether-section {
+/* Black background for unified liquid ether sections */
+.unified-liquid-sections {
   background-color: #000000;
   position: relative;
 }
 
+.unified-liquid-sections .banner,
+.unified-liquid-sections .terminal-section,
+.unified-liquid-sections .github-dashboard,
+.unified-liquid-sections .skill {
+  background-color: transparent;
+  position: relative;
+}
+
 /* Ensure content appears above liquid ether background */
-.liquid-ether-section .container,
-.liquid-ether-section .banner-content {
+.unified-liquid-sections .container,
+.unified-liquid-sections .banner-content {
   position: relative;
   z-index: 2;
 }
@@ -672,13 +680,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   border-right: 0.08em solid #666;
 }
 
-/* Liquid Ether Background Styles for Individual Sections */
-.liquid-ether-section {
+/* Unified Liquid Ether Background Styles */
+.unified-liquid-sections {
   position: relative;
   overflow: hidden;
 }
 
-.liquid-background {
+.unified-liquid-background {
   position: absolute;
   top: 0;
   left: 0;
