@@ -4,7 +4,25 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 import colorSharp from "../asset/img/color-sharp.png"
+import LogoLoop from '../asset/logos/LogoLoop';
+import { SiGithub, SiInstagram, SiLinkedin, 
+  SiReact, SiNextdotjs, SiTypescript, 
+  SiBootstrap, SiNodedotjs, SiExpress, SiMongodb, 
+  SiGit, SiVite, SiJavascript, 
+  SiHtml5, SiCss3, SiDocker, SiGmail  } from 'react-icons/si';
 
+const techLogos = [
+  { node: <SiGithub color="#ffffffff" />, title: "GitHub", href: "https://github.com" },
+  { node: <SiInstagram color="#ffffffff"  />, title: "Instagram", href: "https://instagram.com" },
+  { node: <SiLinkedin color="#ffffffff" />, title: "LinkedIn", href: "https://linkedin.com" },
+  { node: <SiReact color="#ffffffff"  />, title: "React", href: "https://react.dev" },
+  { node: <SiNextdotjs color="#ffffffff"  />, title: "Next.js", href: "https://nextjs.org" },
+  { node: <SiTypescript color="#ffffffff"  />, title: "TypeScript", href: "https://www.typescriptlang.org" },
+  { node: <SiGmail color="#ffffffff" />, title: "Email", href: "mailto:yourmail@example.com" },
+  { node: <SiGit color="#ffffffff" />, title: "Git", href: "https://git-scm.com" },
+  { node: <SiVite  color="#ffffffff" />, title: "Vite", href: "https://vitejs.dev" },
+  { node: <SiDocker  color="#ffffffff" />, title: "Docker", href: "https://www.docker.com" },
+];
 export const Skills = () => {
   const responsive = {
     superLargeDesktop: {
@@ -117,19 +135,24 @@ export const Skills = () => {
                     <div className="skill-bx wow zoomIn">
                         <h2>Skills</h2>
                         <p>Skills here are strictly adhering to the technical aspects<br></br>(referring to the coding front).</p>
-                        <Carousel responsive={responsive} infinite={true} className="owl-carousel owl-theme skill-slider">
-                            {skills.map((skill, index) => (
-                                <div className="item" key={index}>
-                                    <CircularMeter percentage={skill.percentage} />
-                                    <h5>{skill.name}</h5>
-                                </div>
-                            ))}
-                        </Carousel>
-                    </div>
+        <div style={{ height: '200px', position: 'relative', overflow: 'hidden'}}>
+             <LogoLoop
+               logos={techLogos}
+               speed={100}
+               direction="left"
+               logoHeight={70}
+               gap={80}
+               pauseOnHover
+               scaleOnHover
+               fadeOut
+               fadeOutColor="#0c0c0cff"
+               ariaLabel="Technology partners"
+             />
+              </div>
                 </div>
             </div>
-        </div>
-        <img className="background-image-left" src={colorSharp} alt="color" />
+           </div>
+                      </div>
     </section>
   )
 }
