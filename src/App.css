@@ -505,6 +505,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .unified-liquid-sections {
   background-color: #000000;
   position: relative;
+  will-change: scroll-position;
+  transform: translateZ(0);
 }
 
 .unified-liquid-sections .banner,
@@ -520,6 +522,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .unified-liquid-sections .banner-content {
   position: relative;
   z-index: 2;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* Mobile black background */
@@ -694,6 +698,10 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   height: 100%;
   z-index: 1;
   pointer-events: auto;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* Enhanced Banner Content */
