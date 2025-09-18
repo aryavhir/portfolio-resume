@@ -1,0 +1,9 @@
+.text-block {
+text-align: center;
+  color: #ffffff;
+}
+
+.char {
+  will-change: transform;
+  display: inline-block;
+}

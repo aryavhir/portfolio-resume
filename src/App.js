@@ -9,18 +9,48 @@ import { GitHubDashboard } from "./component/GitHubDashboard";
 import { Terminal } from "./component/Terminal";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
+import GradientBlinds from "./asset/background/GradientBlinds";
+import { InfiniteSection } from "./component/build-project"; // Adjust path if needed
 
 function App() {
   return (
     <div className="App">
       <NavBar />
 
-      <Banner />
-      <Terminal />
-      <GitHubDashboard />
-      <Skills />
+      {/* Unified Liquid Ether Background for Banner to Skills sections */}
+      <div className="unified-liquid-sections">
+        {/* Single Liquid Ether Background */}
+        <div className="unified-liquid-background">
+         <GradientBlinds
+    gradientColors={['#FF9FFC', '#5227FF']}
+    angle={0}
+    noise={0.3}
+    blindCount={12}
+    blindMinWidth={50}
+    spotlightRadius={0.5}
+    spotlightSoftness={1}
+    spotlightOpacity={1}
+    mouseDampening={0.15}
+    distortAmount={0}
+    shineDirection="left"
+    mixBlendMode="lighten"
+  />
+        </div>
+
+        <Banner />
+        
+         <Skills />
+        </div>
+       
+               
+ <InfiniteSection />
+        {/* <GitHubDashboard /> */}
+      
+
       <Projects />
+         <Terminal />
       <Contact />
+     
       <Footer />
     </div>
   );

@@ -491,72 +491,44 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 /************ Banner Css ************/
 .banner {
   margin-top: 0;
-  padding: 210px 0 0;
-  background-position: top center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #000000;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Extend banner background to terminal and github sections */
-.banner::before,
-.terminal-section::before,
-.github-dashboard::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 300vh;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(170, 54, 124, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(74, 47, 189, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(170, 54, 124, 0.1) 0%, transparent 50%);
-  animation: gradientShift 8s ease-in-out infinite;
-  z-index: -2;
-  pointer-events: none;
+/* Black background for unified liquid ether sections */
+.unified-liquid-sections {
+  background-color: #000000;
+  position: relative;
 }
 
-.banner::after,
-.terminal-section::after,
-.github-dashboard::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 300vh;
-  background-image:
-    radial-gradient(2px 2px at 20px 30px, rgba(170, 54, 124, 0.3), transparent),
-    radial-gradient(2px 2px at 40px 70px, rgba(74, 47, 189, 0.3), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(170, 54, 124, 0.2), transparent),
-    radial-gradient(1px 1px at 130px 80px, rgba(74, 47, 189, 0.2), transparent),
-    radial-gradient(2px 2px at 160px 30px, rgba(170, 54, 124, 0.3), transparent);
-  background-repeat: repeat;
-  background-size: 200px 100px;
-  animation: floatParticles 20s linear infinite;
-  z-index: -1;
-  pointer-events: none;
+.unified-liquid-sections .banner,
+.unified-liquid-sections .terminal-section,
+.unified-liquid-sections .github-dashboard,
+.unified-liquid-sections .skill {
+  background-color: transparent;
+  position: relative;
 }
 
-/* Mobile background optimization */
+/* Ensure content appears above liquid ether background */
+.unified-liquid-sections .container,
+.unified-liquid-sections .banner-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Mobile black background */
 @media (max-width: 768px) {
   .banner::before,
   .terminal-section::before,
-  .github-dashboard::before {
-    background:
-      radial-gradient(circle at 20% 80%, rgba(170, 54, 124, 0.1) 0%, transparent 40%),
-      radial-gradient(circle at 80% 20%, rgba(74, 47, 189, 0.1) 0%, transparent 40%);
-  }
-
-  .banner::after,
-  .terminal-section::after,
-  .github-dashboard::after {
-    background-image:
-      radial-gradient(1px 1px at 15px 25px, rgba(170, 54, 124, 0.2), transparent),
-      radial-gradient(1px 1px at 30px 50px, rgba(74, 47, 189, 0.2), transparent);
-    background-size: 100px 50px;
+  .github-dashboard::before,
+  .skills::before {
+    background-color: #000000;
   }
 }
 
@@ -602,8 +574,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .banner h1 {
-  font-size: 65px;
-  font-weight: 700;
+  font-size: 78px;
+  font-weight: 600;
   letter-spacing: 0.8px;
   line-height: 1;
   margin-bottom: 20px;
@@ -708,6 +680,51 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   border-right: 0.08em solid #666;
 }
 
+/* Unified Liquid Ether Background Styles */
+.unified-liquid-sections {
+  position: relative;
+}
+
+.unified-liquid-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* Enhanced Banner Content */
+.banner-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  max-width: 800px;
+  padding: 40px 20px;
+}
+
+.banner-hello {
+
+  color: #fff;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 60px rgba(82, 39, 255, 0.6);
+  margin-bottom: 30px;
+  animation: fadeInDown 1s ease-out;
+}
+
+.banner-text-container {
+  font-size: 1.5rem;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.txt-rotate {
+  font-weight: 500;
+  letter-spacing: 0.8px;
+}
+
 /************ Skills Css ************/
 .skill {
   padding: 0 0 50px 0;
@@ -719,24 +736,23 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 /* Skill percentage is now displayed inside the circular meter */
 
 .skill-bx {
-  background: #151515;
+  background: #000000;
   border-radius: 64px;
   text-align: center;
-  padding: 60px 50px;
-  margin-top: -60px;
+  padding: 40px 0px;
 }
 
 .skill h2 {
-  font-size: 45px;
-  font-weight: 700;
+  font-size: 78px;
+  font-weight: 600;
 }
 
 .skill p {
-  color: #B8B8B8;
-  font-size: 18px;
+  font-size: 22px;
   letter-spacing: 0.8px;
   line-height: 1.5em;
   margin: 14px 0 75px 0;
+  text-align: center;
 }
 
 .skill-slider {
@@ -766,19 +782,17 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .project h2 {
-  font-size: 45px;
-  font-weight: 700;
+font-weight: 600;
+  font-size: 78px;
   text-align: center;
 }
 
 .project p {
-  color: #B8B8B8;
-  font-size: 18px;
+  font-size: 22px;
   letter-spacing: 0.8px;
   line-height: 1.5em;
   margin: 14px auto 30px auto;
   text-align: center;
-  width: 56%;
 }
 
 .project .nav.nav-pills {
@@ -1187,7 +1201,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 /************ Footer Css ************/
 .footer {
   padding: 0 0 50px 0;
-  background-image: url('./asset/img/footer-bg.png');
+  background-color: black ;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1377,12 +1391,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   padding: 80px 0;
   position: relative;
   overflow: hidden;
+  background-color: black;
 }
 
 
 
 .github-bx {
-  background: #151515;
+  background: #000000;
   border-radius: 64px;
   text-align: center;
   padding: 60px 50px;
@@ -2094,6 +2109,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   padding: 50px 0;
   position: relative;
   overflow: hidden;
+  background-color: black;
 }
 
 
@@ -2210,7 +2226,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .terminal-body {
-  background: #0d1117;
+  background: #000000;
   padding: 20px;
   min-height: 500px;
   max-height: 600px;
@@ -2629,36 +2645,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   margin-right: auto;
 }
 
-.canvas-container {
-  margin: 40px 0;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-  border: 2px solid rgba(170, 54, 124, 0.3);
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-  transition: all 0.3s ease;
-  position: relative;
-}
 
-.canvas-container:hover {
-  border-color: rgba(170, 54, 124, 0.6);
-  box-shadow: 0 25px 60px rgba(170, 54, 124, 0.4);
-}
-
-.canvas-container::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, #AA367C, #4A2FBD, #7ee787, #ffa657);
-  background-size: 400% 400%;
-  border-radius: 22px;
-  z-index: -1;
-  animation: workspaceGlow 8s ease infinite;
-  opacity: 0.3;
-}
 
 @keyframes workspaceGlow {
   0% {
@@ -2714,14 +2701,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   .workspace-3d-bx p {
     font-size: 16px;
     margin-bottom: 30px;
-  }
-
-  .canvas-container {
-    margin: 30px 0;
-  }
-
-  .canvas-container canvas {
-    height: 400px !important;
   }
 
   .workspace-controls-info p {
@@ -2833,12 +2812,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   transform: scale(1.1);
 }
 
-.cheat-sheet-content {
-  padding: 30px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-}
+
 
 .cheat-sheet-section {
   background: rgba(21, 21, 21, 0.5);
@@ -2965,12 +2939,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
   .cheat-sheet-header h3 {
     font-size: 20px;
-  }
-
-  .cheat-sheet-content {
-    padding: 20px;
-    grid-template-columns: 1fr;
-    gap: 15px;
   }
 
   .cheat-command {

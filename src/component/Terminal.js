@@ -685,8 +685,8 @@ Type 'help' to see available commands.`);
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={handleKeyDown}
                       className="terminal-input"
-                      autoComplete="off"
-                      autoFocus
+                      autoComplete="on"
+                      autoFocus={false}
                     />
                   </form>
                 )}
