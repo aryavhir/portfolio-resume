@@ -1,6 +1,6 @@
 import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
-import { ProjectCard } from "./ProjectCard";
-import { Workspace3D } from "./Workspace3D";
+
+
 import projImg1 from "../asset/img/7.png";
 import projImg2 from "../asset/img/5.png";
 import projImg3 from "../asset/img/cert.png";
@@ -10,7 +10,7 @@ import projImg6 from "../asset/img/6.png";
 import projImg7 from "../asset/img/2.png";
 import colorSharp2 from "../asset/img/color-sharp2.png";
 import 'animate.css';
-import TrackVisibility from 'react-on-screen';
+import CircularGallery from "../asset/cert/CircularGallery"; 
 import ScrambledText from '../asset/text-animation/ScrambledText';
 
 export const Projects = () => {
@@ -65,9 +65,7 @@ export const Projects = () => {
       <Container>
         <Row>
           <Col size={12}>
-            <TrackVisibility>
-              {({ isVisible }) =>
-              <div className={isVisible ? "animate__animated animate__fadeIn": ""}>
+           
                 <ScrambledText
                   className="scrambled-text-demo"
                   radius={100}
@@ -75,54 +73,11 @@ export const Projects = () => {
                   speed={0.5}
                 >
                <h2>Courses Completed</h2> 
-               This is a collection of online Courses completed by me  through sites such as coursera. The images on click would lead you to the actual certificate credentials.
-               </ScrambledText>
-               
-                <Tab.Container id="projects-tabs" defaultActiveKey="first">
-                  <Nav variant="pills" className="nav-pills mb-5 justify-content-center align-items-center" id="pills-tab">
-                    <Nav.Item>
-                      <Nav.Link eventKey="first">Tab 1</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="second">Tab 2</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="third">Tab 3</Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-                  <Tab.Content id="slideInUp" className={isVisible ? "animate__animated animate__slideInUp" : ""}>
-                    <Tab.Pane eventKey="first">
-                      <Row>
-                        {
-                          firstTabProjects.map((project, index) => {
-                            return (
-                              <ProjectCard
-                                key={index}
-                                {...project}
-                                />
-                            )
-                          })
-                        }
-                      </Row>
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="second">
-                      <Row>
-                        {secondTabProjects.map((project, index) => (
-                          <ProjectCard
-                            key={index}
-                            {...project}
-                          />
-                        ))}
-                      </Row>
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="third">
-                      <p>Still Learning Three.js - Currently exploring 3D web development with Three.js. This interactive workspace showcases my progress in creating immersive 3D experiences for the web, featuring realistic lighting, animations, and interactive controls.</p>
-                      <Workspace3D />
-                    </Tab.Pane>
-                  </Tab.Content>
-                </Tab.Container>
-              </div>}
-            </TrackVisibility>
+               This is a collection of online Courses completed by me  through sites such as coursera. 
+               </ScrambledText> 
+               <div style={{ height: '600px', position: 'relative' }}>
+  <CircularGallery bend={1} textColor="#ffffff" borderRadius={0.05} scrollEase={0.02}/>
+</div>
           </Col>
         </Row>
       </Container>
