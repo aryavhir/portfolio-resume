@@ -10,6 +10,8 @@ import { Terminal } from "./component/Terminal";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
 import GradientBlinds from "./asset/background/GradientBlinds";
+import { InfiniteSection } from "./component/build-project"; // Adjust path if needed
+
 function App() {
   return (
     <div className="App">
@@ -36,13 +38,19 @@ function App() {
         </div>
 
         <Banner />
-        <Terminal />
-        <GitHubDashboard />
-        <Skills />
-      </div>
+        
+         <Skills />
+        </div>
+       
+               
+ <InfiniteSection />
+        {/* <GitHubDashboard /> */}
+      
 
       <Projects />
+         <Terminal />
       <Contact />
+     
       <Footer />
     </div>
   );

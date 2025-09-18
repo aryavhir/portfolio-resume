@@ -11,7 +11,7 @@ import projImg7 from "../asset/img/2.png";
 import colorSharp2 from "../asset/img/color-sharp2.png";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
-
+import ScrambledText from '../asset/text-animation/ScrambledText';
 
 export const Projects = () => {
   const projects = [
@@ -68,8 +68,16 @@ export const Projects = () => {
             <TrackVisibility>
               {({ isVisible }) =>
               <div className={isVisible ? "animate__animated animate__fadeIn": ""}>
-                <h2>Courses Completed</h2>
-                <p>This is a collection of online Courses completed by me  through sites such as coursera. The images on click would lead you to the actual certificate credentials.</p>
+                <ScrambledText
+                  className="scrambled-text-demo"
+                  radius={100}
+                  duration={1.2}
+                  speed={0.5}
+                >
+               <h2>Courses Completed</h2> 
+               This is a collection of online Courses completed by me  through sites such as coursera. The images on click would lead you to the actual certificate credentials.
+               </ScrambledText>
+               
                 <Tab.Container id="projects-tabs" defaultActiveKey="first">
                   <Nav variant="pills" className="nav-pills mb-5 justify-content-center align-items-center" id="pills-tab">
                     <Nav.Item>

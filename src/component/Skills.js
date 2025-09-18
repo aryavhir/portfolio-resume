@@ -10,6 +10,7 @@ import { SiGithub, SiInstagram, SiLinkedin,
   SiBootstrap, SiNodedotjs, SiExpress, SiMongodb, 
   SiGit, SiVite, SiJavascript, 
   SiHtml5, SiCss3, SiDocker, SiGmail  } from 'react-icons/si';
+  import ScrambledText from '../asset/text-animation/ScrambledText';
 
 const techLogos = [
   { node: <SiGithub color="#ffffffff" />, title: "GitHub", href: "https://github.com" },
@@ -133,8 +134,16 @@ export const Skills = () => {
             <div className="row">
                 <div className="col-12">
                     <div className="skill-bx wow zoomIn">
+                        <ScrambledText
+  className="scrambled-text-demo"
+  radius={100}
+  duration={1.2}
+  speed={0.5}
+>
                         <h2>Skills</h2>
-                        <p>Skills here are strictly adhering to the technical aspects<br></br>(referring to the coding front).</p>
+                       
+Skills here are strictly adhering to the technical aspects<br></br>(referring to the coding front).
+                        </ScrambledText>
         <div style={{ height: '200px', position: 'relative', overflow: 'hidden'}}>
              <LogoLoop
                logos={techLogos}
