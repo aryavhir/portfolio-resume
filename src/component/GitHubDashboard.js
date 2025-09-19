@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Badge, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Badge, Spinner } from "react-bootstrap";
+import CardSwap, { Card } from "../asset/swap-card/CardSwap";
 
 export const GitHubDashboard = () => {
   const [githubData, setGithubData] = useState({
@@ -26,27 +27,27 @@ export const GitHubDashboard = () => {
       // Fetch user data
       const userResponse = await fetch(
         `https://api.github.com/users/${USERNAME}`,
-        { headers },
+        { headers }
       );
       const userData = await userResponse.json();
 
-      // Fetch pinned repositories
+      // Fetch repos
       const reposResponse = await fetch(
         `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=6`,
-        { headers },
+        { headers }
       );
       const reposData = await reposResponse.json();
 
-      // Fetch recent commits from public repos
+      // Fetch commits
       const commitsPromises = reposData.slice(0, 3).map((repo) =>
         fetch(
           `https://api.github.com/repos/${USERNAME}/${repo.name}/commits?per_page=3`,
-          { headers },
+          { headers }
         )
           .then((res) => res.json())
           .then((commits) =>
-            commits.map((commit) => ({ ...commit, repo: repo.name })),
-          ),
+            commits.map((commit) => ({ ...commit, repo: repo.name }))
+          )
       );
 
       const commitsArrays = await Promise.all(commitsPromises);
@@ -68,13 +69,12 @@ export const GitHubDashboard = () => {
     }
   };
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+  const formatDate = (dateString) =>
+    new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
     });
-  };
 
   const getLanguageColor = (language) => {
     const colors = {
@@ -132,106 +132,74 @@ export const GitHubDashboard = () => {
 
   return (
     <section className="github-dashboard" id="github">
-      <Container>
-        <Row>
-          <Col lg={12}>
-            <div className="github-bx">
-              <h2>GitHub Portfolio</h2>
-
-              <p>
-                Explore my coding journey through repositories, contributions,
-                and development activity. Data fetched in real-time via GitHub
-                API.
-              </p>
-
-              {/* Repositories and Contribution Graph Side by Side */}
-              <Row>
-                {/* Top Repositories - Left Half */}
-                <Col lg={6}>
-                  <Card className="github-section-card">
-                    <Card.Header>
-                      <h4>Top Repositories</h4>
-                    </Card.Header>
-                    <Card.Body>
-                      <Row>
-                        {githubData.repos.slice(0, 4).map((repo, index) => (
-                          <Col md={12} key={index} className="mb-3">
-                            <div
-                              className="repo-item"
-                              onClick={() =>
-                                window.open(repo.html_url, "_blank")
-                              }
-                              style={{ cursor: "pointer" }}
-                            >
-                              <div className="repo-header">
-                                <h5>
-                                  <span className="repo-name">{repo.name}</span>
-                                </h5>
-                                <div className="repo-stats">
-                                  <Badge variant="outline-primary">
-                                    ⭐ {repo.stargazers_count}
-                                  </Badge>
-                                  <Badge variant="outline-secondary">
-                                    🍴 {repo.forks_count}
-                                  </Badge>
-                                </div>
-                              </div>
-                              <p className="repo-description">
-                                {repo.description}
-                              </p>
-                              <div className="repo-meta">
-                                {repo.language && (
-                                  <span className="repo-language">
-                                    <span
-                                      className="language-color"
-                                      style={{
-                                        backgroundColor: getLanguageColor(
-                                          repo.language,
-                                        ),
-                                      }}
-                                    ></span>
-                                    {repo.language}
-                                  </span>
-                                )}
-                                <span className="repo-updated">
-                                  Updated {formatDate(repo.updated_at)}
-                                </span>
-                              </div>
-                            </div>
-                          </Col>
-                        ))}
-                      </Row>
-                    </Card.Body>
-                  </Card>
-                </Col>
-
-                {/* Contribution Graph - Right Half */}
-                <Col lg={6}>
-                  <Card className="github-section-card">
-                    <Card.Header>
-                      <h4>Contribution Graph</h4>
-                    </Card.Header>
-                    <Card.Body>
-                      <div className="contribution-graph-vertical">
-                        <img
-                          src={`https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&title_color=F85D7F&icon_color=F85D7F&text_color=FFFFFF`}
-                          alt="GitHub Stats"
-                          className="github-stats-img-vertical"
-                        />
-                        <img
-                          src={`https://github-readme-streak-stats.herokuapp.com/?user=${USERNAME}&theme=dark&hide_border=true&background=0D1117&stroke=F85D7F&ring=F85D7F&fire=F85D7F&currStreakLabel=FFFFFF`}
-                          alt="GitHub Streak"
-                          className="github-streak-img-vertical"
-                        />
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
+      <div style={{ height: "600px", position: "relative" }}>
+        <CardSwap cardDistance={60} verticalDistance={70} delay={5000} pauseOnHover={false}>
+          
+          {/* Card 1 - Top Repositories */}
+          <Card>
+            <div style={{ padding: "15px" }}>
+              <h4>Top Repositories</h4>
+              {githubData.repos.slice(0, 4).map((repo, index) => (
+                <div
+                  key={index}
+                  className="repo-item mb-3"
+                  onClick={() => window.open(repo.html_url, "_blank")}
+                  style={{ cursor: "pointer", borderBottom: "1px solid #333", paddingBottom: "10px" }}
+                >
+                  <div className="repo-header d-flex justify-content-between align-items-center">
+                    <h5 className="mb-0">{repo.name}</h5>
+                    <div>
+                      <Badge bg="secondary">⭐ {repo.stargazers_count}</Badge>{" "}
+                      <Badge bg="dark">🍴 {repo.forks_count}</Badge>
+                    </div>
+                  </div>
+                  <p className="mb-1">{repo.description}</p>
+                  <small>
+                    {repo.language && (
+                      <span style={{ color: getLanguageColor(repo.language) }}>
+                        ● {repo.language}
+                      </span>
+                    )}{" "}
+                    | Updated {formatDate(repo.updated_at)}
+                  </small>
+                </div>
+              ))}
             </div>
-          </Col>
-        </Row>
-      </Container>
+          </Card>
+
+          {/* Card 2 - Contribution Graph */}
+          <Card>
+            <div style={{ padding: "15px", textAlign: "center" }}>
+              <h4>Contribution Graph</h4>
+              <img
+                src={`https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&title_color=F85D7F&icon_color=F85D7F&text_color=FFFFFF`}
+                alt="GitHub Stats"
+                style={{ width: "100%", marginBottom: "15px", borderRadius: "8px" }}
+              />
+              <img
+                src={`https://github-readme-streak-stats.herokuapp.com/?user=${USERNAME}&theme=dark&hide_border=true&background=0D1117&stroke=F85D7F&ring=F85D7F&fire=F85D7F&currStreakLabel=FFFFFF`}
+                alt="GitHub Streak"
+                style={{ width: "100%", borderRadius: "8px" }}
+              />
+            </div>
+          </Card>
+
+          {/* Card 3 - Recent Commits */}
+          <Card>
+            <div style={{ padding: "15px" }}>
+              <h4>Recent Commits</h4>
+              {githubData.commits.map((commit, index) => (
+                <div key={index} className="mb-3">
+                  <strong>{commit.repo}</strong>
+                  <p style={{ margin: "5px 0" }}>{commit.commit.message}</p>
+                  <small>{formatDate(commit.commit.author.date)}</small>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+        </CardSwap>
+      </div>
     </section>
   );
 };

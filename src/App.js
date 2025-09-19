@@ -6,7 +6,7 @@ import { NavBar } from "./component/NavBar";
 import { Banner } from "./component/Banner";
 import { Skills } from "./component/Skills";
 import { Projects } from "./component/Projects";
-// import { GitHubDashboard } from "./component/GitHubDashboard";
+import { GitHubDashboard } from "./component/GitHubDashboard";
 import { Terminal } from "./component/Terminal";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
@@ -77,15 +77,17 @@ function App() {
           <InfiniteSection />
         </Suspense>
       </ConditionalRender>
-        {/* <GitHubDashboard /> */}
+        
       
 
       <Projects />
-         <Terminal />
-      <Contact />
-     
+         {/* <Terminal />
+         
+      <Contact /> */}
+     <GitHubDashboard />
       <Footer />
     </div>
+
   );
 }
 
