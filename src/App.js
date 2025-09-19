@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import "./App.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,8 +11,10 @@ import { Terminal } from "./component/Terminal";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
 import GradientBlinds from "./asset/background/GradientBlinds";
-import { InfiniteSection } from "./component/build-project"; // Adjust path if needed
 import ConditionalRender from "./components/ConditionalRender";
+
+// Lazy load heavy 3D components
+const InfiniteSection = React.lazy(() => import("./component/build-project").then(module => ({ default: module.InfiniteSection })));
 
 function App() {
   return (
@@ -58,8 +61,21 @@ function App() {
             Loading 3D Projects...
           </div>
         }
+        once={true}
       >
-        <InfiniteSection />
+        <Suspense fallback={
+          <div style={{ 
+            height: '600px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            color: '#fff' 
+          }}>
+            Loading 3D Components...
+          </div>
+        }>
+          <InfiniteSection />
+        </Suspense>
       </ConditionalRender>
         {/* <GitHubDashboard /> */}
       
