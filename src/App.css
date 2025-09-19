@@ -552,6 +552,29 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   }
 }
 
+/* Loading animations for performance optimizations */
+@keyframes loadingPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.2);
+  }
+}
+
+@keyframes fadeInOptimized {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes floatParticles {
   0% {
     transform: translateY(0) translateX(0);
@@ -706,11 +729,11 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .banner-hello {
-
   color: #fff;
   text-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 60px rgba(82, 39, 255, 0.6);
   margin-bottom: 30px;
   animation: fadeInDown 1s ease-out;
+  pointer-events: none; /* Allow cursor to pass through */
 }
 
 .banner-text-container {
@@ -718,11 +741,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   color: #fff;
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
   animation: fadeInUp 1s ease-out 0.3s both;
+  pointer-events: none; /* Allow cursor to pass through */
 }
 
 .txt-rotate {
   font-weight: 500;
   letter-spacing: 0.8px;
+  pointer-events: none; /* Allow cursor to pass through */
 }
 
 /************ Skills Css ************/

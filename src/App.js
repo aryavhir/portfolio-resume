@@ -5,12 +5,13 @@ import { NavBar } from "./component/NavBar";
 import { Banner } from "./component/Banner";
 import { Skills } from "./component/Skills";
 import { Projects } from "./component/Projects";
-import { GitHubDashboard } from "./component/GitHubDashboard";
+// import { GitHubDashboard } from "./component/GitHubDashboard";
 import { Terminal } from "./component/Terminal";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
 import GradientBlinds from "./asset/background/GradientBlinds";
 import { InfiniteSection } from "./component/build-project"; // Adjust path if needed
+import ConditionalRender from "./components/ConditionalRender";
 
 function App() {
   return (
@@ -43,7 +44,23 @@ function App() {
         </div>
        
                
- <InfiniteSection />
+ <ConditionalRender
+        fallback={
+          <div style={{ 
+            height: '600px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            color: '#fff',
+            background: 'rgba(0,0,0,0.1)',
+            borderRadius: '10px' 
+          }}>
+            Loading 3D Projects...
+          </div>
+        }
+      >
+        <InfiniteSection />
+      </ConditionalRender>
         {/* <GitHubDashboard /> */}
       
 
