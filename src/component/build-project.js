@@ -57,38 +57,73 @@ const items = [
 export const InfiniteSection = () => {
   const [showTutorial, setShowTutorial] = useState(true);
 
-  // Auto-hide tutorial after 4 seconds
   useEffect(() => {
+    // Fade-in scroll observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all fade elements in infinite section
+    const fadeElements = document.querySelectorAll('#infinite-menu .fade-element');
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    // Auto-hide tutorial after 4 seconds
     const timer = setTimeout(() => {
       setShowTutorial(false);
     }, 4000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      fadeElements.forEach(element => {
+        observer.unobserve(element);
+      });
+    };
   }, []);
 
   return (
     <section className="infinite-section" id="infinite-menu">
-      <ScrambledText
-        className="scrambled-text-demo"
-        radius={100}
-        duration={1.2}
-        speed={0.5}
-      >
-        <h2>My Projects</h2>
-        Personal projects build/deployed by me.
-      </ScrambledText>
       
-      <div style={{ height: "600px", position: "relative" }}>
-        {showTutorial && (
-          <div className="tutorial-overlay">
-            <div className="ghost-hand">
-              <span className="hand-emoji">👆</span>
-              <div className="tutorial-text">Drag to spin!</div>
-            </div>
-          </div>
-        )}
-        <InfiniteMenu items={items} />
+      {/* Header text with fade-up effect */}
+      <div className="fade-element fade-up">
+        <ScrambledText
+          className="scrambled-text-demo"
+          radius={100}
+          duration={1.2}
+          speed={0.5}
+        >
+          <h2>My Projects</h2>
+          Personal projects build/deployed by me.<br />
+          Grab me and spin<br />
+          ↓
+        </ScrambledText>
       </div>
+      
+      {/* Infinite menu container with fade-scale effect */}
+      <div className="fade-element fade-scale">
+        <div style={{ height: "600px", position: "relative" }}>
+          {showTutorial && (
+            <div className="tutorial-overlay fade-element fade-bounce">
+              <div className="ghost-hand">
+                <span className="hand-emoji">👆</span>
+                <div className="tutorial-text">Drag to spin!</div>
+              </div>
+            </div>
+          )}
+          <InfiniteMenu items={items} />
+        </div>
+      </div>
+      
     </section>
   );
 };

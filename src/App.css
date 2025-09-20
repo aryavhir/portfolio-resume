@@ -3136,3 +3136,296 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   75% { transform: translate(-30px, 20px); }
   100% { transform: translate(0, 0); }
 }
+/* Add this to your CSS file */
+
+/* Fade-in animation classes */
+.fade-element {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.fade-element.fade-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Optional: Add hover effects to social icons */
+.social-icon a {
+  transition: transform 0.3s ease;
+}
+
+.social-icon a:hover {
+  transform: translateY(-3px);
+}
+
+/* Optional: Stagger animation for multiple elements */
+.fade-element:nth-child(1) { transition-delay: 0.1s; }
+.fade-element:nth-child(2) { transition-delay: 0.2s; }
+.fade-element:nth-child(3) { transition-delay: 0.3s; }
+
+/* Projects Section Fade Effects */
+
+/* Base fade classes */
+.fade-element {
+  opacity: 0;
+  transition: all 0.8s ease-out;
+}
+
+.fade-element.fade-visible {
+  opacity: 1 !important;
+}
+
+/* Fade up from bottom */
+.fade-up {
+  transform: translateY(40px);
+}
+
+.fade-up.fade-visible {
+  transform: translateY(0) !important;
+}
+
+/* Fade scale (zoom in) */
+.fade-scale {
+  transform: scale(0.9);
+}
+
+.fade-scale.fade-visible {
+  transform: scale(1) !important;
+}
+
+/* Fade right (slide from right) */
+.fade-right {
+  transform: translateX(30px);
+}
+
+.fade-right.fade-visible {
+  transform: translateX(0) !important;
+}
+
+/* Staggered animation delays for smooth sequence */
+#projects .fade-element:nth-child(1) { 
+  transition-delay: 0.1s; 
+}
+
+#projects .fade-element:nth-child(2) { 
+  transition-delay: 0.3s; 
+}
+
+#projects .fade-element:nth-child(3) { 
+  transition-delay: 0.5s; 
+}
+
+/* Optional: Add a subtle hover effect to the gallery container */
+#projects .fade-scale:hover {
+  transform: scale(1.02) !important;
+  transition: transform 0.3s ease;
+}
+
+/* Loading animation keyframes (if not already defined) */
+@keyframes loadingPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+a/* Skills Section Fade Effects */
+
+/* Base fade classes */
+.fade-element {
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fade-element.fade-visible {
+  opacity: 1 !important;
+}
+
+/* Fade up from bottom */
+.fade-up {
+  transform: translateY(40px);
+}
+
+.fade-up.fade-visible {
+  transform: translateY(0) !important;
+}
+
+/* Fade scale (zoom in) with slight rotation */
+.fade-scale {
+  transform: scale(0.85) rotate(-1deg);
+}
+
+.fade-scale.fade-visible {
+  transform: scale(1) rotate(0deg) !important;
+}
+
+/* Skills specific animations with staggered delays */
+#skills .fade-element:nth-child(1) { 
+  transition-delay: 0.1s; 
+}
+
+#skills .fade-element:nth-child(2) { 
+  transition-delay: 0.3s; 
+}
+
+#skills .skill-bx.fade-element {
+  transition-delay: 0s; /* Container animates first */
+}
+
+#skills .skill-bx .fade-element:nth-child(1) { 
+  transition-delay: 0.2s; /* Text comes after container */
+}
+
+#skills .skill-bx .fade-element:nth-child(2) { 
+  transition-delay: 0.4s; /* Logo loop comes last */
+}
+
+/* Enhanced logo container animation */
+.skills-logo-container.fade-visible {
+  transform: scale(1) !important;
+}
+
+/* Optional: Add a subtle glow effect when logos are visible */
+.skills-logo-container.fade-visible {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  transition: box-shadow 0.8s ease;
+}
+
+/* Smooth transition for the wow zoomIn class override */
+.skill-bx.wow.zoomIn.fade-element {
+  animation: none !important; /* Override wow.js animation */
+}
+
+/* Optional: Add breathing effect to skill box when visible */
+@keyframes skillBoxBreathing {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.01); }
+}
+
+.skill-bx.fade-visible {
+  animation: skillBoxBreathing 4s ease-in-out infinite;
+}
+/* InfiniteSection Fade Effects */
+
+/* Base fade classes */
+.fade-element {
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fade-element.fade-visible {
+  opacity: 1 !important;
+}
+
+/* Fade up from bottom */
+.fade-up {
+  transform: translateY(40px);
+}
+
+.fade-up.fade-visible {
+  transform: translateY(0) !important;
+}
+
+/* Fade scale with 3D rotation */
+.fade-scale {
+  transform: scale(0.9) rotateX(10deg);
+  transform-style: preserve-3d;
+}
+
+.fade-scale.fade-visible {
+  transform: scale(1) rotateX(0deg) !important;
+}
+
+/* Special bounce effect for tutorial */
+.fade-bounce {
+  transform: scale(0.8) translateY(-20px);
+}
+
+.fade-bounce.fade-visible {
+  transform: scale(1) translateY(0) !important;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Bouncy easing */
+}
+
+/* Infinite Menu specific animations */
+#infinite-menu .fade-element:nth-child(1) { 
+  transition-delay: 0.1s; /* Header text */
+}
+
+#infinite-menu .fade-element:nth-child(2) { 
+  transition-delay: 0.3s; /* Menu container */
+}
+
+/* Tutorial overlay enhancements */
+.tutorial-overlay.fade-visible {
+  animation: tutorialPulse 2s ease-in-out infinite;
+}
+
+.ghost-hand {
+  transition: transform 0.3s ease;
+}
+
+.tutorial-overlay:hover .ghost-hand {
+  transform: scale(1.1);
+}
+
+/* Enhanced hand animation */
+.hand-emoji {
+  display: inline-block;
+  animation: pointingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pointingPulse {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg); 
+  }
+  50% { 
+    transform: scale(1.2) rotate(-10deg); 
+  }
+}
+
+@keyframes tutorialPulse {
+  0%, 100% { 
+    opacity: 0.9;
+    transform: translateY(0px);
+  }
+  50% { 
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+}
+
+/* Infinite menu container enhancement */
+.fade-scale.fade-visible > div {
+  transform-style: preserve-3d;
+}
+
+/* Add a subtle glow when menu becomes visible */
+#infinite-menu .fade-scale.fade-visible {
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+}
+
+/* Smooth transition for menu items */
+.fade-scale.fade-visible .infinite-menu-item {
+  animation: menuItemFloat 0.8s ease-out;
+}
+
+@keyframes menuItemFloat {
+  0% { 
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .fade-up {
+    transform: translateY(30px); /* Less dramatic on mobile */
+  }
+  
+  .fade-scale {
+    transform: scale(0.95) rotateX(5deg); /* Subtle effect on mobile */
+  }
+}
