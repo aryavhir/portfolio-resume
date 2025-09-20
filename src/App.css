@@ -19,6 +19,9 @@
 }
 
 /************ Page Loader Css ************/
+.App {
+  background-color: black
+}
 .page-loader {
   position: fixed;
   top: 0;
@@ -818,7 +821,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .skill h2 {
-  font-size: 72px;
+  font-size: 70px;
   font-weight: 600;
 }
 
@@ -858,7 +861,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 .project h2 {
   font-weight: 600;
-  font-size: 72px;
+  font-size: 70px;
   text-align: center;
 }
 
@@ -1447,10 +1450,11 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 .footer p {
   font-weight: 400;
-  font-size: 14px;
-  color: #B8B8B8;
+  font-size: 30px;
   letter-spacing: 0.5px;
   margin-top: 20px;
+  margin-bottom: 40px;
+  line-height: 1.5em;
 }
 
 .video-container {
@@ -1468,10 +1472,47 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 /************ GitHub Dashboard Css ************/
 .github-dashboard {
-  padding: 80px 0;
   position: relative;
   overflow: hidden;
   background-color: black;
+}
+
+/* Layout for ProfileCard (in Footer) on left and GitHubDashboard on right */
+.profile-and-github-row {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    background-color: #000;
+}
+
+
+.profile-and-github-row .profile-left,
+.profile-and-github-row .github-right {
+  flex: 1 1 0;
+  min-width: 50%;
+}
+
+/* Neutralize footer container styles when inside the row */
+.profile-and-github-row .footer {
+  background: transparent;
+  padding: 0;
+  width: 100%;
+}
+
+/* Pin card to far left and allow dashboard to grow */
+.profile-and-github-row .profile-left { flex: 0 0 460px; display: flex; justify-content: flex-start; overflow: visible; }
+.profile-and-github-row .github-right { flex: 1 1 auto; }
+
+/* Make GitHub card swap container fill available height nicely */
+.profile-and-github-row .github-right .github-dashboard > div {
+  height: 100%;
+}
+
+@media (max-width: 992px) {
+  .profile-and-github-row {
+    flex-direction: column;
+    padding: 20px 0;
+  }
 }
 
 
@@ -1942,6 +1983,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
   .github-section-card h4 {
     font-size: 1.1rem;
+    color: #fff;
   }
 
   .github-section-card .card-body {
@@ -3073,4 +3115,24 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   100% {
     background-position: 0% 50%;
   }
+}
+.tutorial-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ghost-hand {
+  animation: dragDemo 3s infinite;
+  font-size: 2rem;
+}
+
+@keyframes dragDemo {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(30px, -20px); }
+  75% { transform: translate(-30px, 20px); }
+  100% { transform: translate(0, 0); }
 }

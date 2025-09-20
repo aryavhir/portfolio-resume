@@ -63,17 +63,6 @@ export const NavBar = () => {
                 Home
               </Nav.Link>
               <Nav.Link
-                href="#terminal"
-                className={
-                  activeLink === "terminal"
-                    ? "active navbar-link"
-                    : "navbar-link"
-                }
-                onClick={() => onUpdateActiveLink("terminal")}
-              >
-                Terminal
-              </Nav.Link>
-              <Nav.Link
                 href="#skills"
                 className={
                   activeLink === "skills" ? "active navbar-link" : "navbar-link"
@@ -106,7 +95,7 @@ export const NavBar = () => {
                   <img src={navIcon3} alt="" />
                 </a>
               </div>
-              <HashLink to="#connect">
+              <HashLink to="#footer">
                 <button className="vvd">
                   <span>Let's Connect</span>
                 </button>

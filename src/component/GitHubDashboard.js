@@ -69,132 +69,64 @@ export const GitHubDashboard = () => {
     }
   };
 
-  const formatDate = (dateString) =>
-    new Date(dateString).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-
-  const getLanguageColor = (language) => {
-    const colors = {
-      JavaScript: "#f1e05a",
-      TypeScript: "#3178c6",
-      Python: "#3776ab",
-      Java: "#b07219",
-      React: "#61dafb",
-      HTML: "#e34c26",
-      CSS: "#1572b6",
-      C: "#555555",
-      "C++": "#f34b7d",
-      Go: "#00add8",
-      Rust: "#dea584",
-      PHP: "#4f5d95",
-    };
-    return colors[language] || "#586069";
-  };
-
-  if (githubData.loading) {
-    return (
-      <section className="github-dashboard" id="github">
-        <Container>
-          <Row>
-            <Col>
-              <div className="text-center py-5">
-                <Spinner animation="border" variant="primary" />
-                <p className="mt-3">Loading GitHub data...</p>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    );
-  }
-
-  if (githubData.error) {
-    return (
-      <section className="github-dashboard" id="github">
-        <Container>
-          <Row>
-            <Col>
-              <div className="text-center py-5">
-                <p className="text-danger">{githubData.error}</p>
-                <button className="btn btn-primary" onClick={fetchGithubData}>
-                  Retry
-                </button>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    );
-  }
 
   return (
     <section className="github-dashboard" id="github">
-      <div style={{ height: "600px", position: "relative" }}>
-        <CardSwap cardDistance={60} verticalDistance={70} delay={5000} pauseOnHover={false}>
+      <div style={{ height: "540px", position: "relative" }}>
+        <CardSwap cardDistance={60} verticalDistance={70} delay={2000} pauseOnHover={true}>
           
-          {/* Card 1 - Top Repositories */}
+          {/* Card 1 - Gaming Hobby: Valorant */}
           <Card>
-            <div style={{ padding: "15px" }}>
-              <h4>Top Repositories</h4>
-              {githubData.repos.slice(0, 4).map((repo, index) => (
-                <div
-                  key={index}
-                  className="repo-item mb-3"
-                  onClick={() => window.open(repo.html_url, "_blank")}
-                  style={{ cursor: "pointer", borderBottom: "1px solid #333", paddingBottom: "10px" }}
-                >
-                  <div className="repo-header d-flex justify-content-between align-items-center">
-                    <h5 className="mb-0">{repo.name}</h5>
-                    <div>
-                      <Badge bg="secondary">⭐ {repo.stargazers_count}</Badge>{" "}
-                      <Badge bg="dark">🍴 {repo.forks_count}</Badge>
-                    </div>
-                  </div>
-                  <p className="mb-1">{repo.description}</p>
-                  <small>
-                    {repo.language && (
-                      <span style={{ color: getLanguageColor(repo.language) }}>
-                        ● {repo.language}
-                      </span>
-                    )}{" "}
-                    | Updated {formatDate(repo.updated_at)}
-                  </small>
-                </div>
-              ))}
+            <div style={{ padding: "15px", backgroundColor: "#000000" }}>
+              <h4 style={{ color: "#fff" }}>Gaming</h4>
+              <div style={{ borderRadius: 12, overflow: "hidden", background: "#0b0b0b", marginTop: 8 }}>
+                <iframe
+                  style={{ width: "100%", height: 315, border: 0 }}
+                  src="https://www.youtube.com/embed/cLx3tyzht3Y"
+                  title="Valorant Gameplay"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <small style={{ display: "block", marginTop: 8, opacity: 0.7 }}>I main Duelists · Always down for scrims.</small>
             </div>
           </Card>
 
-          {/* Card 2 - Contribution Graph */}
+          {/* Card 2 - Vibing To (Spotify Embed) */}
           <Card>
-            <div style={{ padding: "15px", textAlign: "center" }}>
-              <h4>Contribution Graph</h4>
-              <img
-                src={`https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&title_color=F85D7F&icon_color=F85D7F&text_color=FFFFFF`}
-                alt="GitHub Stats"
-                style={{ width: "100%", marginBottom: "15px", borderRadius: "8px" }}
-              />
-              <img
-                src={`https://github-readme-streak-stats.herokuapp.com/?user=${USERNAME}&theme=dark&hide_border=true&background=0D1117&stroke=F85D7F&ring=F85D7F&fire=F85D7F&currStreakLabel=FFFFFF`}
-                alt="GitHub Streak"
-                style={{ width: "100%", borderRadius: "8px" }}
-              />
+            <div style={{ padding: "15px", backgroundColor: "#000000" }}> 
+              <h4 style={{ color: "#fff" }}>Vibing To</h4>
+              <div style={{ borderRadius: 12, overflow: "hidden", background: "#0b0b0b" }}>
+                <iframe
+                  style={{ borderRadius: 12, width: "100%", height: 352, border: 0 }}
+                  src={`https://open.spotify.com/embed/album/6OGzmhzHcjf0uN9j7dYvZH?utm_source=generator&theme=0`}
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  title="Spotify Player"
+                />
+              </div>
+              <small style={{ display: "block", marginTop: 8, opacity: 0.7 }}>
+                Updated: Sep 2025 · Track: current favorite
+              </small>
             </div>
           </Card>
 
-          {/* Card 3 - Recent Commits */}
+          {/* Card 3 - Next Up: Penetration Testing (Video) */}
           <Card>
-            <div style={{ padding: "15px" }}>
-              <h4>Recent Commits</h4>
-              {githubData.commits.map((commit, index) => (
-                <div key={index} className="mb-3">
-                  <strong>{commit.repo}</strong>
-                  <p style={{ margin: "5px 0" }}>{commit.commit.message}</p>
-                  <small>{formatDate(commit.commit.author.date)}</small>
-                </div>
-              ))}
+            <div style={{ padding: "15px", backgroundColor: "#000000" }}>
+              <h4 style={{ color: "#fff" }}>Next Up</h4>
+              <div style={{ borderRadius: 12, overflow: "hidden", background: "#0b0b0b", marginTop: 8 }}>
+                <iframe
+                  style={{ width: "100%", height: 315, border: 0 }}
+                  src="https://www.youtube.com/embed/3Kq1MIfTWCE"
+                  title="Penetration Testing Roadmap"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <small style={{ display: "block", marginTop: 8, opacity: 0.7 }}>Kicking off with fundamentals and lab setups.</small>
             </div>
           </Card>
 

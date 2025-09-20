@@ -84,8 +84,10 @@ function App() {
          {/* <Terminal />
          
       <Contact /> */}
-     <GitHubDashboard />
-      <Footer />
+      <div className="profile-and-github-row">
+        <div className="profile-left"><Footer /></div>
+        <div className="github-right"><GitHubDashboard /></div>
+      </div>
     </div>
 
   );

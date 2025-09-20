@@ -1,0 +1,129 @@
+
+
+/* Ensure the card wrapper doesn't clip and aligns left */
+.newcard-wrapper { display: flex; justify-content: flex-start; }
+
+.newcard-wrapper .card {
+  position: relative;
+  width: 420px;
+  height: 500px;
+  background: #0b0b0b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.newcard-wrapper .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(315deg,#101022,#2a206f,#4A2FBD);
+}
+
+.newcard-wrapper .card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(315deg,#101022,#2a206f,#4A2FBD);
+  filter: blur(24px);
+}
+
+.newcard-wrapper .card b {
+  position: absolute;
+  inset: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  border-radius: 12px;
+}
+
+.newcard-wrapper .card img {
+  position: absolute;
+  z-index: 3;
+  scale: 1;
+  opacity: 1;
+  transition: 0.5s;
+  width: 90%;
+  height: auto;
+}
+
+.newcard-wrapper .card:hover img {
+  scale: 1;
+  opacity: 1;
+  transform: none;
+}
+
+.newcard-wrapper .card .content {
+  position: absolute;
+  z-index: 4;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0);
+  transition: 0.5s;
+}
+
+.newcard-wrapper .card:hover .content {
+  transform: scale(1);
+  bottom: 25px;
+}
+
+.newcard-wrapper .content .title {
+  position: relative;
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.1em;
+  font-size: 1.1em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.newcard-wrapper .content .title span {
+  font-weight: 400;
+  font-size: 0.8em;
+}
+
+.newcard-wrapper .content .sci {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.newcard-wrapper .sci li {
+  list-style: none;
+}
+
+.newcard-wrapper .sci li .fa-brands { width: 14px; }
+.newcard-wrapper .sci li .fa-facebook { width: 10px; }
+
+.newcard-wrapper .sci li a {
+  position: relative;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.2);
+  fill: currentColor;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.newcard-wrapper .sci li a:hover {
+  color: rgba(255, 255, 255, 1);
+}
+

@@ -1,6 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
 
-
 // Removed unused project image imports - now using optimized lazy loading
 import colorSharp2 from "../asset/img/color-sharp2.png";
 import 'animate.css';
