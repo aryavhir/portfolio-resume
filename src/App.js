@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import "./App.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,7 +11,10 @@ import { Terminal } from "./component/Terminal";
 import { Contact } from "./component/Contact";
 import { Footer } from "./component/Footer";
 import GradientBlinds from "./asset/background/GradientBlinds";
-import { InfiniteSection } from "./component/build-project"; // Adjust path if needed
+import ConditionalRender from "./components/ConditionalRender";
+
+// Lazy load heavy 3D components
+const InfiniteSection = React.lazy(() => import("./component/build-project").then(module => ({ default: module.InfiniteSection })));
 
 function App() {
   return (
@@ -43,16 +47,49 @@ function App() {
         </div>
        
                
- <InfiniteSection />
-        {/* <GitHubDashboard /> */}
+ <ConditionalRender
+        fallback={
+          <div style={{ 
+            height: '600px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            color: '#fff',
+            background: 'rgba(0,0,0,0.1)',
+            borderRadius: '10px' 
+          }}>
+            Loading 3D Projects...
+          </div>
+        }
+        once={true}
+      >
+        <Suspense fallback={
+          <div style={{ 
+            height: '600px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            color: '#fff' 
+          }}>
+            Loading 3D Components...
+          </div>
+        }>
+          <InfiniteSection />
+        </Suspense>
+      </ConditionalRender>
+        
       
 
       <Projects />
-         <Terminal />
-      <Contact />
-     
-      <Footer />
+         {/* <Terminal />
+         
+      <Contact /> */}
+      <div className="profile-and-github-row">
+        <div className="profile-left"><Footer /></div>
+        <div className="github-right"><GitHubDashboard /></div>
+      </div>
     </div>
+
   );
 }
 

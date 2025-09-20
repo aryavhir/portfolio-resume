@@ -235,7 +235,12 @@ export const LogoLoop = memo(
       );
 
       return (
-        <li className="logoloop__item" key={key} role="listitem">
+        <li 
+          className="logoloop__item" 
+          key={key} 
+          role="listitem"
+          data-skill-name={item.title}
+        >
           {itemContent}
         </li>
       );

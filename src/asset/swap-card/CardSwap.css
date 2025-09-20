@@ -1,0 +1,47 @@
+.card-swap-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(5%, 20%);
+  transform-origin: bottom right;
+
+  perspective: 900px;
+  overflow: visible;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 12px;
+  padding: 2px; /* to make room for the border */
+
+  background: linear-gradient(135deg, #6e00a3, #ff5c8a); /* dark purple to pink */
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+
+  /* Two backgrounds: one for the content, one for the border */
+  background-image: 
+    linear-gradient(#000, #000), /* inner background */
+    linear-gradient(135deg, #6e00a3, #ff5c8a); /* border gradient */
+
+  border:3px solid transparent; /* actual border, but invisible */
+
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+
+@media (max-width: 768px) {
+  .card-swap-container {
+    transform: scale(0.75) translate(25%, 25%);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-swap-container {
+    transform: scale(0.55) translate(25%, 25%);
+  }
+}

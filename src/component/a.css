@@ -3,6 +3,7 @@
   margin-left: 2px;
   animation: blink 0.8s infinite;
   color: #00ffcc; /* adjust color if you like */
+  pointer-events: none; /* Allow cursor to pass through */
 }
 
 @keyframes blink {

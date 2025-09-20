@@ -1,31 +1,24 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { Newsletter } from "./Newsletter";
-import navIcon1 from "../asset/img/nav-icon1.svg";
-import navIcon2 from "../asset/img/nav-icon2.svg";
-import navIcon3 from "../asset/img/nav-icon3.svg";
 
+import ScrambledText from "../asset/text-animation/ScrambledText";
+import linkedinIcon from "../asset/img/nav-icon1.svg";
+import githubIcon from "../asset/img/nav-icon2.svg";
+import instagramIcon from "../asset/img/nav-icon3.svg";
 export const Footer = () => {
   return (
-    <footer className="footer">
-      <Container>
-        <Row className="align-items-center">
-          <Newsletter />
-          <Col size={12} sm={6}></Col>
-          <Col size={12} sm={6} className="text-center text-sm-end">
-            <div className="social-icon">
-              <a href="https://www.linkedin.com/in/aryavhir-koul-04a08k/">
-                <img src={navIcon1} alt="Icon" />
-              </a>
-              <a href="https://www.github.com/aryavhir">
-                <img src={navIcon2} alt="Icon" />
-              </a>
-              <a href="https://www.instagram.com/aryavhir_koul/">
-                <img src={navIcon3} alt="Icon" />
-              </a>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+    <footer id="footer" className="footer">
+
+      <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 12, marginTop: '13%' }}>
+        <ScrambledText className="scrambled-text-demo" radius={100} duration={1.2} speed={0.5}>
+          Have a Figma? I’ll turn it into a fast app.<br />
+          Night owl,manga addict and someone who definitely has too many browser tabs open right now.
+        </ScrambledText>
+    
+        <div className="social-icon" style={{ display: 'flex', alignItems: 'center',justifyContent: 'center' }}>
+          <a href="https://www.linkedin.com/in/" target="_blank" rel="noreferrer"><img src={linkedinIcon} alt="LinkedIn" /></a>
+          <a href="https://github.com/aryavhir" target="_blank" rel="noreferrer"><img src={githubIcon} alt="GitHub" /></a>
+          <a href="https://instagram.com/" target="_blank" rel="noreferrer"><img src={instagramIcon} alt="Instagram" /></a>
+        </div>
+      </div>
     </footer>
   );
 };

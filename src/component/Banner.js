@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import "./a.css";
 
-// Main Banner Component
-export const Banner = () => {
+// Main Banner Component - Memoized to prevent unnecessary re-renders
+export const Banner = memo(() => {
   const [loopNum, setLoopNum] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState("");
@@ -63,4 +63,4 @@ const typingDelay = 100; // normal typing speed
       </div>
     </section>
   );
-};
+});
