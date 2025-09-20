@@ -1126,6 +1126,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   bottom: 0;
   width: 35%;
   right: 0;
+height: 0%;
   z-index: -4;
 }
 
@@ -2819,6 +2820,12 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
     padding: 60px 0;
   }
 
+  /* Set inner div height in github-dashboard for mobile */
+  .github-dashboard > div {
+    height: 200px !important;
+    min-height: 200px !important;
+    max-height: 200px !important;
+  }
   .workspace-3d-bx {
     padding: 40px 25px;
     border-radius: 32px;
@@ -3427,5 +3434,113 @@ a/* Skills Section Fade Effects */
   
   .fade-scale {
     transform: scale(0.95) rotateX(5deg); /* Subtle effect on mobile */
+  }
+}
+/* --- Mobile & Desktop Footer/GitHub Dashboard Fixes --- */
+
+/* Remove extra space below GitHub dashboard and footer on desktop */
+.github-dashboard,
+.footer {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Remove extra space for profile-and-github-row */
+.profile-and-github-row {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Remove extra space for containers below footer/dashboard */
+main > *:last-child,
+body > *:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Mobile: Reduce padding/margin for footer and dashboard */
+@media (max-width: 768px) {
+  .footer {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .github-dashboard {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .profile-and-github-row {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+/* Mobile: Make profile-and-github-row children fill width and remove extra space */
+@media (max-width: 768px) {
+  .profile-and-github-row .profile-left,
+  .profile-and-github-row .github-right {
+    min-width: 100%;
+    width: 100%;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Mobile: Reduce newsletter box padding for better fit */
+@media (max-width: 768px) {
+  .newsletter-bx {
+    padding-bottom: 20px !important;
+    margin-bottom: 20px !important;
+  }
+}
+
+/* Mobile: Remove extra space below everything */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  main > *:last-child,
+  body > *:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Consistent heading and text sizes for mobile */
+  h1, h2, h3, h4, h5, h6,
+  .banner h1,
+  .skill h2,
+  .project h2,
+  .course-title,
+  .subtitle {
+    font-size: 2rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.8px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+  }
+
+  p, .skill p, .project p, .course-desc {
+    font-size: 1rem !important;
+    letter-spacing: 0.5px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+  }
+
+  /* Footer and GitHub dashboard: bring close together on mobile */
+  .footer, .github-dashboard {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    min-height: 0 !important;
+  }
+  /* Reduce gap between social icons and dashboard animation */
+  .footer .social-icons {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .github-dashboard {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 }
