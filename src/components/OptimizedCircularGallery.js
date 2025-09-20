@@ -13,18 +13,17 @@ const OptimizedCircularGallery = memo(({
   const [certImages, setCertImages] = useState([]);
   const [loadingProgress, setLoadingProgress] = useState(0);
 
+
   useEffect(() => {
     let mounted = true;
-
     const loadComponents = async () => {
       try {
         // Load component first
         const { default: GalleryComponent } = await import('../asset/cert/CircularGallery');
         if (!mounted) return;
-        
         setCircularGallery(() => GalleryComponent);
-        
-        // Load images in true progressive batches
+
+        // Load all images at once
         const imageModules = [
           () => import('../asset/cert/images/1x.png'),
           () => import('../asset/cert/images/2.png'),
@@ -51,48 +50,21 @@ const OptimizedCircularGallery = memo(({
           'Foundation of Cybersecurity', 'Put It To Work', 'Security Risks'
         ];
 
-        // Load first 3 images immediately and render them
-        const initialBatch = await Promise.all(imageModules.slice(0, 3).map(loader => loader()));
+        // Load all images before rendering
+        const allImages = await Promise.all(imageModules.map(loader => loader()));
         if (mounted) {
-          const initialItems = initialBatch.map((img, index) => ({
+          const items = allImages.map((img, index) => ({
             image: img.default,
             text: titles[index]
           }));
-          setCertImages(initialItems);
-          setLoadingProgress(3);
-        }
-
-        // Load remaining images in small batches
-        for (let i = 3; i < imageModules.length; i += 2) {
-          if (!mounted) break;
-          
-          await new Promise(resolve => {
-            requestIdleCallback ? 
-              requestIdleCallback(resolve) : 
-              setTimeout(resolve, 100);
-          });
-
-          const batchEnd = Math.min(i + 2, imageModules.length);
-          const batch = await Promise.all(imageModules.slice(i, batchEnd).map(loader => loader()));
-          
-          if (mounted) {
-            setCertImages(prev => [
-              ...prev,
-              ...batch.map((img, index) => ({
-                image: img.default,
-                text: titles[i + index]
-              }))
-            ]);
-            setLoadingProgress(prev => prev + batch.length);
-          }
+          setCertImages(items);
+          setLoadingProgress(items.length);
         }
       } catch (error) {
         console.warn('Failed to load gallery components:', error);
       }
     };
-
     loadComponents();
-
     return () => {
       mounted = false;
     };
